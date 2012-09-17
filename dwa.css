@@ -1,12 +1,27 @@
 body { 
 	font-size: meduium; 
-	font-family: sans-serif; 
+	font-family: sans-serif;
 }
 
 h1 { 
-	font-size: 150%; 
+	font-size: 150%;
 }
 
 h2 { 
 	font-size: 120%; 
 }
+
+#wrapper {
+	
+}
+
+#masthead {
+	position: relative;
+	border: 3px solid #999;
+	border-radius: 15px;
+	background-color: #AAAAAA;
+	color: #000000;
+	padding-left: 10px;
+	height:75px;
+}
+

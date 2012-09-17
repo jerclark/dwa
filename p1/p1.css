@@ -1,0 +1,16 @@
+/*.section { 
+	border: 1px solid #999;
+	border-radius: 15px;
+	background-color: #99CCFF;
+	color: #AAAAAA;
+	padding-left: 10px;
+	margin-left: 10px;
+}*/
+
+#masthead {
+	background-image: url("lego_coat_hanger.JPG");
+	background-position: 0% 45%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	opacity: 0.3;
+}
