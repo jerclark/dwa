@@ -7,6 +7,12 @@
 	margin-left: 10px;
 }*/
 
+h1 {
+	font-size: 250%;
+	line-height: 20px;
+	letter-spacing: 30px;
+}
+
 #masthead {
 	background-image: url("lego_coat_hanger.JPG");
 	background-position: 0% 45%;
@@ -14,3 +20,14 @@
 	background-size: 100%;
 	opacity: 0.3;
 }
+
+#masthead_text {
+
+}
+
+
+/*
+background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#333));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent
+*/
