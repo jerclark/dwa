@@ -1,20 +1,16 @@
-/*.section { 
-	border: 1px solid #999;
-	border-radius: 15px;
-	background-color: #99CCFF;
-	color: #AAAAAA;
-	padding-left: 10px;
-	margin-left: 10px;
-}*/
-
 h1 {
 	font-size: 250%;
 	line-height: 20px;
-	letter-spacing: 30px;
+	letter-spacing: 10px;
+}
+
+#wrapper{
+	margin: 0px auto;
+	width: 50%;
 }
 
 #masthead {
-	background-image: url("lego_coat_hanger.JPG");
+	/*background-image: url("lego_coat_hanger.JPG");*/
 	background-position: 0% 45%;
 	background-repeat: no-repeat;
 	background-size: 100%;
@@ -22,7 +18,26 @@ h1 {
 }
 
 #masthead_text {
+	position:absolute;
+	background:-webkit-gradient(linear, left top, right top, from(rgba(90,90,90,0.0)), to(rgba(90,90,90,0.0)), color-stop(.5,#AA3333));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
 
+.content_box {
+	margin-top: 10px;
+	border: 2px solid #999;
+	border-radius: 15px;
+	background: #CCCCCC;
+	padding: 0px 0px 20px 10px;
+}
+
+
+.flashlight_text{
+	font-size: 150%;
+	background:-webkit-radial-gradient(50% 50%,25% 25%,#CCCCCC,#CCCCCC);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 

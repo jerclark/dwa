@@ -1,65 +1,67 @@
 <!DOCTYPE html>
 <html lang="en-us">
 	<head>
-		<script type="text/javascript">
-		
-		window.onmousemove = function(event){			
-			document.getElementById("masthead_text").style.background = "-webkit-gradient(linear, left top, right top, from(rgba(90,90,90,0.0)), to(rgba(90,90,90,0.0)), color-stop(" + parseInt(event.pageX)/window.innerWidth + ",#AA3333))";
-		}
-		
-		
-		function adjustGradient(event){
-			var contentText = document.getElementById("content_text");
-			var masthead = document.getElementById("masthead");
-			var centeringOffset = contentText.offsetHeight * .15;
-			var xCoord = (event.clientX/contentText.offsetWidth)*100;
-			var yCoord = (event.clientY/(contentText.offsetHeight + masthead.offsetHeight + centeringOffset))*100;
-			//alert("x: " + xCoord + ", y: " + yCoord);
-			contentText.style.background = "-webkit-radial-gradient(" + xCoord + "% " + yCoord + "%,40% 40%,black,white)";
-		}
-	
-		</script>
+		<script type="text/javascript" src="p1.js"></script> 
 		<meta charset="utf-8">
 		<title>
-			Dynamic Web Applications - P1
+			P1 - Dynamic Web Applications
 		</title>
 		<link type="text/css" rel="stylesheet" href="../dwa.css">
 		<link type="text/css" rel="stylesheet" href="p1.css">
 	</head>
-	<body>
-		
-		<div id="masthead_wrapper">
-			<div style="position:relative;padding-left:10px;">
-				<span id="masthead_text" style="position:absolute;
-				left:20px;
-				background:-webkit-gradient(linear, left top, right top, from(rgba(90,90,90,0.0)), to(rgba(90,90,90,0.0)), color-stop(.5,#AA3333));
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;">
-					<h1>Jeremy Clark</h1>
-				</span>
+	<body onload="initPage()">
+		<div id="wrapper">
+			<div id="masthead_wrapper">
+				<div style="position:relative;padding-left:10px;">
+					<span id="masthead_text">
+						<h1>Jeremy Clark</h1>
+					</span>
+				</div>
+				<div id="masthead">
+				</div>
 			</div>
-			<div id="masthead">
+			<div id="content_wrapper">
+				<div class="content_box">
+					<h2>About This Site:</h2>
+					<div id="about_blurb">
+					</div>
+				</div>
+				<div class="content_box">
+					<h2>About Me:</h2>
+					<div class="flashlight_text">
+						I eat cereal, mostly at night.<br>
+						My simplest joy is cheezy pop dancing with my little daughter.<br>
+						I'm also interested in lego robots - check out a robot I made that plays Towers of Hanoi.<br>
+						<p>
+						<video controls="controls" style="border: 10px solid black; border-radius: 15px;">
+						  <source src="Legosi.mp4" type="video/mp4" />
+						  Your browser does not support the video tag.
+						</video>
+					</div>
+				</div>
+				<div class="content_box">
+					<h2>Host:</h2>
+						<div class="flashlight_text">A Small
+						 Orange, shared plan
+						</div>
+				</div>
+				<div class="content_box">
+					<h2>
+						Text Editor:
+					</h2>
+					<div class="flashlight_text">
+						Text Mate
+					</div>
+				</div>
+				<div class="content_box">
+					<h2>
+						Github Repo:
+					</h2>
+					<div class="flashlight_text">
+						<a href="https://github.com/jerclark/dwa.git">https://github.com/jerclark/dwa.git</a>
+					</div>
+				</div>
 			</div>
-		</div>
-		
-		<div id="content_wrapper">
-			<div id="content_text" onmousemove="adjustGradient(event)" style="width:300px;
-				background:-webkit-radial-gradient(50% 50%,40% 40%,black,white);
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;">
-				<h2>
-					Small Bio:
-				</h2>I eat cereal, mostly at night.
-				<h2>
-					Host:
-				</h2>A Small Orange, shared plan
-				<h2>
-					Text Editor:
-				</h2>Text Mate
-				<h2>
-					Github Repo:
-				</h2><a href="https://github.com/jerclark/dwa.git">https://github.com/jerclark/dwa.git</a>
-			<div>
 		</div>
 	
 	</body>
