@@ -43,9 +43,9 @@
 		var xCoord =  (event.offsetX/targetText.offsetWidth)*100;
 		var yCoord = (event.offsetY/targetText.offsetHeight)*100;
 		
-		//Draw a radial gradient at the "hit-point", whose radius is 30% of the dimensions of the parent element. Have the "outer" gradient color be the same as the background (in this case #CCCCCC) so it appears to "disappear". I also needed to keep setting the background clip and text fill in order to make it work on every mouse move event.
+		//Draw a radial gradient at the "hit-point", whose radius is 30% of the dimensions of the parent element. Have the "outer" gradient color be the same as the background (in this case #EEEEEE) so it appears to "disappear". I also needed to keep setting the background clip and text fill in order to make it work on every mouse move event.
 		if (targetText.style != undefined){
-			targetText.style.background = "-webkit-radial-gradient(" + xCoord + "% " + yCoord + "%,30% 30%,#AA3333,#CCCCCC)";
+			targetText.style.background = "-webkit-radial-gradient(" + xCoord + "% " + yCoord + "%,30% 30%,#AA3333,#EEEEEE)";
 			targetText.style.webkitBackgroundClip = "text";
 			targetText.style.webkitTextFillColor = "transparent";
 		}
@@ -56,7 +56,7 @@
 	*/
 	function extinguishShine(event){
 		if (event.target.style != undefined){
-			event.target.style.background = "-webkit-radial-gradient(50% 50%,60% 60%,#CCCCCC,#CCCCCC)";
+			event.target.style.background = "-webkit-radial-gradient(50% 50%,60% 60%,#EEEEEE,#EEEEEE)";
 		}
 	}
 	

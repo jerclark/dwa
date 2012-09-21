@@ -32,10 +32,18 @@ h1 {
 	padding: 0px 0px 20px 10px;
 }
 
+.flashlight_text_bg{
+	border:0px solid black; 
+	background: #EEEEEE;
+	margin:0px 20px 0px 0px;
+	border-radius: 15px;
+}
+
 
 .flashlight_text{
+	margin: 20px 10px 0px 10px;
 	font-size: 150%;
-	background:-webkit-radial-gradient(50% 50%,25% 25%,#CCCCCC,#CCCCCC);
+	background:-webkit-radial-gradient(50% 50%,25% 25%,#EEEEEE,#EEEEEE);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
