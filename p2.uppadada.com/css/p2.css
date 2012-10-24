@@ -1,0 +1,100 @@
+
+body { 
+	font-size: meduium; 
+	font-family: sans-serif;
+}
+
+
+#masthead {
+	position: relative;
+	border: 3px solid #999;
+	border-radius: 15px;
+	background-color: #AAAAAA;
+	color: #000000;
+	padding-left: 10px;
+	height:75px;
+}
+
+
+
+h1 {
+	font-size: 250%;
+	line-height: 20px;
+	letter-spacing: 10px;
+}
+
+#wrapper{
+	margin: 0px auto;
+	width: 50%;
+}
+
+#masthead {
+	/*background-image: url("lego_coat_hanger.JPG");*/
+	background-position: 0% 40%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	opacity: 0.3;
+}
+
+#masthead_text {
+	position:absolute;
+	background:-webkit-gradient(linear, left top, right top, from(rgba(90,90,90,0.0)), to(rgba(90,90,90,0.0)), color-stop(.5,#AA3333));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.content_box {
+	margin-top: 10px;
+	border: 2px solid #999;
+	border-radius: 15px;
+	background: #CCCCCC;
+	padding: 0px 0px 20px 10px;
+}
+
+.flashlight_text_bg{
+	border:0px solid black; 
+	background: #EEEEEE;
+	margin:0px 20px 0px 0px;
+	border-radius: 15px;
+}
+
+
+.flashlight_text{
+	margin: 20px 10px 0px 10px;
+	font-size: 150%;
+	background:-webkit-radial-gradient(50% 50%,25% 25%,#EEEEEE,#EEEEEE);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+
+.post{
+	margin: 20px 10px 0px 10px;
+	font-size: 150%;
+	background:-webkit-radial-gradient(50% 50%,25% 25%,#EEEEEE,#EEEEEE);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+
+.profile_value{
+	margin-left: 20px;
+	color: #AA3333;
+}
+
+
+a:link {
+	color: #AA3333;
+}
+
+a:visited {
+	color: #443333;
+}
+
+
+
+/*
+background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#333));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent
+*/

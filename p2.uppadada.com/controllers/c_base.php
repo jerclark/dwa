@@ -19,7 +19,7 @@ class base_controller {
 			$this->user = $this->userObj->authenticate();			
 							
 		# Set up templates
-			$this->template 	  = View::instance('_v_template');
+			$this->template 	  = View::instance('_v_template'); //This is the View library loading the _v_template view.
 			$this->email_template = View::instance('_v_email');			
 								
 		# So we can use $user in views			

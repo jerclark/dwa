@@ -15,7 +15,7 @@ If you want a different default time format for this app, set it below
 
 
 # What is the name of this app?
-	define('APP_NAME', 'My App');  
+	define('APP_NAME', 'MiniTrue');  
 
 # When email is sent out from the server, where should it come from?
 # Ideally, this should match the domain name
@@ -28,11 +28,11 @@ A email designated to receive messages from the server. Examples:
  	* Logs, cron results, errors, etc.
  	
  	Some might want this to be the same as the APP_EMAIL, others might want to create a designated gmail address for it
-*/ 	
+*/ 	  
 	define('SYSTEM_EMAIL', 'webmaster@myapp.com'); 
 
 # Default DB name for this app
-	define('DB', "myapp_com"); 
+	define('DB_NAME', 'p2_uppadada_com'); 
 
 
 # If your app is going to have outgoing emails, you should fill in your SMTP settings
@@ -42,5 +42,5 @@ A email designated to receive messages from the server. Examples:
 	//define('SMTP_PASSWORD', '');
 
 # For extra security, you might want to set different salts than what the core uses
-	//define('PASSWORD_SALT', '');
-	//define('TOKEN_SALT', '');
+	define('PASSWORD_SALT', 'winstonsmith');
+	define('TOKEN_SALT', 'julia');
