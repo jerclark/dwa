@@ -8,7 +8,7 @@
 		
 		<br>
 		<!--helpful to use the same names as the database columns-->
-		Find a comrade:
+		Find a friend:
 		<br>
 		<input type='text' name='search_string'/>
 		

@@ -87,11 +87,12 @@ class users_controller extends base_controller {
 		
 		if ( strlen($_POST['search_string']) == 0 ){ #Get all users if search string is empty
 			$q = "SELECT user_id,first_name,last_name from users where (user_id != ".$this->user->user_id.")";
-		}else{ 	#only find users matching the search string
+		}else{ 	#only find users matching the search string - check agains e-mail, firstname, lastname, firstname+lastname
 			$q = "SELECT user_id,first_name,last_name from users where 
 			(((email LIKE '%".$_POST['search_string']."%') or
 			(first_name LIKE '%".$_POST['search_string']."%') or 
-			(last_name LIKE '%".$_POST['search_string']."%')) and
+			(last_name LIKE '%".$_POST['search_string']."%') or
+			(CONCAT(first_name, ' ', last_name) LIKE '%".$_POST['search_string']."%')) and
 			(user_id != ".$this->user->user_id."))";
 		}
 		$users = DB::instance(DB_NAME)->select_rows($q);

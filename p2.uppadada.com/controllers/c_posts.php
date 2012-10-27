@@ -15,9 +15,13 @@ class posts_controller extends base_controller {
 	public function index() {
 				
 		#Search for all posts of all people that i'm following
-		$q = "SELECT posts.*,users.first_name,users.last_name FROM posts,users WHERE posts.user_id IN (SELECT subscribed_id FROM subscriptions WHERE subscriber_id=".$this->user->user_id.") AND users.user_id=posts.user_id";
+		$q = "SELECT posts.*,users.first_name,users.last_name FROM posts,users WHERE posts.user_id IN (SELECT subscribed_id FROM subscriptions WHERE subscriber_id=".$this->user->user_id.") AND users.user_id=posts.user_id ORDER BY posts.modified DESC";
 		
 		$posts = DB::instance(DB_NAME)->select_rows($q);
+		
+		foreach($posts as $key => &$next_post){
+			$next_post['modified'] = Time::display($next_post['modified']);
+		}
 		
 		$this->template->content = View::instance("v_posts_index");
 		$this->template->content->results = $posts;	

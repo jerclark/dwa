@@ -36,7 +36,7 @@
 					Welcome, <?=$user->first_name?>!</span>
 					<a class="navbar_link" href="/posts/create">create a post</a>
 					<a class="navbar_link" href="/posts/index">recent activity</a>
-					<a class="navbar_link" href="/users/search">find brothers</a>
+					<a class="navbar_link" href="/users/search">connect</a>
 					<a class="navbar_link" href="/users/profile">profile</a>
 					<a class="navbar_link" href="/users/logout">logout</a>
 				</div>

@@ -48,6 +48,33 @@ h1 {
 	margin:3px;
 }
 
+.search_result_wrapper {
+	margin-top:10px;
+}
+
+
+
+.post_wrapper {
+	margin-top:10px;
+}
+
+
+.post_display_name {
+	font-weight:bold;
+	border:10px;
+}
+
+.post_text {
+	font-style: oblique;
+	margin:10px;
+}
+
+.post_timestamp {
+	font-size:70%;
+}
+
+
+
 .content_box {
 	margin-top: 10px;
 	border: 2px solid #999;
