@@ -48,6 +48,10 @@ h1 {
 	margin:3px;
 }
 
+#flash_message {
+	font-color:red;
+}
+
 .search_result_wrapper {
 	margin-top:10px;
 }

@@ -31,11 +31,12 @@
 				</span>
 			</div>
 			<div id="masthead"></div>
+			<div id="flash_message"><?=@$flash;?></div>
 			<?php if($user): ?>
 				<div id='toolbar_wrapper'>
 					Welcome, <?=$user->first_name?>!</span>
 					<a class="navbar_link" href="/posts/create">create a post</a>
-					<a class="navbar_link" href="/posts/index">recent activity</a>
+					<a class="navbar_link" href="/posts/index">view posts</a>
 					<a class="navbar_link" href="/users/search">connect</a>
 					<a class="navbar_link" href="/users/profile">profile</a>
 					<a class="navbar_link" href="/users/logout">logout</a>

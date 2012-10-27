@@ -14,22 +14,77 @@ class posts_controller extends base_controller {
 	*/
 	public function index() {
 				
+		Auth::bounce(!$this->user);
+		
 		#Search for all posts of all people that i'm following
 		$q = "SELECT posts.*,users.first_name,users.last_name FROM posts,users WHERE posts.user_id IN (SELECT subscribed_id FROM subscriptions WHERE subscriber_id=".$this->user->user_id.") AND users.user_id=posts.user_id ORDER BY posts.modified DESC";
-		
 		$posts = DB::instance(DB_NAME)->select_rows($q);
 		
+		#format the mod date for each post
 		foreach($posts as $key => &$next_post){
 			$next_post['modified'] = Time::display($next_post['modified']);
 		}
 		
+			
+		#Setup the template	
+		$this->template->title = "Post Activity";
+		
+		#load the content
 		$this->template->content = View::instance("v_posts_index");
-		$this->template->content->results = $posts;	
-		
+		$this->template->content->search_results = View::instance("v_posts_search_results");
+		$this->template->content->search_results->results = $posts;		
+	
+		#This renders the view
 		echo $this->template;
+				
+	}
+	
+	
+	/**
+ 	* Process a search for posts
+	* 
+	* This will lookup posts based on the passed in search string
+	* 
+	*/
+	public function p_search(){
 		
+		if (!$this->user){
+			Router::redirect("/users/login/");
+			return false;
+		}
+			
+		
+		#Search for posts
+		
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST); #sanitize the search string post
+		
+		if ( strlen($_POST['search_string']) == 0 ){ #Get all posts if search string is empty
+			
+			$q = "SELECT posts.*,users.first_name,users.last_name FROM posts,users WHERE posts.user_id IN (SELECT subscribed_id FROM subscriptions WHERE subscriber_id=".$this->user->user_id.") AND users.user_id=posts.user_id ORDER BY posts.modified DESC";
+		
+		}else{ 	#only find posts matching the search string - check agains e-mail, firstname, lastname, firstname+lastname
+			
+			$q = "SELECT posts.*,users.first_name,users.last_name FROM posts,users 
+			WHERE posts.user_id IN (SELECT subscribed_id FROM subscriptions WHERE subscriber_id=".$this->user->user_id.") 
+			AND (users.user_id=posts.user_id) 
+			AND ((posts.text LIKE '%".$_POST['search_string']."%') or
+			(users.first_name LIKE '%".$_POST['search_string']."%') or 
+			(users.last_name LIKE '%".$_POST['search_string']."%') or
+			(CONCAT(users.first_name, ' ', users.last_name) LIKE '%".$_POST['search_string']."%')) 
+			ORDER BY posts.modified DESC";
+			
+		}
+		$posts = DB::instance(DB_NAME)->select_rows($q);
+		
+		$this->template->content = View::instance("v_posts_index");
+		$this->template->content->search_results = View::instance("v_posts_search_results");
+		$this->template->content->search_results->results = $posts;
+		
+		echo $this->template;	
 		
 	}
+	
+	
 	
 	
 	/**

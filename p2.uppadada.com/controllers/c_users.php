@@ -206,8 +206,6 @@ class users_controller extends base_controller {
 	
 	
 	
-	
-	
 	/**
  	* Login
 	* 
@@ -219,6 +217,7 @@ class users_controller extends base_controller {
 		$this->template->content = View::instance("v_users_login");
 		
 		echo $this->template;
+		
 	}
 	
 	
@@ -293,10 +292,6 @@ class users_controller extends base_controller {
 			
 			#Set the content of the master _v_template (content is a variable defined in the body of the _v_template)
 			$this->template->content = View::instance("v_users_profile");
-			
-			#This passes the "user_name" variable to the view. Any data available to the Controller needs to be passed to the
-			#view in this way
-			$this->template->content->user_name = $user_name;
 			
 			#This will setup the "client_files" in the view. Stuff like CSS, etc.
 			$this->template->client_files = Utils::load_client_files($this->client_files); //This uses a utililty method in UTILS
