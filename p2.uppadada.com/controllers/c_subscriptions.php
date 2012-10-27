@@ -32,7 +32,7 @@ class subscriptions_controller extends base_controller {
 		#Create a record in the "subscription" that joins you to the person you want to follow
 		DB::instance(DB_NAME)->insert("subscriptions", $data);
 		
-		Router::redirect("/posts/index");
+		Router::redirect("/users/search");
 		
 	}
 	
