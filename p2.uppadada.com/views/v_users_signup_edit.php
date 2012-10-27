@@ -4,7 +4,13 @@
 		@action param is what processes the form
 		We use the convention p_{action} to process posts
 	-->
-	<form method='POST' action='/users/p_signup_edit'>
+	<form method='POST' 
+		<?php if($user): ?>
+			action='/users/p_edit_profile'
+		<?php else: ?>
+			action='/users/p_signup'
+		<?php endif;?>
+	/>
 		
 		<br>
 		<!--helpful to use the same names as the database columns-->
@@ -57,7 +63,14 @@
 				
 	</form>
 	
-	<a href="/users/p_signup_edit">Cancel</a>
+	<!--redirect to the appropriate controller method based on whether there's a user or not-->
+	<a 
+	<?php if($user): ?>
+		href='/users/p_edit_profile'
+	<?php else: ?>
+		href='/users/p_signup'
+	<?php endif;?>
+	>Cancel</a>
 	
 
 </div>

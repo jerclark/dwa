@@ -91,19 +91,20 @@ class users_controller extends base_controller {
 		$this->template->content->search_results = View::instance("v_users_search_results");
 		$this->template->content->search_results->results = $users;
 		
-		#$this->template->content = View::instance("v_users_search_results");
-		#$this->template->content->results = $users;	
-		
 		echo $this->template;	
 		
 	}
 	
 	
 	/**
- 	* Signup
+ 	* Signup/Edit
 	* 
-	* This will display a signup form to create an account
+	* This will display a signup form to create an account or edit an existing account
 	* 
+	* We're using one method/view here because as the form gets more sophisticated (collecting more data, etc.) it will be nice
+	* to only have to update one view. There is forked logic when handling password/token setup, as an existing won't necessicarily be entering/changing
+	* that information.
+	*
 	*/
 	public function signup_edit() {
 
@@ -121,69 +122,82 @@ class users_controller extends base_controller {
 	/**
  	* p_signup
 	* 
-	* This will process the sign up form
+	* This will process the signup form
+	*
 	* 
 	*/
-	public function p_signup_edit() {
+	public function p_signup() {
 		
 		#Dump out the results of POST to see what the form submitted
 		#print_r($_POST);
 		
 		if (count($_POST) == 0){ #This means we canceled, or a form with nothing in it got posted
-			if ($this->user){
-				Router::redirect("/users/profile");
-			}else{
-				Router::redirect("/index/index");
-			}
+			Router::redirect("/index/index");
 			die();
 		}
 		
 		if ( (!$this->user) && (strlen($_POST['password']) < 5) ){ #extra bullet proofing. This condition should never be met because of the client-side form validtion 
 			die("Please enter a password of 5 or more characters!");
 		}
-		
-		
 
-		
-		if ($this->user){ #We're updating the current user
-			
-			#We need to get rid of the password value in the post - we don't want to 'reset' this.
-			unset($_POST['password']);
-			
-			#Update the mod time
-			$_POST['modified'] = Time::now();		
-			
-			#Insert the posted form into the db
-			DB::instance(DB_NAME)->update_row('users',$_POST,"WHERE user_id=".$this->user->user_id);
-		
-			#Reroute to the user's profile
-			Router::redirect("/users/profile");
-			
-		
-		}else{	#We're creating a new user
-			
-			# Encrypt the password
-			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+		# Encrypt the password
+		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 
-			# Add the timestamps
-			$_POST['created'] = Time::now();
-			$_POST['modified'] = Time::now();		
+		# Add the timestamps
+		$_POST['created'] = Time::now();
+		$_POST['modified'] = Time::now();		
 
-			# Add/encrypt the token	
-			$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
-						
-			#Insert the posted form into the db
-			$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
-			
-			#Create a "subscription" to yourself
-			$data = Array("created" => Time::now(), "subscriber_id" => $new_user_id, "subscribed_id" => $new_user_id);
-			DB::instance(DB_NAME)->insert("subscriptions", $data);
+		# Add/encrypt the token	
+		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+					
+		#Insert the posted form into the db
+		$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
 		
-			#Reply with success
-			Router::redirect("/users/login");
-		}
+		#Create a "subscription" to yourself
+		$data = Array("created" => Time::now(), "subscriber_id" => $new_user_id, "subscribed_id" => $new_user_id);
+		DB::instance(DB_NAME)->insert("subscriptions", $data);
+	
+		#Reply with success
+		Router::redirect("/users/login");
 
 	}
+	
+	
+	
+	/**
+ 	* p_edit_profile
+	* 
+	* This will process the edit profile form
+	*
+	* 
+	*/
+	public function p_edit_profile() {
+		
+		#Dump out the results of POST to see what the form submitted
+		#print_r($_POST);
+		
+		if (count($_POST) == 0){ #This means we canceled, or a form with nothing in it got posted
+			Router::redirect("/users/profile");
+			die();
+		}
+
+			
+		#We need to get rid of the password value in the post - we don't want to 'reset' this.
+		unset($_POST['password']);
+		
+		#Update the mod time
+		$_POST['modified'] = Time::now();		
+		
+		#Insert the posted form into the db
+		DB::instance(DB_NAME)->update_row('users',$_POST,"WHERE user_id=".$this->user->user_id);
+	
+		#Reroute to the user's profile
+		Router::redirect("/users/profile");
+			
+	}
+	
+	
+	
 	
 	
 	/**
