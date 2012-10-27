@@ -31,36 +31,33 @@
 		<input type='text' required pattern="\w+@\w+\.\w{2,3}" name='email' onchange="
 		  this.setCustomValidity(this.validity.patternMismatch ? 'Please enter an e-mail address' : '');
 		  if(this.checkValidity()) form.email.pattern = this.value;"
-		<?php if($user): ?>
-			value=<?=$user->email ?>
-		<?php endif; ?>>
+		  <?php if($user): ?> value=<?=$user->email ?><?php endif; ?> >
 		</input>
 		
-		
-		<!--Only display the password fields for people creating accounts-->
-		<?php if(!$user): ?>
-		
+				
 		<br><br>
 		Password
 		<br>
-		<input type='password' name='password' required pattern="\w{5,}" onchange="
+		<input id='password' type='password' name='password' required pattern="\w{5,}" <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> onchange="
 		  this.setCustomValidity(this.validity.patternMismatch ? 'Please enter a password of 5 or more characters' : '');
 		  if(this.checkValidity()) form.password.pattern = this.value;"/>
 		<br><br>
 		
 		Password Confirmation
 		<br>
-		<input type='password' onchange="
+		<input id='password_confirmation' type='password' <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> onchange="
 		  this.setCustomValidity(this.value!=form.password.pattern ? 'Passwords must match!' : '');
 			this.checkValidity();"/>
 		<br><br>
-		
-		<?php endif;?>
-		
+				
 		
 		<!--This will send the form data to /users/p_signup-->
+		<br><br>
 		<input type='submit'/>
-		
+				
 	</form>
+	
+	<a href="/users/p_signup_edit">Cancel</a>
+	
 
 </div>

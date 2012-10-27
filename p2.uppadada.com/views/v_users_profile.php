@@ -8,7 +8,6 @@
 	<h2>Email:</h2>
 	<h3 class='profile_value'><?=$user->email ?></h3>
 	
-	<a href="/posts/index">All Posts</a>
 	<br>
 	<a href="/users/signup_edit">Edit Profile</a>
 

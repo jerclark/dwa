@@ -129,22 +129,29 @@ class users_controller extends base_controller {
 		#Dump out the results of POST to see what the form submitted
 		#print_r($_POST);
 		
-		if (strlen($_POST['password']) < 5){
+		if (count($_POST) == 0){ #This means we canceled, or a form with nothing in it got posted
+			if ($this->user){
+				Router::redirect("/users/profile");
+			}else{
+				Router::redirect("/index/index");
+			}
+			die();
+		}
+		
+		if ( (!$this->user) && (strlen($_POST['password']) < 5) ){ #extra bullet proofing. This condition should never be met because of the client-side form validtion 
 			die("Please enter a password of 5 or more characters!");
 		}
 		
-		# Encrypt the password	
-		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 		
-		# Add the timestamps
-		$_POST['created'] = Time::now();
-		$_POST['modified'] = Time::now();		
-			
-		# Add/encrypt the token	
-		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
-		
+
 		
 		if ($this->user){ #We're updating the current user
+			
+			#We need to get rid of the password value in the post - we don't want to 'reset' this.
+			unset($_POST['password']);
+			
+			#Update the mod time
+			$_POST['modified'] = Time::now();		
 			
 			#Insert the posted form into the db
 			DB::instance(DB_NAME)->update_row('users',$_POST,"WHERE user_id=".$this->user->user_id);
@@ -155,6 +162,16 @@ class users_controller extends base_controller {
 		
 		}else{	#We're creating a new user
 			
+			# Encrypt the password
+			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+
+			# Add the timestamps
+			$_POST['created'] = Time::now();
+			$_POST['modified'] = Time::now();		
+
+			# Add/encrypt the token	
+			$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+						
 			#Insert the posted form into the db
 			$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
 			
