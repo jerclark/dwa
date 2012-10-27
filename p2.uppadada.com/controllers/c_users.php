@@ -30,9 +30,9 @@ class users_controller extends base_controller {
 	
 	
 	/**
- 	* Search for a user
+ 	* Display the "search" page
 	* 
-	* This will take a search term and do a "LIKE" query agains e-mail, first name and last name
+	* This will display a list of all available users, along with a search form to find users by name, e-mail, etc.
 	* 
 	*/
 	public function search(){
@@ -67,6 +67,12 @@ class users_controller extends base_controller {
 	}
 	
 	
+	/**
+ 	* Process a search for users
+	* 
+	* This will lookup users based on the passed in search string
+	* 
+	*/
 	public function p_search(){
 		
 		if (!$this->user){
@@ -76,6 +82,9 @@ class users_controller extends base_controller {
 			
 		
 		#Search for users
+		
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST);#sanitize the search string post
+		
 		if ( strlen($_POST['search_string']) == 0 ){ #Get all users if search string is empty
 			$q = "SELECT user_id,first_name,last_name from users where (user_id != ".$this->user->user_id.")";
 		}else{ 	#only find users matching the search string
@@ -124,7 +133,6 @@ class users_controller extends base_controller {
 	* 
 	* This will process the signup form
 	*
-	* 
 	*/
 	public function p_signup() {
 		
@@ -169,7 +177,6 @@ class users_controller extends base_controller {
 	* 
 	* This will process the edit profile form
 	*
-	* 
 	*/
 	public function p_edit_profile() {
 		
@@ -223,6 +230,8 @@ class users_controller extends base_controller {
 	public function p_login() {
 		
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+		
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 		
 		$q = "SELECT token from users where email='".$_POST['email']."' and password='".$_POST['password']."'";
 		
