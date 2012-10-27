@@ -1,12 +1,9 @@
-
 <?php
 class posts_controller extends base_controller {
 
 	public function __construct() {
 		
 		parent::__construct(); //Must call parent's __construct method
-
-		Auth::bounce(!$this->user);
 		
 	}
 	
@@ -38,6 +35,8 @@ class posts_controller extends base_controller {
 	* 
 	*/
 	public function create() {
+		
+		Auth::bounce(!$this->user);		
 				
 		$this->template->title = "Create Post";
 
@@ -57,11 +56,10 @@ class posts_controller extends base_controller {
 	* 
 	* This will create a post from the passed in text.
 	* 
-	* Expects
-	* @parent - The ID of the post to which this is a response. If null, then this is an originating post.
-	* @content - The content of the post.
 	*/
 	public function p_create() {
+		
+		Auth::bounce(!$this->user);
 				
 		#Dump out the results of POST to see what the form submitted
 		#print_r($_POST);
@@ -85,7 +83,9 @@ class posts_controller extends base_controller {
 	* 
 	*/
 	public function comment() {
-
+		
+		Auth::bounce(!$this->user);
+	
 		$this->template->title = "Create Post";
 
 		#load the content

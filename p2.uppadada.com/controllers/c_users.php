@@ -144,7 +144,7 @@ class users_controller extends base_controller {
 		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 		
 		
-		if ($this->user){ //Then we're editing the profile
+		if ($this->user){ #We're updating the current user
 			
 			#Insert the posted form into the db
 			DB::instance(DB_NAME)->update_row('users',$_POST,"WHERE user_id=".$this->user->user_id);
@@ -153,10 +153,14 @@ class users_controller extends base_controller {
 			Router::redirect("/users/profile");
 			
 		
-		}else{	
+		}else{	#We're creating a new user
 			
 			#Insert the posted form into the db
-			DB::instance(DB_NAME)->insert('users',$_POST);
+			$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
+			
+			#Create a "subscription" to yourself
+			$data = Array("created" => Time::now(), "subscriber_id" => $new_user_id, "subscribed_id" => $new_user_id);
+			DB::instance(DB_NAME)->insert("subscriptions", $data);
 		
 			#Reply with success
 			Router::redirect("/users/login");

@@ -10,7 +10,8 @@
 		<!--helpful to use the same names as the database columns-->
 		Enter a new post:
 		<br>
-		<textarea name='content'/></textarea>
+		<textarea style="height:70px;width:95%;margin-top:10px;" name='content'/></textarea>
+		<br>
 		
 		<!--This will send the form data to /users/p_signup-->
 		<input type='submit'/>
