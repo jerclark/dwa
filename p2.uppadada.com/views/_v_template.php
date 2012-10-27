@@ -22,7 +22,7 @@
 
 <body onlaod="initPage()">
 	
-	<div id="wrapper">
+	<div id="wrapper" style="min-width:600px">
 		
 		<div id="masthead_wrapper" onclick="window.location='/index/index'">
 			<div style="position:relative;padding-left:10px;">
@@ -34,7 +34,7 @@
 			<?php if($user): ?>
 				<div id='toolbar_wrapper'>
 					Welcome, <?=$user->first_name?>!</span>
-					<a class="navbar_link" href="/posts/create">Create a post</a>
+					<a class="navbar_link" href="/posts/create">create a post</a>
 					<a class="navbar_link" href="/posts/index">recent activity</a>
 					<a class="navbar_link" href="/users/search">find brothers</a>
 					<a class="navbar_link" href="/users/profile">profile</a>
