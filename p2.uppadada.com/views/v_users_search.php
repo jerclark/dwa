@@ -8,13 +8,18 @@
 		
 		<br>
 		<!--helpful to use the same names as the database columns-->
-		Search For a User:
+		Find a comrade:
 		<br>
 		<input type='text' name='search_string'/>
 		
 		<!--This will send the form data to /users/p_signup-->
 		<input type='submit'/>
-		
+				
 	</form>
 
+</div
+
+
+<div id="content_box">			
+	<?=$search_results;?>
 </div>

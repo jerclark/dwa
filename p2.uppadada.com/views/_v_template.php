@@ -20,21 +20,26 @@
 
 </head>
 
-<body>
+<body onlaod="initPage()">
 	
 	<div id="wrapper">
 		
-		<div id="masthead_wrapper">
+		<div id="masthead_wrapper" onclick="window.location='/index/index'">
 			<div style="position:relative;padding-left:10px;">
 				<span id="masthead_text">
-					<h1>Chestnut Tree Cafe</h1>
+					<h1><a href="/index/index">Chestnut Tree Cafe</a></h1>
 				</span>
 			</div>
 			<div id="masthead"></div>
 			<?php if($user): ?>
-				<a style="margin-left:3px;" href="/posts/index">recent activity</a>
-				<a style="margin-left:3px;" href="/users/profile">profile</a>
-				<a style="margin-left:3px;" href="/users/logout">logout</a>
+				<div id='toolbar_wrapper'>
+					Welcome, <?=$user->first_name?>!</span>
+					<a class="navbar_link" href="/posts/create">Create a post</a>
+					<a class="navbar_link" href="/posts/index">recent activity</a>
+					<a class="navbar_link" href="/users/search">find brothers</a>
+					<a class="navbar_link" href="/users/profile">profile</a>
+					<a class="navbar_link" href="/users/logout">logout</a>
+				</div>
 			<?php endif;?>
 			
 		</div>

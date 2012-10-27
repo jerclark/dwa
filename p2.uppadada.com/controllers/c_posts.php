@@ -3,7 +3,11 @@
 class posts_controller extends base_controller {
 
 	public function __construct() {
+		
 		parent::__construct(); //Must call parent's __construct method
+
+		Auth::bounce(!$this->user);
+		
 	}
 	
 	/**
@@ -12,9 +16,7 @@ class posts_controller extends base_controller {
 	* By default, this will display all posts from all followed users in chronological order.	
 	*/
 	public function index() {
-		
-		Auth::bounce(!$this->user);
-		
+				
 		#Search for all posts of all people that i'm following
 		$q = "SELECT posts.*,users.first_name,users.last_name FROM posts,users WHERE posts.user_id IN (SELECT subscribed_id FROM subscriptions WHERE subscriber_id=".$this->user->user_id.") AND users.user_id=posts.user_id";
 		
@@ -36,9 +38,7 @@ class posts_controller extends base_controller {
 	* 
 	*/
 	public function create() {
-		
-		Auth::bounce(!$this->user);
-		
+				
 		$this->template->title = "Create Post";
 
 		#load the content
@@ -62,9 +62,7 @@ class posts_controller extends base_controller {
 	* @content - The content of the post.
 	*/
 	public function p_create() {
-		
-		Auth::bounce(!$this->user);
-		
+				
 		#Dump out the results of POST to see what the form submitted
 		#print_r($_POST);
 	
@@ -73,8 +71,8 @@ class posts_controller extends base_controller {
 		#Insert the posted form into the db
 		DB::instance(DB_NAME)->insert('posts',$data);
 		
-		#Reply with success
-		echo 'Post Created Succesfully!';
+		#Redirect to the "recent activity" page
+		Router::redirect("/posts/index");
 		
 	}
 	
@@ -87,8 +85,6 @@ class posts_controller extends base_controller {
 	* 
 	*/
 	public function comment() {
-
-		Auth::bounce(!$this->user);
 
 		$this->template->title = "Create Post";
 

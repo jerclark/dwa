@@ -21,7 +21,9 @@ class users_controller extends base_controller {
 	*/
 	public function index() {
 		
+		Auth::bounce(!$this->user);
 		
+		Router::redirect("/users/search");
 		
 	}
 	
@@ -40,10 +42,23 @@ class users_controller extends base_controller {
 			return false;
 		}
 		
-		$this->template->title = "User Search";
-
+		#Get all of the users in the system
+		$q = "SELECT user_id,first_name,last_name from users where (user_id != ".$this->user->user_id.")";
+		$users = DB::instance(DB_NAME)->select_rows($q);
+		
+		#Load up connections to those users
+		$q = "SELECT * FROM subscriptions WHERE (subscriber_id = ".$this->user->user_id.")";
+		$connections = DB::instance(DB_NAME)->select_array($q, 'subscribed_id');
+			
+		#Setup the template	
+		$this->template->title = "Connect with comrades!";
+		
 		#load the content
 		$this->template->content = View::instance("v_users_search");
+		$this->template->content->search_results = View::instance("v_users_search_results");
+		$this->template->content->search_results->results = $users;
+		$this->template->content->search_results->connections = $connections;
+		
 	
 		#This renders the view
 		echo $this->template;
@@ -59,17 +74,25 @@ class users_controller extends base_controller {
 			return false;
 		}
 			
-			
-		$q = "SELECT user_id,first_name,last_name from users where 
-		(((email LIKE '".$_POST['search_string']."') or
-		(first_name LIKE '".$_POST['search_string']."') or 
-		(last_name LIKE '".$_POST['search_string']."')) and
-		(user_id != ".$this->user->user_id."))";
-				
+		
+		#Search for users
+		if ( strlen($_POST['search_string']) == 0 ){ #Get all users if search string is empty
+			$q = "SELECT user_id,first_name,last_name from users where (user_id != ".$this->user->user_id.")";
+		}else{ 	#only find users matching the search string
+			$q = "SELECT user_id,first_name,last_name from users where 
+			(((email LIKE '%".$_POST['search_string']."%') or
+			(first_name LIKE '%".$_POST['search_string']."%') or 
+			(last_name LIKE '%".$_POST['search_string']."%')) and
+			(user_id != ".$this->user->user_id."))";
+		}
 		$users = DB::instance(DB_NAME)->select_rows($q);
 		
-		$this->template->content = View::instance("v_users_search_results");
-		$this->template->content->results = $users;	
+		$this->template->content = View::instance("v_users_search");
+		$this->template->content->search_results = View::instance("v_users_search_results");
+		$this->template->content->search_results->results = $users;
+		
+		#$this->template->content = View::instance("v_users_search_results");
+		#$this->template->content->results = $users;	
 		
 		echo $this->template;	
 		
@@ -105,6 +128,10 @@ class users_controller extends base_controller {
 		
 		#Dump out the results of POST to see what the form submitted
 		#print_r($_POST);
+		
+		if (strlen($_POST['password']) < 5){
+			die("Please enter a password of 5 or more characters!");
+		}
 		
 		# Encrypt the password	
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
@@ -192,7 +219,7 @@ class users_controller extends base_controller {
 		
 		$this->template->content = View::instance("v_users_logout");
 		
-		$this->user = NULL;
+		$this->template->user = NULL;
 		
 		echo $this->template;
 		
@@ -287,15 +314,14 @@ class users_controller extends base_controller {
 	*/
 	public function subscribe($subscribed_id) {
 	
-		if(!$this->user){
-			Router::redirect("/users/login/");
-			return false;
-		}
+		Auth::bounce(!$this->user);
 		
-		$data = Array("subscriber_id" => $this->user->user_id, "subscribed_id" => $subscribed_id);
+		$data = Array("created" => Time::now(), "subscriber_id" => $this->user->user_id, "subscribed_id" => $subscribed_id);
 		
 		#Create a record in the "subscription" that joins you to the person you want to follow
 		DB::instance(DB_NAME)->insert("subscriptions", $data);
+		
+		Router::redirect("/posts/index");
 		
 	}
 	
