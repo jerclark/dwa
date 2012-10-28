@@ -52,6 +52,19 @@ h1 {
 	font-color:red;
 }
 
+
+.profile_image {
+	width:100px;
+	height:100px;
+	background-position:center;
+	border:4px solid #33AA33;
+	-moz-background-size:120%;
+	-webkit-background-size:120%;
+	-moz-border-radius:52px;
+	-webkit-border-radius:52px;
+}
+
+
 .search_result_wrapper {
 	margin-top:10px;
 }

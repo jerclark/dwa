@@ -10,7 +10,7 @@
 		<?php else: ?>
 			action='/users/p_signup'
 		<?php endif;?>
-	/>
+	 enctype="multipart/form-data"/>
 		
 		<br>
 		<!--helpful to use the same names as the database columns-->
@@ -39,6 +39,12 @@
 		  if(this.checkValidity()) form.email.pattern = this.value;"
 		  <?php if($user): ?> value=<?=$user->email ?><?php endif; ?> >
 		</input>
+		
+		
+		<br><br>
+		Profile Picture
+		<br>
+		<input type='file' name='Filedata'></input>
 		
 				
 		<br><br>

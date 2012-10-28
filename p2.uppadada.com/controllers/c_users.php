@@ -162,6 +162,9 @@ class users_controller extends base_controller {
 		#Insert the posted form into the db
 		$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
 		
+		#save the posted profile image
+		$this->save_profile_image($_FILES, $new_user_id);
+		
 		#Create a "subscription" to yourself
 		$data = Array("created" => Time::now(), "subscriber_id" => $new_user_id, "subscribed_id" => $new_user_id);
 		DB::instance(DB_NAME)->insert("subscriptions", $data);
@@ -189,6 +192,8 @@ class users_controller extends base_controller {
 			die();
 		}
 
+		#process the passed in image
+		$this->save_profile_image($_FILES, $this->user->user_id);
 			
 		#We need to get rid of the password value in the post - we don't want to 'reset' this.
 		unset($_POST['password']);
@@ -203,6 +208,38 @@ class users_controller extends base_controller {
 		Router::redirect("/users/profile");
 			
 	}
+	
+	
+	
+	/**
+ 	* save_profile_image
+	* 
+	* This will process save a profile image when a user signs up or edits their profile
+	*
+	* First, it checks whether image data is attached.
+	* If so, then it saves a cropped copy of the uploaded file as the user's profile image (it also keeps a copy of th originally uploaded file); 
+	* If not, then it creates a random colored checkerboard image as a placeholder.
+	*
+	*/
+	private function save_profile_image($file_data, $user_id){
+		
+		$profile_filename = $user_id."_profile.png";
+		
+		#process the passed in image
+		if ($file_data['Filedata']['size'] > 0) {
+			$raw_filename = $user_id."_original";
+			$img_filename = $this->upload($file_data, "/profile_images/", array("jpg", "jpeg", "gif", "png"), $raw_filename);
+			$img = new Image(APP_PATH."profile_images/".$img_filename);
+			$img->resize(100,100, "crop");
+			$img->save_image(APP_PATH."profile_images/".$profile_filename);
+		}else{
+			$img = new Image(APP_PATH."profile_images/".$profile_filename);
+			if (!$img->exists()){
+				$img->generate_random_image(100, 100, true);
+			}
+		}
+	}
+	
 	
 	
 	
@@ -366,6 +403,29 @@ class users_controller extends base_controller {
 	}
 	
 
+	private function upload($file_obj, $upload_dir, $allowed_files, $new_file_name = NULL) {
+	
+		$original_file_name = $file_obj['Filedata']['name'];
+		$temp_file          = $file_obj['Filedata']['tmp_name'];
+		$upload_dir         = $upload_dir;
+		
+		if($new_file_name == NULL) $new_file_name = $original_file_name;
+		
+		$file_parts  = pathinfo($original_file_name);
+		$target_file = getcwd().$upload_dir . $new_file_name . "." . $file_parts['extension'];
+		
+		# Validate the filetype
+		if (in_array($file_parts['extension'], $allowed_files)) {
+	
+			# Save the file
+				move_uploaded_file($temp_file,$target_file);
+				return $new_file_name . "." . $file_parts['extension'];
+	
+		} else {
+			echo 'Invalid file type.';
+		}
+	
+	}
 	
 	
 	
