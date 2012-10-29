@@ -80,7 +80,7 @@
 			window.location='/users/p_signup'
 		<?php endif;?>
 		"
-		>Cancel</a>
+		>Cancel</button>
 				
 	</form>
 	
