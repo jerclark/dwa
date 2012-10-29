@@ -61,22 +61,30 @@
 		  this.setCustomValidity(this.value!=form.password.pattern ? 'Passwords must match!' : '');
 			this.checkValidity();"/>
 		<br><br>
+		
+		
+		<?php if($user): ?>
+		<button type="button" onclick="form.password.disabled=false;form.password.value='';form.password_confirmation.disabled=false;form.password_confirmation.value='';form.password_changed.value='true'">Change Password</button>
+		<?php endif; ?>
 				
 		
 		<!--This will send the form data to /users/p_signup-->
 		<br><br>
 		<input type='submit'/>
+		
+		<!--redirect to the appropriate controller method based on whether there's a user or not-->
+		<button type="button" onclick=" 
+		<?php if($user): ?>
+			window.location='/users/p_edit_profile'
+		<?php else: ?>
+			window.location='/users/p_signup'
+		<?php endif;?>
+		"
+		>Cancel</a>
 				
 	</form>
 	
-	<!--redirect to the appropriate controller method based on whether there's a user or not-->
-	<a 
-	<?php if($user): ?>
-		href='/users/p_edit_profile'
-	<?php else: ?>
-		href='/users/p_signup'
-	<?php endif;?>
-	>Cancel</a>
+
 	
 
 </div>

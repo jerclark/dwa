@@ -1,5 +1,3 @@
-<h2 style="text-align:center;">Activity Stream</h2>
-
 <div class="content_box">
 	
 	<!--

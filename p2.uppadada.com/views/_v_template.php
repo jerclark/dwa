@@ -31,7 +31,16 @@
 				</span>
 			</div>
 			<div id="masthead"></div>
-			<div id="flash_message"><?=@$flash;?></div>
+			<? if(isset($flash_error)): ?>
+				<div id="flash_error">
+					<?=$flash_error?>
+				</div>
+			<? endif; ?>
+			<? if(isset($flash_msg)): ?>
+				<div id="flash_msg">
+					<?=$flash_msg?>
+				</div>
+			<? endif; ?>
 			<?php if($user): ?>
 				<div id='toolbar_wrapper'>
 					Welcome, <?=$user->first_name?>!</span>

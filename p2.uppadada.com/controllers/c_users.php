@@ -84,9 +84,11 @@ class users_controller extends base_controller {
 		#Search for users
 		
 		$_POST = DB::instance(DB_NAME)->sanitize($_POST);#sanitize the search string post
+	
 		
 		if ( strlen($_POST['search_string']) == 0 ){ #Get all users if search string is empty
-			$q = "SELECT user_id,first_name,last_name from users where (user_id != ".$this->user->user_id.")";
+			$q = "SELECT user_id,first_name,last_name from users ".$where_clause; //where (user_id != ".$this->user->user_id.")";
+			
 		}else{ 	#only find users matching the search string - check agains e-mail, firstname, lastname, firstname+lastname
 			$q = "SELECT user_id,first_name,last_name from users where 
 			(((email LIKE '%".$_POST['search_string']."%') or
@@ -195,8 +197,11 @@ class users_controller extends base_controller {
 		#process the passed in image
 		$this->save_profile_image($_FILES, $this->user->user_id);
 			
-		#We need to get rid of the password value in the post - we don't want to 'reset' this.
-		unset($_POST['password']);
+		if (empty($_POST['password'])){ #We need to get rid of the password value in the post - we don't want to 'reset' this.
+			unset($_POST['password']);
+		}else{ # User is updating the password - Encrypt the password
+			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+		}
 		
 		#Update the mod time
 		$_POST['modified'] = Time::now();		
@@ -276,7 +281,9 @@ class users_controller extends base_controller {
 		
 		//NO TOKEN!
 		if($token == ""){
-			Router::redirect("/users/login/");
+			$this->template->content = View::instance("v_users_login");
+			$this->template->flash_error = "Login Incorrect. Please try again.";
+			echo $this->template;
 		}else{
 			setcookie("token", $token, strtotime('+2 weeks'), '/');
 		}

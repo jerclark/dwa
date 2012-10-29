@@ -1,3 +1,4 @@
+<h2>Recent Activity</h2>
 <? foreach($results as $next_post): ?>
 <div class="content_box">
 	<div class="post_wrapper">

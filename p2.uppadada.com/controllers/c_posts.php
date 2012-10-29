@@ -16,6 +16,10 @@ class posts_controller extends base_controller {
 				
 		Auth::bounce(!$this->user);
 		
+		$_POST['search_string'] = "";
+		$this->p_search();
+		
+		/*
 		#Search for all posts of all people that i'm following
 		$q = "SELECT posts.*,users.first_name,users.last_name FROM posts,users WHERE posts.user_id IN (SELECT subscribed_id FROM subscriptions WHERE subscriber_id=".$this->user->user_id.") AND users.user_id=posts.user_id ORDER BY posts.modified DESC";
 		$posts = DB::instance(DB_NAME)->select_rows($q);
@@ -36,6 +40,7 @@ class posts_controller extends base_controller {
 	
 		#This renders the view
 		echo $this->template;
+		*/
 				
 	}
 	
@@ -75,6 +80,11 @@ class posts_controller extends base_controller {
 			
 		}
 		$posts = DB::instance(DB_NAME)->select_rows($q);
+		
+		#format the mod date for each post
+		foreach($posts as $key => &$next_post){
+			$next_post['modified'] = Time::display($next_post['modified']);
+		}
 		
 		$this->template->content = View::instance("v_posts_index");
 		$this->template->content->search_results = View::instance("v_posts_search_results");

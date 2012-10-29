@@ -48,8 +48,12 @@ h1 {
 	margin:3px;
 }
 
-#flash_message {
-	font-color:red;
+#flash_error {
+	color:red;
+}
+
+#flash_msg {
+	font-color:green;
 }
 
 
@@ -62,6 +66,11 @@ h1 {
 	-webkit-background-size:120%;
 	-moz-border-radius:52px;
 	-webkit-border-radius:52px;
+}
+
+.profile_value{
+	margin-left: 20px;
+	color: #33AA33;
 }
 
 
@@ -125,11 +134,6 @@ h1 {
 	-webkit-text-fill-color: transparent;
 }
 
-
-.profile_value{
-	margin-left: 20px;
-	color: #AA3333;
-}
 
 .navbar_link{
 	margin-left:3px;
