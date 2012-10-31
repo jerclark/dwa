@@ -1,6 +1,5 @@
-<!--THIS SERVES AS THE MASTER TEMPLATE FOR ALL PAGES IN OUR APPLICATION-->
-
 <!DOCTYPE html>
+<!--THIS SERVES AS THE MASTER TEMPLATE FOR ALL PAGES IN OUR APPLICATION-->
 <html>
 <head>
 	<title>Chestnut Tree Cafe - <?=@$title; ?></title>
@@ -20,16 +19,14 @@
 
 </head>
 
-<body onlaod="initPage()">
+<body>
 	
-	<div id="wrapper" style="min-width:600px">
+	<div id="wrapper" style="min-width:665px">
 		
 		<div id="masthead_wrapper">
 			<div style="position:relative;padding-left:10px;">
 				<div id="masthead_image" style="float:left;background-image:url('/images/tree.jpg');"></div>
-				<span id="masthead_text">
-					<h1>Chestnut Tree Cafe</h1>
-				</span>
+				<h1 id="masthead_text">Chestnut Tree Cafe</h1>
 			</div>
 			<div id="masthead"><a href="/index/index"><span id="masthead_link"></span></a></div>
 			<? if(isset($flash_error)): ?>
