@@ -42,7 +42,7 @@
 		
 		
 		<br><br>
-		Profile Picture
+		Profile Picture ( jpg / jpeg / png / gif )
 		<br>
 		<input type='file' name='Filedata'></input>
 		

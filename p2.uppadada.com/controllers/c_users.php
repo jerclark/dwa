@@ -120,7 +120,7 @@ class users_controller extends base_controller {
 	*/
 	public function signup_edit() {
 
-		$this->template->title = "User Signup";
+		$this->template->title = "User Profile";
 	
 		#load the content
 		$this->template->content = View::instance("v_users_signup_edit");
@@ -138,6 +138,8 @@ class users_controller extends base_controller {
 	*
 	*/
 	public function p_signup() {
+		
+		$l_flash_error = NULL;
 		
 		#Dump out the results of POST to see what the form submitted
 		#print_r($_POST);
@@ -165,7 +167,18 @@ class users_controller extends base_controller {
 		$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
 		
 		#save the posted profile image
-		$this->save_profile_image($_FILES, $new_user_id);
+		if ( !$this->save_profile_image($_FILES, $new_user_id) ){
+			$l_flash_error = "Invalid file upload";
+		}
+		
+		if ($l_flash_error != NULL){
+			$this->template->content = View::instance("v_users_signup_edit");
+			$this->template->flash_error = $l_flash_error;
+			echo $this->template;
+			die();
+		}
+		
+		
 		
 		#Create a "subscription" to yourself
 		$data = Array("created" => Time::now(), "subscriber_id" => $new_user_id, "subscribed_id" => $new_user_id);
@@ -195,7 +208,11 @@ class users_controller extends base_controller {
 		}
 
 		#process the passed in image
-		$this->save_profile_image($_FILES, $this->user->user_id);
+		if (!$this->save_profile_image($_FILES, $this->user->user_id)){
+			$this->template->content = View::instance("v_users_signup_edit");
+			$this->template->flash_error = "Invalid file upload";
+			echo $this->template;
+		}
 			
 		if (empty($_POST['password'])){ #We need to get rid of the password value in the post - we don't want to 'reset' this.
 			unset($_POST['password']);
@@ -234,6 +251,9 @@ class users_controller extends base_controller {
 		if ($file_data['Filedata']['size'] > 0) {
 			$raw_filename = $user_id."_original";
 			$img_filename = $this->upload($file_data, "/profile_images/", array("jpg", "jpeg", "gif", "png"), $raw_filename);
+			if (!$img_filename){
+				return false;
+			}
 			$img = new Image(APP_PATH."profile_images/".$img_filename);
 			$img->resize(100,100, "crop");
 			$img->save_image(APP_PATH."profile_images/".$profile_filename);
@@ -243,6 +263,7 @@ class users_controller extends base_controller {
 				$img->generate_random_image(100, 100, true);
 			}
 		}
+		return true;
 	}
 	
 	
@@ -429,7 +450,7 @@ class users_controller extends base_controller {
 				return $new_file_name . "." . $file_parts['extension'];
 	
 		} else {
-			echo 'Invalid file type.';
+			return false; //'Invalid file type.';
 		}
 	
 	}

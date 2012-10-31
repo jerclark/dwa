@@ -24,13 +24,14 @@
 	
 	<div id="wrapper" style="min-width:600px">
 		
-		<div id="masthead_wrapper" onclick="window.location='/index/index'">
+		<div id="masthead_wrapper">
 			<div style="position:relative;padding-left:10px;">
+				<div id="masthead_image" style="float:left;background-image:url('/images/tree.jpg');"></div>
 				<span id="masthead_text">
-					<h1><a href="/index/index">Chestnut Tree Cafe</a></h1>
+					<h1>Chestnut Tree Cafe</h1>
 				</span>
 			</div>
-			<div id="masthead"></div>
+			<div id="masthead"><a href="/index/index"><span id="masthead_link"></span></a></div>
 			<? if(isset($flash_error)): ?>
 				<div id="flash_error">
 					<?=$flash_error?>

@@ -18,8 +18,7 @@
 		<!--This will clear the search, and submit the form again /users/p_signup-->
 		<input onclick="form.search_string.value=''" type="submit" value="Show All"/>
 		
-		<!--This will clear the search, and submit the form again /users/p_signup-->
-		<input type="checkbox" name="restrict_to_friends" value="true" onclick=""/><span style="font-size:80%;">Restrict to my friends</span><br>
+		<!--input type="checkbox" name="restrict_to_friends" value="true" onclick=""/><span style="font-size:80%;">Restrict to my friends</span><br-->
 
 				
 	</form>
