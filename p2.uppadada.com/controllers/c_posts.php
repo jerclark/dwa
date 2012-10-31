@@ -59,12 +59,13 @@ class posts_controller extends base_controller {
 		}
 			
 		
-		#Search for posts
+		#Search for posts among those that I'm following
 		
 		$_POST = DB::instance(DB_NAME)->sanitize($_POST); #sanitize the search string post
 		
 		if ( strlen($_POST['search_string']) == 0 ){ #Get all posts if search string is empty
 			
+			#Query to find all post from the people I'm following, displaying newest on top.
 			$q = "SELECT posts.*,users.first_name,users.last_name FROM posts,users WHERE posts.user_id IN (SELECT subscribed_id FROM subscriptions WHERE subscriber_id=".$this->user->user_id.") AND users.user_id=posts.user_id ORDER BY posts.modified DESC";
 		
 		}else{ 	#only find posts matching the search string - check agains e-mail, firstname, lastname, firstname+lastname

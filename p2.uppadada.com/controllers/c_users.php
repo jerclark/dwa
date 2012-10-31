@@ -141,18 +141,26 @@ class users_controller extends base_controller {
 		
 		$l_flash_error = NULL;
 		
-		#Dump out the results of POST to see what the form submitted
-		#print_r($_POST);
-		
 		if (count($_POST) == 0){ #This means we canceled, or a form with nothing in it got posted
 			Router::redirect("/index/index");
 			die();
 		}
 		
-		if ( (!$this->user) && (strlen($_POST['password']) < 5) ){ #extra bullet proofing. This condition should never be met because of the client-side form validtion 
+		#extra bullet proofing. This condition should never be met because of the client-side form validtion
+		if ( (!$this->user) && (strlen($_POST['password']) < 5) ){  
 			die("Please enter a password of 5 or more characters!");
 		}
-
+		
+		
+		#Validate uniqueness of the e-mail address
+		$db = DB::instance(DB_NAME);
+		DB::instance(DB_NAME)->sanitize($_POST);
+		$q = "SELECT email FROM users WHERE (email='".$_POST['email']."')";
+		$r = $db->select_rows($q);
+		if (count($r) > 0){
+			$l_flash_error = "E-mail address already taken!";
+		}
+		
 		# Encrypt the password
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 
@@ -162,15 +170,13 @@ class users_controller extends base_controller {
 
 		# Add/encrypt the token	
 		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
-					
-		#Insert the posted form into the db
-		$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
 		
 		#save the posted profile image
 		if ( !$this->save_profile_image($_FILES, $new_user_id) ){
 			$l_flash_error = "Invalid file upload";
 		}
-		
+
+		#if we have an error message, let's post it and die!
 		if ($l_flash_error != NULL){
 			$this->template->content = View::instance("v_users_signup_edit");
 			$this->template->flash_error = $l_flash_error;
@@ -178,8 +184,10 @@ class users_controller extends base_controller {
 			die();
 		}
 		
+		#Insert the posted form into the db
+		$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
 		
-		
+
 		#Create a "subscription" to yourself
 		$data = Array("created" => Time::now(), "subscriber_id" => $new_user_id, "subscribed_id" => $new_user_id);
 		DB::instance(DB_NAME)->insert("subscriptions", $data);
