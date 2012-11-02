@@ -171,7 +171,7 @@ class users_controller extends base_controller {
 		# Add/encrypt the token	
 		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 		
-		#save the posted profile image
+		#Insert the posted form into the db
 		if ( !$this->save_profile_image($_FILES, $new_user_id) ){
 			$l_flash_error = "Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K";
 		}
