@@ -20,6 +20,8 @@
 		<!--This will send the form data to /users/p_signup-->
 		<input type='submit'/>
 		
+		<h4>First time here?&nbsp;<a href="/users/signup_edit">Click here to join!</a></h4>
+		
 	</form>
 
 </div>
