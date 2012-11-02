@@ -17,5 +17,9 @@
 	</ul>
 	<a href="/users/login"><h3>Click Here to login</h3></a>
 	<h4>First time here?&nbsp;<a href="/users/signup_edit">Click here to join!</a></h4>
+	
+	<div style="font-style:italic;">
+		(Note: This site works best with webkit based browsers, will work with IE 9, and looks like crud (but will work!) with IE7)
+	</div>
 
 </div>

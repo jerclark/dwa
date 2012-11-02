@@ -67,6 +67,8 @@ h1 {
 	-webkit-background-size:120%;
 	-moz-border-radius:52px;
 	-webkit-border-radius:52px;
+	background-size:120%;
+	border-radius:52px;
 	margin-right:10px;
 	margin-top:6px;
 }
@@ -94,6 +96,8 @@ h1 {
 	-webkit-background-size:120%;
 	-moz-border-radius:52px;
 	-webkit-border-radius:52px;
+	background-size:120%;
+	border-radius:52px;
 	margin-right:10px;
 }
 
