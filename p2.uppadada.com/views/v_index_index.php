@@ -5,6 +5,7 @@
 	The Chestnut Tree Cafe is a simple microblog. You can:
 	<ul>
 	<li>Sign up for an account</li>
+	<li>Create blog posts for the world to see</li>
 	<li>View a list of other users</li>
 	<li>Follow other user's posts</li>
 	<li>Unfollow somebody you're following</li>
