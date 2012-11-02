@@ -16,7 +16,7 @@ class users_controller extends base_controller {
 	/**
  	* List the users
 	* 
-	* This will list all the users that the current user is following.
+	* This will redirect to the user index/search page.
 	* 
 	*/
 	public function index() {
@@ -173,7 +173,7 @@ class users_controller extends base_controller {
 		
 		#save the posted profile image
 		if ( !$this->save_profile_image($_FILES, $new_user_id) ){
-			$l_flash_error = "Invalid file upload";
+			$l_flash_error = "Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K";
 		}
 
 		#if we have an error message, let's post it and die!
@@ -217,8 +217,8 @@ class users_controller extends base_controller {
 
 		#process the passed in image
 		if (!$this->save_profile_image($_FILES, $this->user->user_id)){
+			$this->template->flash_error = "Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K";
 			$this->template->content = View::instance("v_users_signup_edit");
-			$this->template->flash_error = "Invalid file upload";
 			echo $this->template;
 		}
 			
@@ -254,9 +254,11 @@ class users_controller extends base_controller {
 	private function save_profile_image($file_data, $user_id){
 		
 		$profile_filename = $user_id."_profile.png";
-		
+
 		#process the passed in image
-		if ($file_data['Filedata']['size'] > 0) {
+		if ($file_data['Filedata']['size'] > 500000) { //Must be less than equal to 500K
+			return false;
+		} else if ($file_data['Filedata']['size'] > 0 && $file_data['Filedata']['size'] <= 500000 ) {
 			$raw_filename = $user_id."_original";
 			$img_filename = $this->upload($file_data, "/profile_images/", array("jpg", "jpeg", "gif", "png"), $raw_filename);
 			if (!$img_filename){

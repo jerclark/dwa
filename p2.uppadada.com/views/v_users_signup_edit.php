@@ -49,7 +49,7 @@
 		
 		
 		<!--Profile Pic-->
-		Profile Picture ( jpg / jpeg / png / gif )
+		Profile Picture ( jpg / jpeg / png / gif - 500K max)
 		<br>
 		<input type='file' name='Filedata'></input>		
 		<br><br>
