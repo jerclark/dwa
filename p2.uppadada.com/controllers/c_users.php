@@ -172,8 +172,12 @@ class users_controller extends base_controller {
 		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 		
 		#Insert the posted form into the db
+		$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
+		
+		#save the posted profile image. If it fails, roll back the record just created, and display a flash message
 		if ( !$this->save_profile_image($_FILES, $new_user_id) ){
-			$l_flash_error = "Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K";
+			DB::instance(DB_NAME)->delete("users", "WHERE user_id='".$new_user_id."'");
+			$l_flash_error = "Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K. NOTE: A profile image is NOT REQUIRED.";
 		}
 
 		#if we have an error message, let's post it and die!
@@ -183,9 +187,6 @@ class users_controller extends base_controller {
 			echo $this->template;
 			die();
 		}
-		
-		#Insert the posted form into the db
-		$new_user_id = DB::instance(DB_NAME)->insert('users',$_POST);
 		
 
 		#Create a "subscription" to yourself
@@ -238,6 +239,7 @@ class users_controller extends base_controller {
 		Router::redirect("/users/profile");
 			
 	}
+	
 	
 	
 	
@@ -441,6 +443,15 @@ class users_controller extends base_controller {
 	}
 	
 
+
+	/**
+ 	* Upload a profile image file
+	* 
+	* @file_obj - the file object to upload
+	* @upload_dir - the destination folder
+	* @allowed_files - the valid extensions
+	* @new_file_name (optional) - the target file name
+	*/
 	private function upload($file_obj, $upload_dir, $allowed_files, $new_file_name = NULL) {
 	
 		$original_file_name = $file_obj['Filedata']['name'];
