@@ -159,13 +159,12 @@ class users_controller extends base_controller {
 				
 		
 		#extra bullet proofing. This condition should never be met because of the client-side form validtion
-		if ( (!$this->user) && (strlen($_POST['password']) < 5) ){  
+		if ( strlen($_POST['password']) < 5 ){  
 			$this->display_edit_profile_error("Please enter a password of 5 or more characters!");
 		}
-		
-		
+				
 		#validate that the passwords match
-		if ( !strcmp($_POST['password'],$_POST['password_confirmation']) ){
+		if ( !(strcmp($_POST['password'],$_POST['password_confirmation']) == 0) ){
 			$this->display_edit_profile_error("Passwords must match!");
 		}
 		
@@ -179,6 +178,8 @@ class users_controller extends base_controller {
 			$this->display_edit_profile_error("E-mail address already taken!");
 		}
 		
+		#if we get here, the passwords match, so let's unset password_confirmation		
+		unset($_POST['password_confirmation']);
 		
 		# Encrypt the password
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
@@ -247,6 +248,7 @@ class users_controller extends base_controller {
 			
 		if (empty($_POST['password'])){ #We need to get rid of the password value in the post - we don't want to 'reset' this.
 			unset($_POST['password']);
+
 		}else{ # User is updating the password - Encrypt the password
 			
 			#Make sure the password has more than 5 charcters
@@ -255,12 +257,15 @@ class users_controller extends base_controller {
 			}
 
 			#validate that the passwords match
-			if ( !strcmp($_POST['password'],$_POST['password_confirmation']) ){
+			if ( !(strcmp($_POST['password'],$_POST['password_confirmation']) == 0) ){
 				$this->display_edit_profile_error("Passwords must match!");
 			}
 			
 			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 		}
+		
+		#We always want to scrub the password_confirmation
+		unset($_POST['password_confirmation']);
 		
 		#Update the mod time
 		$_POST['modified'] = Time::now();		

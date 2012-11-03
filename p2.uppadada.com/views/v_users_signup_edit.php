@@ -16,7 +16,7 @@
 		
 		<!--helpful to use the same names as the database columns-->
 		<!--First Name-->
-		First Name
+		First Name<span style="color:red;">*</span>
 		<br>
 		<input type='text' required pattern="\w+" name='first_name' 
 		<?php if($user): ?>
@@ -29,7 +29,7 @@
 		<!--Last Name-->
 		Last Name
 		<br>
-		<input type='text' required pattern="\w+" name='last_name'
+		<input type='text' name='last_name'
 		<?php if($user): ?>
 			value=<?=$user->last_name ?>
 		<?php endif; ?>>
@@ -38,7 +38,7 @@
 		
 		
 		<!--E-mail-->
-		Email
+		Email<span style="color:red;">*</span>
 		<br>
 		<input type='text' required pattern="\w+@\w+\.\w{2,3}" name='email' 
 			onchange="
@@ -57,7 +57,7 @@
 		
 		
 		<!--Password-->
-		Password
+		Password<span style="color:red;">*</span>
 		<br>
 		<input id='password' type='password' name='password' required pattern="\w{5,}" <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> 					
 			onchange="
@@ -68,9 +68,9 @@
 		
 		
 		<!--Password Confirmation-->
-		Password Confirmation
+		Password Confirmation<span style="color:red;">*</span>
 		<br>
-		<input id='password_confirmation' type='password' required <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> 
+		<input id='password_confirmation' type='password' name='password_confirmation' required <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> 
 			onchange="
 		  		this.setCustomValidity(this.value!=form.password.pattern ? 'Passwords must match!' : '');
 				this.checkValidity();"/>
@@ -90,6 +90,7 @@
 		</button>
 		<?php endif; ?>
 				
+		Items marked with <span style="color:red;">*</span> are required.
 		
 		<!--This will send the form data to /users/p_signup-->
 		<br><br>
