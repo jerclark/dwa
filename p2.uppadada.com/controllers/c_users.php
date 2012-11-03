@@ -146,9 +146,27 @@ class users_controller extends base_controller {
 			die();
 		}
 		
+		#Validate a first name value exists
+		if (strlen($_POST['first_name'] == 0) ){  
+			display_edit_profile_error("Please Enter a First Name.");
+		}
+		
+		
+		#Validate the e-mail address exists, and is an e-mail address
+		if (strlen($_POST['email'] == 0) ){  
+			display_edit_profile_error("Please Enter a valid e-mail.");
+		}
+				
+		
 		#extra bullet proofing. This condition should never be met because of the client-side form validtion
 		if ( (!$this->user) && (strlen($_POST['password']) < 5) ){  
-			die("Please enter a password of 5 or more characters!");
+			display_edit_profile_error("Please enter a password of 5 or more characters!");
+		}
+		
+		
+		#validate that the passwords match
+		if ($_POST['password'] != $_POST['password_confirmation']){
+			display_edit_profile_error("Passwords must match!");
 		}
 		
 		
@@ -158,8 +176,9 @@ class users_controller extends base_controller {
 		$q = "SELECT email FROM users WHERE (email='".$_POST['email']."')";
 		$r = $db->select_rows($q);
 		if (count($r) > 0){
-			$l_flash_error = "E-mail address already taken!";
+			display_edit_profile_error("E-mail address already taken!");
 		}
+		
 		
 		# Encrypt the password
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
@@ -181,12 +200,12 @@ class users_controller extends base_controller {
 		}
 
 		#if we have an error message, let's post it and die!
-		if ($l_flash_error != NULL){
+		/*if ($l_flash_error != NULL){
 			$this->template->content = View::instance("v_users_signup_edit");
 			$this->template->flash_error = $l_flash_error;
 			echo $this->template;
 			die();
-		}
+		}*/
 		
 
 		#Create a "subscription" to yourself
@@ -215,17 +234,31 @@ class users_controller extends base_controller {
 			Router::redirect("/users/profile");
 			die();
 		}
+		
+		#Validate a first name value exists
+		if (strlen($_POST['first_name'] == 0) ){  
+			display_edit_profile_error("Please Enter a First Name.");
+		}
 
 		#process the passed in image
 		if (!$this->save_profile_image($_FILES, $this->user->user_id)){
-			$this->template->flash_error = "Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K";
-			$this->template->content = View::instance("v_users_signup_edit");
-			echo $this->template;
+			display_edit_profile_error("Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K");
 		}
 			
 		if (empty($_POST['password'])){ #We need to get rid of the password value in the post - we don't want to 'reset' this.
 			unset($_POST['password']);
 		}else{ # User is updating the password - Encrypt the password
+			
+			#Make sure the password has more than 5 charcters
+			if (strlen($_POST['password']) < 5){  
+				display_edit_profile_error("Please enter a password of 5 or more characters!");
+			}
+
+			#validate that the passwords match
+			if ($_POST['password'] != $_POST['password_confirmation']){
+				display_edit_profile_error("Passwords must match!");
+			}
+			
 			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 		}
 		
@@ -240,6 +273,13 @@ class users_controller extends base_controller {
 			
 	}
 	
+	
+	private function display_edit_profile_error($flash_error){
+		$this->template->content = View::instance("v_users_signup_edit");
+		$this->template->flash_error = $flash_error;
+		echo $this->template;
+		die();
+	}
 	
 	
 	

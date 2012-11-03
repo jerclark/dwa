@@ -40,9 +40,10 @@
 		<!--E-mail-->
 		Email
 		<br>
-		<input type='text' required pattern="\w+@\w+\.\w{2,3}" name='email' onchange="
-		  this.setCustomValidity(this.validity.patternMismatch ? 'Please enter an e-mail address' : '');
-		  if(this.checkValidity()) form.email.pattern = this.value;"
+		<input type='text' required pattern="\w+@\w+\.\w{2,3}" name='email' 
+			onchange="
+		  		this.setCustomValidity(this.validity.patternMismatch ? 'Please enter an e-mail address' : '');
+		  		if(this.checkValidity()) form.email.pattern = this.value;"
 		  <?php if($user): ?> value=<?=$user->email ?> disabled='true'<?php endif; ?> >
 		</input>
 		<br><br>
@@ -58,24 +59,35 @@
 		<!--Password-->
 		Password
 		<br>
-		<input id='password' type='password' name='password' required pattern="\w{5,}" <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> onchange="
-		  this.setCustomValidity(this.validity.patternMismatch ? 'Please enter a password of 5 or more characters' : '');
-		  if(this.checkValidity()) form.password.pattern = this.value;"/>
+		<input id='password' type='password' name='password' required pattern="\w{5,}" <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> 					
+			onchange="
+		  		this.setCustomValidity(this.validity.patternMismatch ? 'Please enter a password of 5 or more characters' : '');
+		  		if(this.checkValidity()) form.password.pattern = this.value;
+		"/>
 		<br><br>
 		
 		
 		<!--Password Confirmation-->
 		Password Confirmation
 		<br>
-		<input id='password_confirmation' type='password' required <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> onchange="
-		  this.setCustomValidity(this.value!=form.password.pattern ? 'Passwords must match!' : '');
-			this.checkValidity();"/>
+		<input id='password_confirmation' type='password' required <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> 
+			onchange="
+		  		this.setCustomValidity(this.value!=form.password.pattern ? 'Passwords must match!' : '');
+				this.checkValidity();"/>
 		<br><br>
 		
 		
 		<!--Change Password Button-->
 		<?php if($user): ?>
-		<button type="button" onclick="form.password.disabled=false;form.password.value='';form.password_confirmation.disabled=false;form.password_confirmation.value='';form.password_changed.value='true'">Change Password</button>
+		<button type="button" 
+			onclick=
+				"form.password.disabled=false;form.password.value='';
+				form.password_confirmation.disabled=false;
+				form.password_confirmation.value='';
+				form.password_changed.value='true'"
+		>
+		Change Password
+		</button>
 		<?php endif; ?>
 				
 		

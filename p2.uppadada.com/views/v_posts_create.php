@@ -16,6 +16,8 @@
 		<!--This will send the form data to /users/p_signup-->
 		<input type='submit'/>
 		
+		<button type="button" onclick="window.location='/posts/index'">Cancel</button>
+		
 	</form>
 
 </div>
