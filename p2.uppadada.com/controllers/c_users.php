@@ -200,21 +200,15 @@ class users_controller extends base_controller {
 			$l_flash_error = "Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K. NOTE: A profile image is NOT REQUIRED.";
 		}
 
-		#if we have an error message, let's post it and die!
-		/*if ($l_flash_error != NULL){
-			$this->template->content = View::instance("v_users_signup_edit");
-			$this->template->flash_error = $l_flash_error;
-			echo $this->template;
-			die();
-		}*/
-		
-
 		#Create a "subscription" to yourself
 		$data = Array("created" => Time::now(), "subscriber_id" => $new_user_id, "subscribed_id" => $new_user_id);
 		DB::instance(DB_NAME)->insert("subscriptions", $data);
 	
 		#Reply with success
-		Router::redirect("/users/login");
+		$this->template->content = View::instance("v_users_login");
+		$this->template->flash_msg = "Account created succesfully. Please login.";
+		echo $this->template;
+		die();
 
 	}
 	
