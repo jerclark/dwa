@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<script type="text/javascript" src="p3.js"></script> 
+		<meta charset="utf-8">
+		<title>
+			P3 Proposal - Dynamic Web Applications
+		</title>
+		<link type="text/css" rel="stylesheet" href="../dwa.css">
+		<link type="text/css" rel="stylesheet" href="p3.css">
+	</head>
+	<body>
+		<div id="wrapper">
+			<div class="content_box">
+				<span id="masthead_text">
+					<h1>Matrix Master</h1>
+				</span>
+			</div>
+			<div id="content_wrapper">
+					<div class="content_box">
+						<h2>Abstract</h2>
+						Matrix Master&trade; is intended to be a software testing utility, although it is applicable to many other workflows. If you have ever found yourself trying to test a method, function, algorithm, etc., only to realize 15 iterations into it that the possible combinations of input are vast (if not infinte), then Matrix Master may be of some help to you. Literally speaking, it takes a a list of parameters, each with an associated list of possible values, and creates a dynamic grid (the 'Matrix') of possible outcomes. The grid allows you to associate results with each possible outcome. 
+						<p>Matrix Master assumes the following thesis:
+						<pre>A testcase is a repeatable set of steps with a fixed set of possible parameters,<br>each with a variable (and potentially infinte) number of possible values.</pre>
+						<p>
+						You may not agree with this definition of a testcase, but Matrix Master is modeled on this idea. If you absolutely cannot frame testcases in this way, Matrix Master may not be for you.
+					</div>
+					<div class="content_box">
+						<h2>Simple Example/Use Case</h2>
+					Let's say you have a function that takes 2 parameters: A string and a boolean. Looked at one way, we have "two" different possible inputs:<br>
+					<ul>
+						<li>Some string + TRUE</li>
+						<li>Some string + FALSE</li>
+					</ul>
+					But if you think about the possible number of strings that can be passed in (a 10 character string made up of only lowercase letters has 26^10 possible combinations - which is 141,167,100,000,000), then testing each possible input seems pretty daunting. If you multiply that by the factor of possible booleans (2) passed in with the string, you end up with double that number. Most likely, however, testing each possible string isn't a requirement. To organize things, one approach is to devise categories of values to test, perhaps:
+					<ul>
+						<li>Strings with less than 10 characters</li>
+					    <li>Strings with a capital letter</li>
+						<li>An integer value wrapped in a string</li>
+					</ul>
+					In this simple example, what you can do is take each "category" of string value, and turn it into a "boolean" input, and create a testing matrix from the combinations of those booleans:
+					<ul>
+						<li><i>String Length &lt; 10</i>  +  <i>Contains Capital</i>  +  <i>String is integer</i>  +  <i>Original Boolean</i></li>
+					</ul>
+					Now we end up with a 2&#8308; matrix (16 possible combinations), which is a little more manageable.
+					<br><br>
+					If you can break down your testcases this way, Matrix Master may be of some help.
+					</div>
+				<div class="content_box">
+					<h2>Usage/UI</h2>
+					<h3>UI Overview</h3>
+					The UI will be based on a Native OS X version of the application that I created many years. I want to take this opportunity to port the main functionality to a web-based application, and also to refine some of the implementations in the OS X version. Here's a screen grab of the OS X Version:
+					<img src="images/mm_osx.png" width="800px" height="500px"/>
+					The main UI will consist of the following primary elements:
+					<ul>
+						<li>A list of Testcases, with Add/Remove buttons</li>
+						<li>A list of Parameters, which will be related to the selected Testcase.</li>
+						<li>A list of Values, which will be related to the selected Parameter</li>
+						<li>A "Matrix" of all plotted combinations</li>
+					</ul>
+					<img src="images/overview.jpg"/>
+					
+					<h3>Testcases</h3>
+					A 1 column table view that will add hold a list testcase names. You can add and remove testcases.
+					<img src="images/testcases_close.jpg"/>
+					
+					<h3>Parameters</h3>
+					A 3 column table view that will hold parameters associated with a testcase. To manager parameters, selecte a testcase from the Testcase list.
+					The columns in the parameter table:
+					<ul>
+						<li>Name - the name of the paramter</li>
+						<li>Plot (not shown) - a checkbox to decide whether to plot the paramter in the Matrix</li>
+						<li>Axis - The axis (x/y) on which to plot the parameter</li>
+					</ul>
+					Note: any modifcations to the the values in this table will automatically "re-plot" the matrix.
+					<img src="images/parameters_close.jpg"/>
+					
+					<h3>Values</h3>
+					A 2 column table view that will hold values associated with a parameter. To manage values, select a parameter from the Parameter list.
+					The columns in the value table:
+					<ul>
+						<li>Name - the name of the value</li>
+						<li>Plot (not shown) - a checkbox to decide whether to plot the paramter in the Matrix</li>
+					</ul>
+					Note: any modifcations to the the values in this table will automatically "re-plot" the matrix.
+					<img src="images/values_close.jpg"/>
+					
+					
+					<h3>The Matrix</h3>
+					A dynamic grid that will display a "cell" for each plotted testcase combination. Each cell will have a descriptive label (likey a number or a short text description). The grid will have two modes of use, RESULTS mode (which allows you to log and view testing results easily) and EDIT mode (which allows you to edit details about each cell):
+					<h4>RESULTS Mode</h4>
+					<ul>
+						<li>Clicking the cell will toggle between three statues, indicated by color: PASS (Green), FAIL (Red), UNTESTED (Gray)</li>
+					</ul>
+					<h4>EDIT Mode</h4>
+					<ul>
+						<li>Clicking on single cell will select that cell.</li>
+						<li>Right-Clicking on a cell will display a menu to "Select Row" or "Select Column". Choosing one will "Select" the given row or column.</li>
+						<li>There will be a checkbox next to the grid to "intersect selections", so that row/column selection results will be the "intersection" of the selected rows and columns. This will allow for selection control over large areas of testcases.</li>
+						<li>Right-Clicking on cell will display an option to "Edit Selected Cells", which will display a form to update the Description and Expected Result of all selected cells</li>
+						<li>Option-Clicking on a selected cell will remove that cell from the selection</li>
+					</ul>
+					<h3>In EITHER mode, hovering over the cell will display a help/heads-up style display with the Parameter Values, Description and Expected Result of that cell</h3>
+					<img src="images/grid_close.jpg"/>
+					
+					<h3>Usage</h3>
+					Once a Matrix is plotted, the basic idea is to perform the associated testcases, and log the result. As you log results, the high level ratio of Red to Green can be useful in getting a feel for how well testing is going.
+										
+					
+				</div>
+				
+				<div class="content_box">
+					<h2>Other Inspiration</h2>
+					As stated earlier, this will largely be a port of a similiar application I worked on for the Mac OS, albeit a subset of the features in that application. I'm not really familiar with any applications that do exactly the same thing (although I'm sure there are some!), so it's not really modeled after anything specfically. In general, it's probably most inspired by an application like MS Excel, which is a super-hyped up grid - this is an attempt to do something very specialized in a similar grid-like environment. One thing I do want to emulate is a cool flipping animation as results are logged, similar to something I've seen in a game called Animatch that my daughter plays:<br>
+					<a href='https://itunes.apple.com/us/app/animatch-animal-pairs-sounds/id293548481?mt=8'>Animatch</a> 
+				</div>
+				
+			</div>
+		</div>
+	
+	</body>
+</html>
+
+
