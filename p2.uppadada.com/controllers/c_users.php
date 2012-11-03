@@ -147,26 +147,26 @@ class users_controller extends base_controller {
 		}
 		
 		#Validate a first name value exists
-		if (strlen($_POST['first_name'] == 0) ){  
-			display_edit_profile_error("Please Enter a First Name.");
+		if ( strlen($_POST['first_name']) == 0 ){  
+			$this->display_edit_profile_error("Please Enter a First Name.");
 		}
 		
 		
 		#Validate the e-mail address exists, and is an e-mail address
-		if (strlen($_POST['email'] == 0) ){  
-			display_edit_profile_error("Please Enter a valid e-mail.");
+		if ( strlen($_POST['email']) == 0 ){  
+			$this->display_edit_profile_error("Please Enter a valid e-mail.");
 		}
 				
 		
 		#extra bullet proofing. This condition should never be met because of the client-side form validtion
 		if ( (!$this->user) && (strlen($_POST['password']) < 5) ){  
-			display_edit_profile_error("Please enter a password of 5 or more characters!");
+			$this->display_edit_profile_error("Please enter a password of 5 or more characters!");
 		}
 		
 		
 		#validate that the passwords match
-		if ($_POST['password'] != $_POST['password_confirmation']){
-			display_edit_profile_error("Passwords must match!");
+		if ( !strcmp($_POST['password'],$_POST['password_confirmation']) ){
+			$this->display_edit_profile_error("Passwords must match!");
 		}
 		
 		
@@ -176,7 +176,7 @@ class users_controller extends base_controller {
 		$q = "SELECT email FROM users WHERE (email='".$_POST['email']."')";
 		$r = $db->select_rows($q);
 		if (count($r) > 0){
-			display_edit_profile_error("E-mail address already taken!");
+			$this->display_edit_profile_error("E-mail address already taken!");
 		}
 		
 		
@@ -236,13 +236,13 @@ class users_controller extends base_controller {
 		}
 		
 		#Validate a first name value exists
-		if (strlen($_POST['first_name'] == 0) ){  
-			display_edit_profile_error("Please Enter a First Name.");
+		if ( strlen($_POST['first_name']) == 0 ){  
+			$this->display_edit_profile_error("Please Enter a First Name.");
 		}
 
 		#process the passed in image
 		if (!$this->save_profile_image($_FILES, $this->user->user_id)){
-			display_edit_profile_error("Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K");
+			$this->display_edit_profile_error("Invalid file upload. Please upload a JPG, JPEG, GIF, or PNG file no bigger than 500K");
 		}
 			
 		if (empty($_POST['password'])){ #We need to get rid of the password value in the post - we don't want to 'reset' this.
@@ -251,12 +251,12 @@ class users_controller extends base_controller {
 			
 			#Make sure the password has more than 5 charcters
 			if (strlen($_POST['password']) < 5){  
-				display_edit_profile_error("Please enter a password of 5 or more characters!");
+				$this->display_edit_profile_error("Please enter a password of 5 or more characters!");
 			}
 
 			#validate that the passwords match
-			if ($_POST['password'] != $_POST['password_confirmation']){
-				display_edit_profile_error("Passwords must match!");
+			if ( !strcmp($_POST['password'],$_POST['password_confirmation']) ){
+				$this->display_edit_profile_error("Passwords must match!");
 			}
 			
 			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
