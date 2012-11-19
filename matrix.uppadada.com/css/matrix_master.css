@@ -1,0 +1,225 @@
+
+body { 
+	font-size: meduium; 
+	font-family: sans-serif;
+}
+
+
+#masthead {
+	position: relative;
+	border: 3px solid #999;
+	border-radius: 15px;
+	background-color: #AAAAAA;
+	color: #000000;
+	padding-left: 10px;
+	height:75px;
+}
+
+
+
+h1 {
+	font-size: 250%;
+	line-height: 20px;
+	letter-spacing: 10px;
+}
+
+#wrapper{
+	margin: 0px auto;
+	width: 75%;
+}
+
+#masthead {
+	/*background-image: url("lego_coat_hanger.JPG");*/
+	background-position: 0% 40%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	opacity: 0.3;
+}
+
+#masthead_text {
+	position:absolute;
+	color:#66AA66;
+	margin-left:78px;
+	/*background:-webkit-gradient(linear, left top, right top, from(rgba(90,90,90,0.0)), to(rgba(90,90,90,0.0)), color-stop(.5,#33AA33));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;*/
+}
+
+
+#masthead_link {
+	position:absolute; 
+  	width:100%;
+  	height:100%;
+  	top:0;
+  	left: 0;
+  	z-index: 1;
+  	/*background-image: url('/images/empty.gif');*/
+}
+
+
+
+#masthead_image {
+	width:60px;
+	height:60px;
+	background-position:center;
+	border:4px solid #33AA33;
+	-moz-background-size:120%;
+	-webkit-background-size:120%;
+	-moz-border-radius:52px;
+	-webkit-border-radius:52px;
+	background-size:120%;
+	border-radius:52px;
+	margin-right:10px;
+	margin-top:6px;
+}
+
+
+#toolbar_wrapper {
+	margin:3px;
+}
+
+#flash_error {
+	color:red;
+}
+
+#flash_msg {
+	font-color:green;
+}
+
+
+
+
+.mm_table_wrapper{
+	width:300px;
+	padding:15px;
+	height:250px;
+	float:left;
+}
+
+.mm_table_wrapper_wide{
+	width:400px;
+	height:250px;
+	float:left;
+}
+
+#mm_testcase_table_wrapper{
+	/*margin-left:auto;
+	margin-right:auto;*/
+}
+
+
+#mm_parameter_table_wrapper{
+	/*margin-right:auto;*/
+}
+
+
+#mm_value_table_wrapper{	
+	/*margin-left:auto;*/
+}
+
+
+
+.mm_matrix_wrapper{
+	margin-top:15px;
+	background-color:#EEEEEE;
+	padding:20px;
+	/*border:3px solid indigo;*/
+	clear:both;
+	border-radius: 30px;
+}
+
+.mm_matrix_cell{
+	border: 2px solid gray;
+	float:left;
+	width: 10%;
+	height: 50px;
+	border-radius: 15px;
+	text-align: center;
+	margin-left:5px;
+	background-color:#AAAAAA;
+}
+
+
+.mm_matrix_cell[resultState='pass']{
+	background-color:#33EE33;
+}
+
+.mm_matrix_cell[resultState='fail']{
+	background-color:#EE3333;
+}
+
+
+
+.mm_matrix_row{
+	clear:both;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+
+
+/*TOOLTIP STUFF FROM JQUERY UI.COM*/
+.ui-tooltip, .arrow:after {
+    background: black;
+    border: 2px solid white;
+}
+.ui-tooltip {
+    padding: 10px 20px;
+    color: white;
+    border-radius: 20px;
+    font: bold 14px "Helvetica Neue", Sans-Serif;
+    text-transform: uppercase;
+    box-shadow: 0 0 7px black;
+}
+.arrow {
+    width: 70px;
+    height: 16px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
+    bottom: -16px;
+}
+.arrow.top {
+    top: -16px;
+    bottom: auto;
+}
+.arrow.left {
+    left: 20%;
+}
+.arrow:after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -20px;
+    width: 25px;
+    height: 25px;
+    box-shadow: 6px 5px 9px -9px black;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    tranform: rotate(45deg);
+}
+.arrow.top:after {
+    bottom: -20px;
+    top: auto;
+}
+
+
+
+.content_box {
+	margin-top: 10px;
+	border: 2px solid #999;
+	border-radius: 15px;
+	background: #CCCCCC;
+	padding: 0px 0px 20px 10px;
+}
+
+
+
+/*
+background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#333));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent
+*/
