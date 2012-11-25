@@ -60,7 +60,7 @@ MMTestcase.prototype.updateCells = function(){
 		var aCellValues = oValue;
 		
 		//Derive the cell token (concatenate all of the value ID's)
-		var sCellToken = "";
+		var sCellToken = "CELL_";
 		$.each(oValue, function(iIndex, oValue){
 			sCellToken = sCellToken + oValue.id;
 		});
