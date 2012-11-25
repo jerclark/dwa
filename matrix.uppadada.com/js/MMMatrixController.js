@@ -74,7 +74,7 @@ MMMatrixController.prototype.loadMatrixForTestcase = function(oTestcase){
 		}
 		
 		//Set Cell Title for the Tooltip display
-		var sExpectedResult = "<span style='color:gray'><i>Edit the testcase metadata or the value metadata to add a result</i></span>";
+		var sExpectedResult = "<span style='color:gray'><i>Right-Click cells to edit expected results</i></span>";
 		if (oCell.expectedResult != ""){
 			sExpectedResult = "<i>" + oCell.expectedResult + "</i>";
 		}else if (gApp.testcaseController.selectedTestcase.expectedResult != ""){

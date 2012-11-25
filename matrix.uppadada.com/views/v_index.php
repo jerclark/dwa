@@ -2,25 +2,39 @@
 
 <div style="border:3px solid gray;margin-top:10px;padding:20px;	min-width:850px;border-radius:20px;">
 
-	<div id="mm_table_wrapper_wrapper" style="align:center;width:100%;margin:auto;min-width:850px;border:none;background-color:white;border-radius:15px;">
+
+	<div class="mm_content_layout_header"><h3>Testcase Configuration</h3></div>
 	
-		<div class="mm_content_layout_header"><h3>Testcase Configuration</h3></div>
-	
-		<div id="mm_testcase_table_wrapper" class="mm_table_wrapper">
-	
-			<table id="mm_testcase_table" class="display">
-			</table>
-			
-			<div>
-			<span style="float:left;display:none;"><input type="text" id="mm_testcase_input_name" placeholder="Enter Testcase Name" onkeyup="gApp.testcaseController.detectInputNameKeypress()"/></span>
-			<button id="mm_testcase_add_button" type='button' onclick="gApp.testcaseController.addTestcase()">Add</button>
-			<button type='button' onclick="gApp.testcaseController.removeTestcase()">Remove</button>
-			</div>
-				
-		</div>
-		
+	<div>
+		<div style="width:334px;padding-left:0px;float:left;"><i>Step 1: Add testcases. Double-click the name to edit.</i></div>
 		<div style="float:left;padding-left:10px;vertical-align:middle;">
 			<img src="/images/right_arrow.png" width="20px" height="40px"/>
+		</div>
+		<div style="width:334px;padding-left:0px;float:left;margin-left:15px;"><i>Step 2: Add parameters. Double-click the name to edit.</i></div>
+		<div style="float:left;padding-left:10px;vertical-align:middle;">
+			<img src="/images/right_arrow.png" width="20px" height="40px"/>
+		</div>
+		<div style="width:334px;padding-left:0px;float:left;margin-left:15px;"><i>Step 3: Add values. Double-click the name to edit. Check "optional" to dim cells.</i></div>
+	</div>
+	
+
+	<div id="mm_table_wrapper_wrapper" style="clear:both;align:center;width:100%;margin:auto;min-width:850px;border:none;background-color:white;border-radius:15px;">
+			
+		<div id="mm_testcase_table_wrapper" class="mm_table_wrapper">
+				
+			<table id="mm_testcase_table" class="display">
+			</table>
+		
+			<div>
+				<button id="mm_testcase_add_button" type='button' onclick="gApp.testcaseController.addTestcase()">Add</button>
+				<button type='button' onclick="gApp.testcaseController.removeTestcase()">Remove</button>
+			</div>
+						
+		</div>
+		
+		
+		<div style="float:left;padding-left:10px;vertical-align:middle;">
+			<img src="/images/spacer.png" width="20px" height="40px"/>
 		</div>
 	
 		<div id="mm_parameter_table_wrapper" class="mm_table_wrapper">
@@ -38,7 +52,7 @@
 		
 		
 		<div style="float:left;padding-left:10px;vertical-align:middle;">
-			<img src="/images/right_arrow.png" width="20px" height="40px"/>
+			<img src="/images/spacer.png" width="20px" height="40px"/>
 		</div>
 	
 		<div id="mm_value_table_wrapper" class="mm_table_wrapper">
@@ -56,6 +70,12 @@
 		<div id="mm_table_anchor" style="clear:both;"></div>
 	
 	</div>
+	
+	
+	<div style="margin-top:30px;">
+		<i>Step 4: Track results. Hover over cell to see testcase information. Click cell to log pass/fail result. Right-Click cell to edit expected result.</i>
+	</div>
+	
 	
 	
 	<div id="mm_matrix_wrapper" class="mm_matrix_wrapper">

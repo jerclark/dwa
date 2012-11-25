@@ -26,11 +26,7 @@ var gMatrixGrid;
 
 
 
-$(document).ready(function() {
-	
-	
-
-	
+$(document).ready(function() {	
 	
 	$( document ).tooltip({
 	            position: {
@@ -89,6 +85,8 @@ function MMApp(){
 	this.parameterCount = 0;
 	this.valueCount = 0;
 	
+	
+	$(".DataTables_sort_wrapper").click();
 
 	
 }
