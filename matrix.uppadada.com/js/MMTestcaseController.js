@@ -15,6 +15,9 @@ function MMTestcaseController(){
 				
 				//Click the first item in the parameter table
 				gApp.parameterController.dataTable.$('tr:first').click();
+				
+				//Set the testcase matrix header
+				$("#mm_testcase_matrix_header").html("<h3>Testcase Matrix: " + oSelectedTC.name + "</h3>");
 								
 				//Update the matrix
 				gApp.matrixController.loadMatrixForTestcase(oSelectedTC);
@@ -34,8 +37,6 @@ function MMTestcaseController(){
 		"sScrollY": "180px",
 		
 		"bPaginate": false,
-		
-		"aaData": [],
 		
 		"bJQueryUI": true,
 		
@@ -76,6 +77,7 @@ MMTestcaseController.prototype.addTestcase = function(){
 	//Set the editable behavior
 	$('#' + newTestcase.id + ' td').editable( function(value,settings){
 				gApp.testcaseController.dataTable._('#' + newTestcase.id)[0].name = value;
+				$("#mm_testcase_matrix_header").html("<h3>Testcase Matrix: " + value + "</h3>");
 				this.selectedTestcase = gApp.testcaseController.dataTable._('#' + newTestcase.id)[0];
 				return(value);
 	        },
@@ -117,6 +119,7 @@ MMTestcaseController.prototype.editMetadata = function(){
 				gApp.testcaseController.dataTable._('#' + selectedTestcaseId)[0].expectedResult = $("#mm_tc_metadata_expected_result_field").val();
 				gApp.testcaseController.selectedTestcase = gApp.testcaseController.dataTable._('#' + selectedTestcaseId)[0];
 				gApp.testcaseController.selectedTestcase.updateCells();
+				$("#mm_testcase_matrix_header").html("<h3>Testcase Matrix: " + $("#mm_tc_metadata_name_field").val() + "</h3>");
 				$( this ).dialog( "close" );
 			},
 			Cancel:function(){

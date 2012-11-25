@@ -4,7 +4,7 @@ function MMTestcase(sName){
 	this.id = "TC" + gApp.testcaseCount++;
 	
 	//NAME
-	if (typeof(sName) == "undefined") sName = this.id;
+	if (typeof(sName) == "undefined") sName = "Untitled Testcase - " + this.id;
 	this.name = sName;
 	
 	//PARAMETERS

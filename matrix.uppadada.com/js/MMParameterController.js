@@ -37,7 +37,7 @@ function MMParameterController(){
 		"bJQueryUI": true,
 		
 		"aoColumns": [
-					{ "mData":"name","sClass":"name","sTitle": "Parameter" }
+					{ "mData":"name","sClass":"name","sTitle": "Parameters" }
 				]
 		
 	});

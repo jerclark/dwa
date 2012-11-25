@@ -4,7 +4,7 @@ function MMParameter(sName){
 	this.id = "P" + gApp.parameterCount++;
 	
 	//NAME
-	if (typeof(sName) == "undefined") sName = this.id;
+	if (typeof(sName) == "undefined") sName = "Untitled Parameter - " + this.id;
 	this.name = sName;
 	
 	//DT_RowID

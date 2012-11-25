@@ -87,6 +87,10 @@ h1 {
 }
 
 
+.mm_content_layout_header{
+	padding-left:15px;
+	color:#66AA66;
+}
 
 
 .mm_table_wrapper{
@@ -94,6 +98,10 @@ h1 {
 	padding:15px;
 	height:250px;
 	float:left;
+	border-radius:15px;
+	margin-left:15px;
+	background:#EEEEEE;
+	border:2px solid lightgray;
 }
 
 .mm_table_wrapper_wide{
@@ -103,6 +111,7 @@ h1 {
 }
 
 #mm_testcase_table_wrapper{
+	margin-left:0px;
 	/*margin-left:auto;
 	margin-right:auto;*/
 }
@@ -121,10 +130,11 @@ h1 {
 
 .mm_matrix_wrapper{
 	
+	margin:auto;
 	margin-top:15px;
-	background-color:#EEEEEE;
+	background-color:lightgray;
 	padding:20px;
-	border:none; /*1px solid gray;*/
+	border:2px solid gray;
 	clear:both;
 	border-radius: 30px;
 }

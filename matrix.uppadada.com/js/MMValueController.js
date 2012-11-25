@@ -35,7 +35,7 @@ function MMValueController(){
 		"bJQueryUI": true,
 		
 		"aoColumns": [
-					{ "mData":"name","sClass":"name","sTitle": "Value" },
+					{ "mData":"name","sClass":"name","sTitle": "Values" },
 					{ "mData":"optional","sClass":"optional","sTitle": "Optional" }
 				]
 		

@@ -48,6 +48,13 @@ $(document).ready(function() {
 	        });
 	
 	gApp = new MMApp();
+	
+	//Load some sample data
+	gApp.addSampleData();
+	
+	//This forces a redraw of the table headers so the labels draw
+	$(".DataTables_sort_wrapper").click();
+	
 		    
 });
 
@@ -81,6 +88,16 @@ function MMApp(){
 	this.testcaseCount = 0;
 	this.parameterCount = 0;
 	this.valueCount = 0;
+	
+
+	
+}
+
+
+
+MMApp.prototype.addSampleData = function(){
+	var sampleTcId = gApp.testcaseController.addTestcase();
+	gApp.testcaseController.dataTable._("#" + sampleTcId)[0].name = "Checkout";
 	
 }
 

@@ -4,7 +4,7 @@ function MMValue(sParameterId,sName){
 	this.id = "V" + gApp.valueCount++;
 	
 	//NAME
-	if (typeof(sName) == "undefined") sName = this.id;
+	if (typeof(sName) == "undefined") sName = "Untitled Value - " + this.id;
 	this.name = sName;
 	
 	//DT_RowID
