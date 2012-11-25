@@ -6,6 +6,12 @@ function MMMatrixCell(sToken,aValues){
 	
 	this.resultState = gApp.TestcaseResultStateEnum.UNTESTED; //
 	
+	this.expectedResult = "";
+	
+	this.hasOverrideResult = false;
+	
+	this.testcaseId = null;
+		
 }
 
 MMMatrixCell.prototype.displayName = function(){
@@ -26,6 +32,25 @@ MMMatrixCell.prototype.isOptional = function(){
 		return ((this.optional == "true") || (this.optional == true));
 	});
 	return optionalValues.length > 0;
+	
+}
+
+
+MMMatrixCell.prototype.isSelected = function(){
+	
+	//Filter the values for this matrix cell to include only those that are "selected" (there should only be 1)
+	var selectedValues = $(this.values).filter(function(){
+		try{
+			//Check to see if
+			return (gApp.valueController.dataTable._('.row_selected')[0].id == this.id);
+		}catch(e){
+			return false;
+		}
+		return false;
+	});
+	
+	//If there was a selected value, then consider this cell needing selection
+	return selectedValues.length > 0;
 	
 }
 

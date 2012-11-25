@@ -29,6 +29,9 @@ var gMatrixGrid;
 $(document).ready(function() {
 	
 	
+
+	
+	
 	$( document ).tooltip({
 	            position: {
 	                my: "center bottom-20",
@@ -50,18 +53,21 @@ $(document).ready(function() {
 
 
 
+
+
+
 function MMApp(){
 	
-	//CLICK HANDLER FOR ALL TABLE ROWS
-	$('body').on( 'click', 'tbody tr', function( e ) {
+	//CLICK HANDLER FOR ALL TABLE CELLS
+	$('body').on( 'click', 'tbody tr td[selectable!="false"]', function( e ) {
         
 			//Perform the selection highlight
-			if ( $(this).hasClass('row_selected') ) { //If the row is already selected, leave it selected
+			if ( $(this).parent().hasClass('row_selected') ) { //If the row is already selected, leave it selected
 	           
 	        }
 	        else { //Otherwise, select the row that's clicked (closest() looks for the parent table of the clicked row)
-	            $(this).closest('table').dataTable().$('tr.row_selected').removeClass('row_selected');
-	            $(this).addClass('row_selected');
+	            $(this).parent().closest('table').dataTable().$('tr.row_selected').removeClass('row_selected');
+	            $(this).parent().addClass('row_selected');
 	        }
 		
 	});
@@ -88,10 +94,6 @@ MMApp.prototype.TestcaseResultStateEnum = {
 
 
 
-
-
-
-
 function findDTRowDataById(aDTDataSet, iDTRowId){
 	var i = -1;
 	var d = $(aDTDataSet).filter(function(){
@@ -104,6 +106,26 @@ function findDTRowDataById(aDTDataSet, iDTRowId){
 }
 
 
+$(function(){
+	
+	$( "#metadata-form-div" ).dialog({
+           autoOpen: false,
+           height: 500,
+           width: 700,
+           modal: true,
+           buttons: {
+               Update: function(){
+				   
+			   },
+               Cancel: function() {
+                   $( this ).dialog( "close" );
+               }
+           },
+           close: function() {
+               //allFields.val( "" ).removeClass( "ui-state-error" );
+           }
+       });
+});
 
 
 

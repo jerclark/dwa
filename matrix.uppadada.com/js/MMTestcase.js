@@ -15,6 +15,9 @@ function MMTestcase(sName){
 	
 	//CELLS
 	this.matrixCells = [];
+	
+	//EXPECTED RESULT
+	this.expectedResult = "";
 		
 	//Set the parameter controller
 	//this.parameterController = new MMParameterController();
@@ -72,6 +75,8 @@ MMTestcase.prototype.updateCells = function(){
 		//If not, create a new MatrixCell
 		if (oMatch.length == 0 && sCellToken != ""){
 			var newCell = new MMMatrixCell(sCellToken, aCellValues);
+			newCell.testcaseId = currentTestcase.id;
+			newCell.expectedResult = "";
 			currentTestcase.matrixCells.push(newCell);
 		//If there is, then update the values just to make sure they have the right names n' junk
 		}else{
@@ -101,6 +106,23 @@ MMTestcase.prototype.pruneCells = function(sValueId){
 	this.matrixCells = prunedArray;
 	
 	gApp.matrixController.loadMatrixForTestcase(this);
+	
+}
+
+
+
+MMTestcase.prototype.cellsForValue = function(sValueId){
+	
+	var l_sValueId = sValueId;
+	var aCells = [];
+	
+	//Do a filter on the matrixCells for any cell with a token containing the pruned value ID
+	aCells = this.matrixCells.filter(function(e,i,a){
+		var re = new RegExp("((" + l_sValueId + "(?=V))|(" + l_sValueId + "$))", 'gi');
+		return (e.token.match(re) != null);
+	});
+	
+	return aCells;
 	
 }
 

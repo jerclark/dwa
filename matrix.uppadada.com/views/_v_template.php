@@ -7,13 +7,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 	
 	<!-- JQUERY-->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"/>
+	<!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script-->
+	<script src="/js/jquery-1.8.3.min.js"></script>
+	<script src="/js/jquery-ui-1.9.1.custom/js/jquery-ui-1.9.1.custom.js"></script>
+	<link rel="stylesheet" type="text/css" href="/js/jquery-ui-1.9.1.custom/development-bundle/themes/base/jquery-ui.css"/>
 	
 	<!-- JS -->			
 	<script type="text/javascript" charset="utf-8" src="/DataTables/media/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/jquery.jeditable.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/js/jquery.bgiframe-2.1.2.js"></script>
 	
 	<script type="text/javascript" charset="utf-8" src="/js/MMApp.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/MMTestcase.js"></script>
@@ -47,15 +49,21 @@
 </head>
 
 <body>
+
+	<div id="metadata-form-div" title="">
+	    <form id="metadata-form-form">
+	    </form>
+	</div>
+
 	
-	<div id="wrapper" style="min-width:665px">
+	<div id="wrapper" style="min-width:665px;">
 		
 		<div id="masthead_wrapper">
 			<div style="position:relative;padding-left:10px;">
 				<div id="masthead_image" style="float:left;background-image:url('/images/matrix.jpg');"></div>
 				<h1 id="masthead_text">Matrix Master</h1>
 			</div>
-			<div id="masthead"><a href="/index/index"><span id="masthead_link"></span></a></div>			
+			<div id="masthead"></div>			
 		</div>
 
 		<div id="content_wrapper">			
@@ -63,6 +71,11 @@
 		</div>
 		
 	</div>
+	
+	
+
+	
+		
 
 </body>
 </html>

@@ -22,9 +22,13 @@ function MMParameterController(){
 	
 	this.dataTable = $('#mm_parameter_table').dataTable({
 		
+		"bFilter": false,
+		
+		"bInfo": false,
+		
 		"bDestroy": true,
 		
-		"sScrollY": "90px",
+		"sScrollY": "180px",
 		
 		"bPaginate": false,
 		
@@ -43,6 +47,17 @@ function MMParameterController(){
 }
 
 
+MMParameterController.prototype.detectInputNameKeypress = function(){
+	
+	if ($("#mm_parameter_input_name").val() == ""){
+		$("#mm_parameter_add_button").attr("disabled", "true");
+	}else{
+		$("#mm_testcase_add_button").removeAttr("disabled");
+	}
+	
+}
+
+
 MMParameterController.prototype.selectedParameter = function(){
 	return this.dataTable._('.row_selected');
 }
@@ -52,7 +67,7 @@ MMParameterController.prototype.addParameter = function(){
 	
 	//Make sure a testcase is selected
 	if (this.testcase == null){
-		alert("Please selected a testcase!");
+		alert("Please select a testcase!");
 		return;
 	}
 	
@@ -62,7 +77,7 @@ MMParameterController.prototype.addParameter = function(){
 	gApp.testcaseController.selectedTestcase.parameters = this.dataTable.fnGetData();
 	
 	//Select the new parameter, and create a default value
-	$('#' + newParameter.id).click();
+	$('#' + newParameter.id).children()[0].click();
 	gApp.valueController.addValue();
 	
 	
@@ -79,7 +94,7 @@ MMParameterController.prototype.removeParameter = function(){
 	
 	//Make sure a testcase is selected
 	if (this.testcase == null){
-		alert("Please selected a testcase!");
+		alert("Please select a testcase!");
 		return;
 	}
 	
@@ -121,9 +136,13 @@ MMParameterController.prototype.loadDataForTestcase = function(oTestcase){
 	//Now load the data into the Parameter table
 	this.dataTable = $('#mm_parameter_table').dataTable({
 		
+		"bFilter": false,
+		
+		"bInfo": false,
+		
 		"bDestroy": true,
 		
-		"sScrollY": "90px",
+		"sScrollY": "180px",
 		
 		"bPaginate": false,
 		
