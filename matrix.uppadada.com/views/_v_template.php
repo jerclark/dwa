@@ -7,8 +7,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 	
 	<!-- JQUERY-->
-	<!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script-->
-	<script src="/js/jquery-1.8.3.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<!--script src="/js/jquery-1.8.3.min.js"></script-->
 	<script src="/js/jquery-ui-1.9.1.custom/js/jquery-ui-1.9.1.custom.js"></script>
 	<link rel="stylesheet" type="text/css" href="/js/jquery-ui-1.9.1.custom/development-bundle/themes/base/jquery-ui.css"/>
 	
