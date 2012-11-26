@@ -124,7 +124,9 @@
 	
 	
 	<div id="mm_context_menu">
-		<div id="mm_cell_edit_expected_result_menu_item" onclick="gApp.matrixController.editExpectedResultForCell()">Edit Expected Result For Cell</div>
+		<div id="mm_cell_edit_expected_result_menu_item" onclick="gApp.matrixController.editExpectedResultForCell()">Edit Expected Result For This Cell</div>
+		<div style="border:1px solid black;margin-top:5px;margin-bottom:5px;"></div>
+		<div id="mm_cells_edit_expected_results_menu_item" onclick="gApp.matrixController.editExpectedResultForSelectedCells()">Edit Expected Result For Selected Cells</div>
 	</div>
 	
 	

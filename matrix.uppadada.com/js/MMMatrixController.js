@@ -246,7 +246,7 @@ MMMatrixController.prototype.editExpectedResultForCell = function(){
 /*
 CLICKING ON THE EDIT SELECTED CELLS BUTTON (WITH MULTIPLE SELECTION)
 */
-MMMatrixController.prototype.editSelectedCellsMetadata = function(){
+MMMatrixController.prototype.editExpectedResultForSelectedCells = function(){
 	
 	var selectedTestcase = gApp.testcaseController.selectedTestcase;
 	var selectedValue = gApp.valueController.selectedValue;
