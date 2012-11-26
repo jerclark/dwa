@@ -102,38 +102,45 @@ MMMatrixController.prototype.loadMatrixForTestcase = function(oTestcase){
 		
 		//Set the style to reflect whether the cell is selected
 		if (oCell.isSelected()){
-			$('#' + oCell.token).addClass("selected");
+			$('#' + oCell.token).addClass("mm_cell_selected");
 		}else{
-			$('#' + oCell.token).removeClass("selected");		
+			$('#' + oCell.token).removeClass("mm_cell_selected");		
 		}
 		
 		
 		//Create the Click Handler
 		$('#' + oCell.token).on('click',function( e ){
 			
-			//Check whether it's an option-click
+			var cellData = $('#' + e.target.id).data();
+			
+			//Check whether it's an option-click. If so, toggle the selection.
 			if (e.altKey == true){
 				
-				return;
-			
+				if (cellData.isSelected()){
+					$('#' + cellData.token).removeClass("mm_cell_selected");
+				}else{
+					$('#' + cellData.token).addClass("mm_cell_selected");	
+				}
+				
+				
+				
 			}else{ //non-option click
 			
-				var cellData = $('#' + e.target.id).data();
 				cellData.toggleState();
-	
-				//Update the cell data in the testcase matrix cells
-				var updatedMatrixCells = gApp.testcaseController.selectedTestcase.matrixCells.map(function(e,i,a){
-					if (e.token == cellData.token){
-						e = cellData;
-					}
-					return e;
-				});
-	
-				gApp.testcaseController.selectedTestcase.matrixCells = updatedMatrixCells;
-		
-				gApp.matrixController.updateStats();
-				
+					
 			}
+			
+			//Update the cell data in the testcase matrix cells
+			var updatedMatrixCells = gApp.testcaseController.selectedTestcase.matrixCells.map(function(e,i,a){
+				if (e.token == cellData.token){
+					e = cellData;
+				}
+				return e;
+			});
+
+			gApp.testcaseController.selectedTestcase.matrixCells = updatedMatrixCells;
+	
+			gApp.matrixController.updateStats();
 			
 		});
 		
@@ -201,8 +208,22 @@ MMMatrixController.prototype.updateStats = function(){
 
 
 
+MMMatrixController.prototype.selectAllCells = function(){
+
+	$('.mm_matrix_cell').addClass("mm_cell_selected");
+	
+}
+
+
+MMMatrixController.prototype.clearSelection = function(){
+
+	$('.mm_matrix_cell').removeClass("mm_cell_selected");
+	
+}
+
+
 /*
-RIGHT CLICKING ON A SINGLE CELL
+Edit Expected Result for This Cell
 */
 MMMatrixController.prototype.editExpectedResultForCell = function(){
 	
@@ -253,7 +274,7 @@ MMMatrixController.prototype.editExpectedResultForCell = function(){
 
 
 /*
-CLICKING ON THE EDIT SELECTED CELLS BUTTON (WITH MULTIPLE SELECTION)
+Edit Expected Result for Selected Cells
 */
 MMMatrixController.prototype.editExpectedResultForSelectedCells = function(){
 	
@@ -262,8 +283,8 @@ MMMatrixController.prototype.editExpectedResultForSelectedCells = function(){
 	
 	
 	//Make sure a value is selected
-	if (selectedValue == {} || selectedValue == null || gApp.valueController.dataTable.$('.row_selected').length == 0){
-		alert("Please create and/or selected a value from the value list!");
+	if ( $(".mm_cell_selected").length == 0 ) { //selectedValue == {} || selectedValue == null || gApp.valueController.dataTable.$('.row_selected').length == 0){
+		alert("Please select some cells!");
 		return;
 	}
 	
@@ -291,7 +312,7 @@ MMMatrixController.prototype.editExpectedResultForSelectedCells = function(){
 	});
 	
 	//Init the form
-	$("#metadata-form-div").attr("title", "Edit Cells For Value - " + selectedValue.name);
+	$("#metadata-form-div").attr("title", "Edit Selected Cells");
 	
 	//Add it to the Form DIV
 	$("#metadata-form-form").html(this.metadataFieldsetHTML());

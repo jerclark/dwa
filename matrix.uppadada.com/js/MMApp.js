@@ -46,10 +46,14 @@ $(document).ready(function() {
 	gApp = new MMApp();
 	
 	//Load some sample data
-	gApp.addSampleData();
+	//gApp.addSampleData();
 	
 	//This forces a redraw of the table headers so the labels draw
 	$(".DataTables_sort_wrapper").click();
+	
+	
+	
+	
 	
 		    
 });
@@ -95,8 +99,6 @@ function MMApp(){
 
 MMApp.prototype.addSampleData = function(){
 	var sampleTcId = gApp.testcaseController.addTestcase();
-	gApp.testcaseController.dataTable._("#" + sampleTcId)[0].name = "Checkout";
-	
 }
 
 

@@ -24,7 +24,7 @@ function MMTestcaseController(){
 
 			}
 		
-	});
+	});	
 	
 	
 	//INIT DATA TABLE
@@ -45,6 +45,10 @@ function MMTestcaseController(){
 				]
 		
 	});
+	
+	
+	$('#mm_testcase_table').attr("title", "Double-Click to edit");
+	
 	
 
 	//SELECTED TESTCASE IVAR
@@ -73,6 +77,7 @@ MMTestcaseController.prototype.addTestcase = function(){
 	
 	//Add it to the table
 	this.dataTable.fnAddData( [newTestcase] );
+	
 	
 	//Set the editable behavior
 	$('#' + newTestcase.id + ' td').editable( function(value,settings){

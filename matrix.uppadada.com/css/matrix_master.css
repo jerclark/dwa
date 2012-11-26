@@ -88,7 +88,6 @@ h1 {
 
 
 .mm_content_layout_header{
-	padding-left:15px;
 	color:#66AA66;
 }
 
@@ -114,6 +113,12 @@ h1 {
 	width:400px;
 	height:250px;
 	float:left;
+}
+
+.mm_table_step_text {
+	width:334px;
+	padding-left:0px;
+	float:left;	
 }
 
 #mm_testcase_table_wrapper{
@@ -165,7 +170,7 @@ h1 {
 	background-color:#EE3333;
 }
 
-.selected{
+.mm_cell_selected{
 	border:4px solid black;
 }
 
@@ -243,6 +248,12 @@ fieldset { padding:0; border:0; margin-top:25px; }
     padding: 10px;
     background-color: #ddd;
     border: 2px solid gray;
+}
+
+.mm_menu_separator {
+	border:1px solid black;
+	margin-top:5px;
+	margin-bottom:5px;
 }
 
 

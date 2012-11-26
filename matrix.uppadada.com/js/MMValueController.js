@@ -41,6 +41,7 @@ function MMValueController(){
 		
 	});
 	
+	
 	this.parameter = null;
 	
 	this.selectedValue = {};
@@ -61,6 +62,12 @@ MMValueController.prototype.addValue = function(){
 	
 	//Add it to the table
 	this.dataTable.fnAddData( newValue );
+	
+	//Set the tooltips
+	$("#" + newValue.id + " td:first").attr("title", "Double Click to Edit");
+	$("#" + newValue.id + " td:last").attr("title", "Click to dim display in matrix");
+	
+	
 	
 	//Set the optional column to be a checkbox
 	//$("#" + newValue.id + ">td.optional").html("<input class='mm_value_optional_cb' type='checkbox' name='optional' value='false' onclick='gApp.valueController.updateOptional(event)'/>");

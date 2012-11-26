@@ -42,6 +42,8 @@ function MMParameterController(){
 		
 	});
 	
+	$('#mm_parameter_table').attr("title", "Double-Click to edit");
+	
 	this.testcase = null;
 		
 }

@@ -2,7 +2,7 @@
 <br>
 <i><small>Compatibility Note: Has been tested with Chrome (Version 23.0.1271.64), Firefox (16.0.2), Safari (5.1.7) and IE 9 (9.0.8112.16421). Safari has some slight usage issues, and IE8 or earlier will not work.</small></i>
 <br><br>
-<small>Click here to see the <a href="http://p3.uppadada.com">original proposal</a>, which includes some background and usage information. Note that the implementation below is not exactly as specified in the original proposal, but I believe the spirit of the original proposal is captured.</small>
+<small>Click here to see the <a href="http://p3.uppadada.com">original proposal</a>, which includes some background and usage information. This implementation below is not exactly as specified in the original proposal, but I believe the spirit of the original proposal is captured. There is NO persistence in this implementation. Once you leave the page, your entered data will be lost.</small>
 
 
 <!--Wrapper-->
@@ -14,15 +14,15 @@
 	<div class="mm_content_layout_header"><h3>Testcase Configuration</h3></div>
 	
 	<div>
-		<div style="width:334px;padding-left:0px;float:left;"><i><small>Step 1: Add testcases. Double-click the name to edit.</small></i></div>
+		<div class="mm_table_step_text"><i><small>Step 1: Add testcases. For example, you might enter "Checkout", to test a shopping basket app.</small></i></div>
 		<div style="float:left;padding-left:10px;vertical-align:middle;">
 			<img src="/images/right_arrow.png" width="20px" height="20px"/>
 		</div>
-		<div style="width:334px;padding-left:0px;float:left;margin-left:15px;"><i><small>Step 2: Add parameters. Double-click the name to edit.</small></i></div>
+		<div class="mm_table_step_text" style="margin-bottom:10px;margin-left:15px;"><i><small>Step 2: Add parameters. For example, you might enter "Credit Card Type" and "Discount" in our "Checkout" example.</small></i></div>
 		<div style="float:left;padding-left:10px;vertical-align:middle;">
 			<img src="/images/right_arrow.png" width="20px" height="20px"/>
 		</div>
-		<div style="width:334px;padding-left:0px;float:left;margin-left:15px;"><i><small>Step 3: Add values, and cells will be created. Double-click the name to edit. Check "optional" to dim cells.</small></i></div>
+		<div class="mm_table_step_text" style="margin-bottom:10px;margin-left:15px;"><i><small>Step 3: Add values. For example, you might enter "Visa", "Master Card" and "AmEx" for "Credit Card Type", and "10%" and "20%" for "Discount".</small></i></div>
 	</div>
 	
 
@@ -88,13 +88,17 @@
 	
 	<!--MATRIX CONTENT-->
 	
-	<div style="margin-top:30px;">
-		<i>Step 4: Track results. Hover over cell to see testcase information. Click cell to log pass/fail result. Right-Click cell to edit expected result. (NOTE: You can select a row from the values table above to select and edit multiple expected results at once)</i>
+	<br>
+	
+	<div id="mm_testcase_matrix_header" class="mm_content_layout_header"><h3>Testcase Matrix</h3></div>
+	
+	<div style="margin-top:30px;clear:both;">
+		<i><small>Step 4: Track results. Hover over cell to see testcase information. Click cell to log pass/fail result. Option-Click cell to select/deselect cell. Right-Click cell to edit expected result.</small></i>
 	</div>
+	
 	
 	<div id="mm_matrix_wrapper" class="mm_matrix_wrapper">
 		
-		<div id="mm_testcase_matrix_header" class="mm_content_layout_header"><h3>Testcase Matrix</h3></div>
 		
 		<div id="mm_matrix_stats_wrapper" style="margin-left:30px;border-radius:15px;float:left;">
 		
@@ -131,8 +135,12 @@
 	
 	<div id="mm_context_menu">
 		<div id="mm_cell_edit_expected_result_menu_item" onclick="gApp.matrixController.editExpectedResultForCell()">Edit Expected Result For This Cell</div>
-		<div style="border:1px solid black;margin-top:5px;margin-bottom:5px;"></div>
+		<div class="mm_menu_separator"></div>
 		<div id="mm_selected_cells_edit_expected_results_menu_item" onclick="gApp.matrixController.editExpectedResultForSelectedCells()">Edit Expected Result For Selected Cells</div>
+		<div class="mm_menu_separator"></div>
+		<div id="mm_select_all_cells_menu_item" onclick="gApp.matrixController.selectAllCells()">Select All Cells</div>
+		<div class="mm_menu_separator"></div>
+		<div id="mm_clear_selection_menu_item" onclick="gApp.matrixController.clearSelection()">Clear Selection</div>
 	</div>
 	
 	

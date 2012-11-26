@@ -11,6 +11,8 @@ function MMMatrixCell(sToken,aValues){
 	this.hasOverrideResult = false;
 	
 	this.testcaseId = null;
+	
+	this.selected = false;
 		
 }
 
@@ -38,7 +40,10 @@ MMMatrixCell.prototype.isOptional = function(){
 
 MMMatrixCell.prototype.isSelected = function(){
 	
-	//Filter the values for this matrix cell to include only those that are "selected" (there should only be 1)
+	//Check whether any cells with the class mm_cell_selected 
+	return $("#" + this.token).hasClass("mm_cell_selected");
+	
+	/*//Filter the values for this matrix cell to include only those that are "selected" (there should only be 1)
 	var selectedValues = $(this.values).filter(function(){
 		try{
 			//Check to see if
@@ -50,7 +55,8 @@ MMMatrixCell.prototype.isSelected = function(){
 	});
 	
 	//If there was a selected value, then consider this cell needing selection
-	return selectedValues.length > 0;
+	return ( (selectedValues.length > 0) || this.selected) ;
+	*/
 	
 }
 
