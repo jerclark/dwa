@@ -83,7 +83,7 @@
 	<!--MATRIX CONTENT-->
 	
 	<div style="margin-top:30px;">
-		<i>Step 4: Track results. Hover over cell to see testcase information. Click cell to log pass/fail result. Right-Click cell to edit expected result.</i>
+		<i>Step 4: Track results. Hover over cell to see testcase information. Click cell to log pass/fail result. Right-Click cell to edit expected result. (NOTE: You can select a row from the values table above to select and edit multiple expected results at once)</i>
 	</div>
 	
 	<div id="mm_matrix_wrapper" class="mm_matrix_wrapper">

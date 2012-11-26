@@ -99,6 +99,40 @@ MMTestcaseController.prototype.addTestcase = function(){
 }
 
 
+MMTestcaseController.prototype.removeTestcase = function(){
+	
+	//Make sure a testcase is selected
+	if (this.selectedTestcase == null){
+		alert("Please select a testcase!");
+		return;
+	}
+	
+	//Get the index of the selected value row
+	var oSelectedRows = this.dataTable.$('.row_selected');
+	
+	//If there's a selected row
+	if (oSelectedRows.length > 0){
+		
+		//Get the index of the selected row
+		var oSelectedRow = oSelectedRows[0];
+		var iSelectedIndex = this.dataTable.fnGetPosition(oSelectedRow);
+	
+		//Remove the value from the table
+		this.dataTable.fnDeleteRow( iSelectedIndex );
+		
+		//Clear the parameter table table
+		gApp.parameterController.dataTable.fnClearTable();
+		
+		//Clear the value table
+		gApp.valueController.dataTable.fnClearTable();
+		
+	}
+		
+}
+
+
+
+
 
 MMTestcaseController.prototype.editMetadata = function(){
 	
