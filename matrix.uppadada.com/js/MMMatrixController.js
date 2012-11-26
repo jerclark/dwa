@@ -111,20 +111,29 @@ MMMatrixController.prototype.loadMatrixForTestcase = function(oTestcase){
 		//Create the Click Handler
 		$('#' + oCell.token).on('click',function( e ){
 			
-			var cellData = $('#' + e.target.id).data();
-			cellData.toggleState();
-		
-			//Update the cell data in the testcase matrix cells
-			var updatedMatrixCells = gApp.testcaseController.selectedTestcase.matrixCells.map(function(e,i,a){
-				if (e.token == cellData.token){
-					e = cellData;
-				}
-				return e;
-			});
-		
-			gApp.testcaseController.selectedTestcase.matrixCells = updatedMatrixCells;
+			//Check whether it's an option-click
+			if (e.altKey == true){
+				
+				return;
 			
-			gApp.matrixController.updateStats();
+			}else{ //non-option click
+			
+				var cellData = $('#' + e.target.id).data();
+				cellData.toggleState();
+	
+				//Update the cell data in the testcase matrix cells
+				var updatedMatrixCells = gApp.testcaseController.selectedTestcase.matrixCells.map(function(e,i,a){
+					if (e.token == cellData.token){
+						e = cellData;
+					}
+					return e;
+				});
+	
+				gApp.testcaseController.selectedTestcase.matrixCells = updatedMatrixCells;
+		
+				gApp.matrixController.updateStats();
+				
+			}
 			
 		});
 		

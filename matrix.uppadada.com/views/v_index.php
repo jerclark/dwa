@@ -1,6 +1,12 @@
-<!--Wrapper-->
+<!--NOTES-->
+<br>
+<i><small>Compatibility Note: Has been tested with Chrome (Version 23.0.1271.64), Firefox (16.0.2), Safari (5.1.7) and IE 9 (9.0.8112.16421). Safari has some slight usage issues, and IE8 or earlier will not work.</small></i>
+<br><br>
+<small>Click here to see the <a href="http://p3.uppadada.com">original proposal</a>, which includes some background and usage information. Note that the implementation below is not exactly as specified in the original proposal, but I believe the spirit of the original proposal is captured.</small>
 
-<div style="border:3px solid gray;margin-top:10px;padding:20px;	min-width:850px;border-radius:20px;">
+
+<!--Wrapper-->
+<div style="border:3px solid gray;margin-top:10px;padding:20px;	min-width:1100px;border-radius:20px;">
 
 
 	<!--TABLE CONTENT-->
@@ -8,15 +14,15 @@
 	<div class="mm_content_layout_header"><h3>Testcase Configuration</h3></div>
 	
 	<div>
-		<div style="width:334px;padding-left:0px;float:left;"><i>Step 1: Add testcases. Double-click the name to edit.</i></div>
+		<div style="width:334px;padding-left:0px;float:left;"><i><small>Step 1: Add testcases. Double-click the name to edit.</small></i></div>
 		<div style="float:left;padding-left:10px;vertical-align:middle;">
-			<img src="/images/right_arrow.png" width="20px" height="40px"/>
+			<img src="/images/right_arrow.png" width="20px" height="20px"/>
 		</div>
-		<div style="width:334px;padding-left:0px;float:left;margin-left:15px;"><i>Step 2: Add parameters. Double-click the name to edit.</i></div>
+		<div style="width:334px;padding-left:0px;float:left;margin-left:15px;"><i><small>Step 2: Add parameters. Double-click the name to edit.</small></i></div>
 		<div style="float:left;padding-left:10px;vertical-align:middle;">
-			<img src="/images/right_arrow.png" width="20px" height="40px"/>
+			<img src="/images/right_arrow.png" width="20px" height="20px"/>
 		</div>
-		<div style="width:334px;padding-left:0px;float:left;margin-left:15px;"><i>Step 3: Add values. Double-click the name to edit. Check "optional" to dim cells.</i></div>
+		<div style="width:334px;padding-left:0px;float:left;margin-left:15px;"><i><small>Step 3: Add values, and cells will be created. Double-click the name to edit. Check "optional" to dim cells.</small></i></div>
 	</div>
 	
 
@@ -126,7 +132,7 @@
 	<div id="mm_context_menu">
 		<div id="mm_cell_edit_expected_result_menu_item" onclick="gApp.matrixController.editExpectedResultForCell()">Edit Expected Result For This Cell</div>
 		<div style="border:1px solid black;margin-top:5px;margin-bottom:5px;"></div>
-		<div id="mm_cells_edit_expected_results_menu_item" onclick="gApp.matrixController.editExpectedResultForSelectedCells()">Edit Expected Result For Selected Cells</div>
+		<div id="mm_selected_cells_edit_expected_results_menu_item" onclick="gApp.matrixController.editExpectedResultForSelectedCells()">Edit Expected Result For Selected Cells</div>
 	</div>
 	
 	
