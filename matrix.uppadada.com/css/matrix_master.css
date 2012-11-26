@@ -93,6 +93,12 @@ h1 {
 }
 
 
+#mm_testcase_matrix_header{
+	float:left;
+}
+
+
+
 .mm_table_wrapper{
 	width:300px;
 	padding:15px;

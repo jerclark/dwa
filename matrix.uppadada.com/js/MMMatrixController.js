@@ -124,6 +124,8 @@ MMMatrixController.prototype.loadMatrixForTestcase = function(oTestcase){
 		
 			gApp.testcaseController.selectedTestcase.matrixCells = updatedMatrixCells;
 			
+			gApp.matrixController.updateStats();
+			
 		});
 		
 				
@@ -141,11 +143,53 @@ MMMatrixController.prototype.loadMatrixForTestcase = function(oTestcase){
 
 		});
 		
+		
+		this.updateStats();
 			
 		
 	}
 	
 }
+
+
+MMMatrixController.prototype.updateStats = function(){
+	
+	//Get all testcases and the count
+	var aMatrixCells = gApp.testcaseController.selectedTestcase.matrixCells;
+	var iTotalCnt = aMatrixCells.length;
+	
+	//Get the passed cells
+	var aPassedCells = aMatrixCells.filter(function(e,i,a){
+		return (e.resultState == gApp.TestcaseResultStateEnum.PASS);
+	});
+	var iPassedCnt = aPassedCells.length;
+	
+	//Get the failed cells
+	var aFailedCells = aMatrixCells.filter(function(e,i,a){
+		return (e.resultState == gApp.TestcaseResultStateEnum.FAIL);
+	});
+	var iFailedCnt = aFailedCells.length;
+	
+	
+	//Set the total testcase number
+	$("#mm_matrix_total_stat_value").html(iTotalCnt);
+	
+	//Set the percent executed 
+	var iExecutedCnt = (iPassedCnt + iFailedCnt);
+	var iExecutedCellPercent = ( iExecutedCnt / iTotalCnt) * 100;
+	$("#mm_matrix_executed_stat_value").html( parseInt(iExecutedCellPercent) );
+	
+	//Set the percent passed 
+	var iPassedPercent = (iExecutedCnt == 0) ? 0 : (iPassedCnt / iExecutedCnt) * 100;
+	$("#mm_matrix_passed_stat_value").html( parseInt(iPassedPercent) );
+	
+	//Set the percent failed 
+	var iFailedPercent = (iExecutedCnt == 0) ? 0 : (iFailedCnt / iExecutedCnt) * 100;
+	$("#mm_matrix_failed_stat_value").html( parseInt(iFailedPercent) );
+	
+	
+}
+
 
 
 /*

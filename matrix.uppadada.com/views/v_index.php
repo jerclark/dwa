@@ -3,6 +3,8 @@
 <div style="border:3px solid gray;margin-top:10px;padding:20px;	min-width:850px;border-radius:20px;">
 
 
+	<!--TABLE CONTENT-->
+
 	<div class="mm_content_layout_header"><h3>Testcase Configuration</h3></div>
 	
 	<div>
@@ -72,15 +74,41 @@
 	</div>
 	
 	
+	
+	
+	
+
+	
+	
+	<!--MATRIX CONTENT-->
+	
 	<div style="margin-top:30px;">
 		<i>Step 4: Track results. Hover over cell to see testcase information. Click cell to log pass/fail result. Right-Click cell to edit expected result.</i>
 	</div>
 	
-	
-	
 	<div id="mm_matrix_wrapper" class="mm_matrix_wrapper">
 		
 		<div id="mm_testcase_matrix_header" class="mm_content_layout_header"><h3>Testcase Matrix</h3></div>
+		
+		<div id="mm_matrix_stats_wrapper" style="margin-left:30px;border-radius:15px;float:left;">
+		
+			<div id="mm_testcase_matrix_stats" style="float:left;text-align:right;margin:auto;margin-left:15px;border-radius:5px;">
+				<span id="mm_matrix_total_stat_label">Total Testcases:</span><br>
+				<span id="mm_matrix_executed_stat_label">% Executed:</span><br>
+				<span id="mm_matrix_passed_stat_label">% Passed:</span><br>
+				<span id="mm_matrix_failed_stat_label">% Failed:</span><br>				
+			</div>
+		
+		
+			<div id="mm_testcase_matrix_stats" style="float:left;text-align:left;margin:auto;margin-left:15px;border-radius:5px;">
+				<span id="mm_matrix_total_stat_value"></span><br>
+				<span id="mm_matrix_executed_stat_value"></span><br>
+				<span id="mm_matrix_passed_stat_value"></span><br>
+				<span id="mm_matrix_failed_stat_value"></span>					
+			</div>
+			
+		</div>
+		
 		
 		<!--button type='button' onclick="gApp.matrixController.editSelectedCellsMetadata()">Edit Expected Result For Selected Cell(s)</button-->
 		
@@ -91,7 +119,7 @@
 		</div>
 		
 		<div id="mm_matrix_anchor" style="clear:both;"></div>
-		
+
 	</div>
 	
 	
