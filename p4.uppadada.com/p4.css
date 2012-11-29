@@ -1,12 +1,13 @@
 h1 {
 	font-size: 250%;
 	line-height: 20px;
-	letter-spacing: 10px;
+	letter-spacing: 0px;
 }
 
 #wrapper{
 	margin: 0px auto;
-	width: 50%;
+	width: 95%;
+	min-width:600px;
 }
 
 #masthead {
