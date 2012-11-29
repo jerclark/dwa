@@ -29,9 +29,7 @@
 						<ul>
 							<li>Create an account or Login to begin</li>
 							<li>Add recipes (with instructions and ingredient lists) to your Recipe Bank</li>
-							<li>Mark Recipes as Breakfast, Lunch, Snack, Dinner, or any combination</li>
-							<li>Connect with friends to see their Recipe Banks as well</li>
-							<li>Use the "Meal-o-Matic" to generate a "Big Board" of meals. The application will generate 1 week meal plan, suggesting a breakfast, lunch, snack and dinner option for every day of the week</li>
+							<li>Use the "Meal-o-Matic" to generate a "Big Board" of meals. The application will generate a meal plan, suggesting a breakfast, lunch, snack and dinner option for every day of the date range of the meal plan</li>
 							<li>Adjust your meal plan by rearranging the suggested options, or by using alternatives from your recipe bank</li>
 							<li>Use the auto generated "shopping list" to buy the necessary goods for the weeks meals</li>					
 						</ul>
@@ -41,23 +39,60 @@
 						<h2>UI/Features</h2>
 
 						<h3>Getting Started/Home</h3>
+						The home screen will provide a simple overview of what the site does, as well as offer an option to signup/login:<br>
+						<img width="400" height="600" src="/images/welcome_screen.jpg"/>
 						
 						
 						<h3>Main Screen</h3>
+						The main screen will contain most of the UI necessary to use the site, including:
+						The Recipe Bank - users can add/edit/remove their own recipes, and see other user's shared recipes
+						The Big Board - User's can choose a date range for which to plan meals, and view a grid of the meal plan. The user can also click the "View Shopping List" button to view the shopping list associated with a meal plan.<br>
+						<img width="400" height="600" src="/images/main_screen.png"/>
 						
 						
-						<h3>Adding Recipes</h3>
+												
+						<h3>Recipe Bank</h3>
+						This is where the user will Manage and Browse recipes. The user can:
+						<ul>
+							<li>Add recipes, and Edit/Remove recipes they own</li>
+							<li>Enter ingredients, steps and metadata about recipes (metadata: type of meal, healthy/junk, cost, ease, time, sharing preference, pictures, custom tags?)</li>
+							<li>Add Metadata about ingredients (cost, season, availablility, images)</li>
+							<li>Browse other users shared recipes</li>
+							<li>Search for recipes (By Name, Ingredient, user, other metadata>)</li>
+						</ul>
 						
 						
-						<h3>Connecting to friends shared recipes</h3>
+						<h3>The Big Board</h3>
+						This is where the user will create meal plans
+						<ul>
+							<li>User can set a date range for which to make a meal plan (I will probably set some limit here)</li>
+							<li>User can do a random "Auto-Generate" from the recipe bank</li>
+							<li>User can do a guided "Auto-Generate" from the recipe bank by entering some "parameters" to the generation process (possibilities: favor "healthy" recipes, allow higher tolerance for "junk" food, keep overall ingredient list below some threshold, favor in season recipes, etc.)</li>
+							<li>Manually drag/drop recipes from the recipe bank</li>
+							<li>User can rearrange recipes in the grid by drag/drop</li>	
+							<li>User can click the "View Big List" button to view the Big List (shopping list)</li>			
+						</ul>
+						<h4>Nice to haves</h4>
+						<ul>
+							<li>User can export plan to CalDAV services</li>
+						</ul>
 						
 						
-						<h3>Generating a Meal Plan</h3>
+						<h3>The Big List</h3>
+						This is the shopping list for the meal plan
+						<ul>
+							<li>The user can e-mail the list (for consumption on a smartphone, etc)</li>
+							<li>The user can print the list</li>
+							<li>The user can view the list on a smartphone</li>	
+							<li>The user can add or edit an existing price for an ingredient</li>
+							<li>If the user hasn't added a price, they can view an average of all other users price entries for that ingredient</li>
+							<li>The user can check items as they are purchased</li>	
+						</ul>
 						
-						
-						<h3>Using the shopping list</h3>
-						
-						
+						<h4>Nice to haves</h4>
+						<ul>
+							<li>User can export plan to some list/task (like ta-da-list, or some other task/list manager)</li>
+						</ul>
 						
 					</div>
 					
