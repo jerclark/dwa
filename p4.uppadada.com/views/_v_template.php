@@ -19,14 +19,14 @@
 	
 
 	<!--OTHER JS-->
-	<script type="text/javascript" src="/js/p4.js"></script>
+	<!--script type="text/javascript" src="/js/p4.js"></script-->
 	
 	
 	<!--CSS-->
 	<link rel="stylesheet" type="text/css" href="/css/p2.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/p4.css"/>
 	<style type="text/css" title="currentStyle">
-	    @import "/DataTables/media/css/demo_table.css";@import "/DataTables/media/css/header.ccss";
+	    @import "/DataTables/media/css/demo_table.css";
 					@import "/DataTables/media/css/demo_table_jui.css";
 					@import "/DataTables/examples/examples_support/themes/smoothness/jquery-ui-1.8.4.custom.css";
 	

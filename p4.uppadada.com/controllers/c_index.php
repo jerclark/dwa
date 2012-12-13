@@ -35,7 +35,7 @@ class index_controller extends base_controller {
 			$this->template->content = View::instance('_v_main');
 			
 			#Add the JS files for the Main UI Controllers and Views
-			$client_files = Array("/js/BMApp.js", "/js/BMRecipeController.js");
+			$client_files = Array("/js/BMApp.js", "/js/BMRecipeController.js", "/js/BMMealPlanController.js", "/js/BMMealGridController.js");
 			$this->template->client_files = Utils::load_client_files($client_files);
 		
 			# Render the view

@@ -9,8 +9,8 @@ class recipes_controller extends base_controller {
 	* 
 	*/
 	public function index() {
-	
-		$q = "SELECT * FROM recipes";
+			
+		$q = "SELECT * FROM recipes WHERE user_id=".$this->user->user_id;
 		
 		$recipes = DB::instance(DB_NAME)->select_rows($q);
 		
@@ -33,8 +33,9 @@ class recipes_controller extends base_controller {
 	*/
 	public function add() {
 	
+		//Auth::bounce(!$this->user);
 	
-		$data = Array("name" => "New Recipe", "created" => Time::now(), "modified" => Time::now());
+		$data = Array("name" => "New Recipe", "created" => Time::now(), "modified" => Time::now(), "user_id" => $this->user->user_id);
 
 		#Insert the posted form into the db
 		$recipe = DB::instance(DB_NAME)->insert('recipes',$data);
@@ -51,6 +52,8 @@ class recipes_controller extends base_controller {
 	* 
 	*/
 	public function delete($recipe_id) {
+		
+		//Auth::bounce(!$this->user);
 
 		# Delete this recipe
 		$where_condition = 'WHERE recipe_id = '.$recipe_id;
@@ -68,6 +71,8 @@ class recipes_controller extends base_controller {
 	* 
 	*/
 	public function p_update() {
+		
+		//Auth::bounce(!$this->user);
 				
 		#Update the mod time
 		$_POST['modified'] = Time::now();		

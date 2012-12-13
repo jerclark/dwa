@@ -86,5 +86,8 @@ function BMApp(){
 
 
 	this.recipeController = new BMRecipeController();
+	this.mealplanController = new BMMealPlanController();
+	this.mealgridController = new BMMealGridController();
+	
 
 }

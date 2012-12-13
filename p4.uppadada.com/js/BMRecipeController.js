@@ -21,6 +21,7 @@ function BMRecipeController(){
 			var oSelectedRecipe = gApp.recipeController.dataTable._('#' + this.id)[0];
 			
 			//Load the data into the fields
+			$("#bm_recipe_name_label").html(oSelectedRecipe.name);
 			$("#bm_recipe_ingredients_field").val(oSelectedRecipe.ingredients);
 			$("#bm_recipe_steps_field").val(oSelectedRecipe.steps);
 			$("#bm_recipe_meal_type_breakfast_checkbox").attr("checked", (oSelectedRecipe.is_breakfast == 1));
@@ -40,7 +41,7 @@ function BMRecipeController(){
 		
 		"bInfo": false,
 
-		"sScrollY": "350px",
+		"sScrollY": "200px",
 		
 		"bPaginate": false,
 		
@@ -56,6 +57,36 @@ function BMRecipeController(){
 		    if (this.$('tr').length > 0){
 				this.$('tr:last').children()[0].click();
 			}
+		},
+		
+		"fnCreatedRow": function (nRow, aData, iDataIndex) {
+						
+			//Capture the data
+			var oData = aData; 
+								  	
+			//NAME EDITING
+			$('td', nRow).editable( function(value, settings){
+				var recipeId = gApp.recipeController.dataTable._("#" + nRow.id)[0].recipe_id;
+				$.ajax({
+					data: {"recipe_id":recipeId, "name":value},
+					type: "POST",
+			        url: '/recipes/p_update'
+			     }).done(function(oResponse){
+					//Reload the data
+					gApp.recipeController.dataTable.fnReloadAjax();		
+				 }).error(function(xhr, errorStatus, errorText){
+					alert("There was an issue adding a new recipe: " + errorStatus + ", " + errorText);
+				 });
+				return(value);
+			}, 
+			{	
+                "height": "20px",
+				event: "dblclick",
+				"width": "100%",
+				onblur: "submit"
+            });
+
+			
 		}
 		
 		
@@ -124,12 +155,21 @@ BMRecipeController.prototype.addRecipe = function(){
 		dataType:"json",
         url: '/recipes/add'
      }).done(function(oResponse){
-		 gApp.recipeController.dataTable.fnReloadAjax();
+		 
+		//Reload the data
+		gApp.recipeController.dataTable.fnReloadAjax();		
+		
+		
 	 }).error(function(xhr, errorStatus, errorText){
 		alert("There was an issue adding a new recipe: " + errorStatus + ", " + errorText);
 	 });
 	
 		
+}
+
+
+BMRecipeController.prototype.updateRecipeName = function(){
+	alert("Changed Name");
 }
 
 

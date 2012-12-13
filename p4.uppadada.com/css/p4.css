@@ -62,16 +62,51 @@ h1 {
 }
 
 
+#bm_planner_wrapper{
+	margin:auto;
+	margin-top:10px;
+	padding:20px;
+	border:2px solid gray;
+	clear:both;
+	border-radius: 30px;
+}
+
 
 .bm_table_wrapper{
 	width:300px;
 	padding:15px;
-	height:450px;
+	height:275px;
 	float:left;
 	border-radius:15px;
 	margin-left:15px;
 	border:2px solid lightgray;
 }
+
+.bm_mealplan_grid_cell{
+	float:left;
+	width:125px;
+	margin:10px;
+	text-align:center;
+}
+
+.bm_mealplan_grid_column_header{
+	border-radius:10px;
+	border:2px solid gray;
+	background: lightgray;
+}
+
+.bm_mealplan_grid_row_header{
+	border-radius:10px;
+	border:2px solid gray;
+	background: lightgray;
+}
+
+.bm_mealplan_grid_body{
+	border-radius:10px;
+	border:2px solid blue;
+	background: lightblue;
+}
+
 
 
 
