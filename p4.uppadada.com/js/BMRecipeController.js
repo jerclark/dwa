@@ -78,13 +78,28 @@ function BMRecipeController(){
 					alert("There was an issue adding a new recipe: " + errorStatus + ", " + errorText);
 				 });
 				return(value);
-			}, 
+			},
 			{	
                 "height": "20px",
 				event: "dblclick",
 				"width": "100%",
 				onblur: "submit"
             });
+
+			
+			//DRAG N' DROP TO MEAL GRID
+			$(nRow).draggable({
+				zIndex:5000,
+				cursor: "move",
+				scroll: false,
+				appendTo: "body",
+				helper: function() {
+			        //debugger;
+			        return $("<div></div>").append($(this).find('td:first').html());
+			    }
+			});
+
+
 
 			
 		}

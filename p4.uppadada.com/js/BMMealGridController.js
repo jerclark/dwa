@@ -36,8 +36,9 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 			scroll: false
 		});
 		
-		//Setup the droppable event
+		//Setup the droppable event for other meals
 		$("#" + aoMeals[i].meal_id).droppable({
+			accept: ".bm_mealplan_grid_cell",
 			hoverClass: "ui-state-active",
 			drop: function( event, ui ) {
 				
@@ -72,6 +73,34 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 				
             }
 		});
+		
+	
+		//Setup the droppable event for recipes from the tables
+		$("#" + aoMeals[i].meal_id).droppable({
+			accept: "tr",
+			hoverClass: "ui-state-active",
+			drop: function( event, ui ) {
+
+				var sourceRecipeId = ui.draggable[0].id;
+				var targetMeal = $(this).data().meal;
+
+
+				//Post an update for the target meal
+				$.post("/meals/p_update", {"meal_id":targetMeal.meal_id, "recipe_id":sourceRecipeId.substring(1)})
+				 .success(function() { 
+					//gApp.mealplanController.refresh();
+				  })
+				 .error(function() { 
+					alert("error"); 
+				  })
+				 .complete(function() { 
+					gApp.mealplanController.refresh();
+				  });
+
+            }
+		});
+		
+		
 	}
 	
 	
