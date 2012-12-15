@@ -6,8 +6,11 @@ function BMMealGridController(){
 
 BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 	
-	//First Create the rows, with the "date" row headers
+	//Clear out the content
 	$("#bm_mealplan_grid_content").html("");
+	$("#bm_mealplan_shopping_list_textarea").val("");
+	
+	//First Create the rows, with the "date" row headers
 	var rowCount = aoMeals.length / 4;
 	for (var i=0;i<rowCount;i++){
 		
@@ -20,11 +23,15 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 		$("#" + sRowId).append('<div class="bm_mealplan_grid_cell bm_mealplan_grid_row_header">' + aoMeals[i*4].meal_date + '</div>')
 	}
 	
-	//Now place the cells
+	//Compose the Grid and the Ingredient Lis
 	for (var i=0;i<aoMeals.length;i++){
+		
+		//Add the cell for the next meal
 		var targetRowIndex = Math.floor(i / 4);
 		var sCellLabel = aoMeals[i].recipe ? aoMeals[i].recipe.name : aoMeals[i].meal_id;
 		$("#bm_mealplan_row_" + targetRowIndex).append('<div class="bm_mealplan_grid_cell bm_mealplan_grid_body" id="' + aoMeals[i].meal_id + '">' + sCellLabel + '</div>');
+		
+		//Setup the data object on the cell
 		$("#" + aoMeals[i].meal_id).data('meal', aoMeals[i]);
 		
 		//Setup the draggable cell
@@ -38,29 +45,27 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 		
 		//Setup the droppable event for other meals
 		$("#" + aoMeals[i].meal_id).droppable({
-			accept: ".bm_mealplan_grid_cell",
+			accept: ".bm_mealplan_grid_cell,tr",
 			hoverClass: "ui-state-active",
 			drop: function( event, ui ) {
 				
-				var sourceMeal = ui.draggable.data().meal;
-				var targetMeal = $(this).data().meal;
+				var iSourceRecipeId;
+				var oSourceMeal;
 				
+				//If it's another meal grid cell
+				if (ui.draggable.hasClass("bm_mealplan_grid_cell")){
+					oSourceMeal = ui.draggable.data().meal;
+					iSourceRecipeId = oSourceMeal.recipe_id; 
+				//Otherwise if it's a table row	
+				}else{
+					iSourceRecipeId = ui.draggable[0].id.substring(1);
+				}
 				
-				//Post an update for the source meal
-				$.post("/meals/p_update", {"meal_id":sourceMeal.meal_id, "recipe_id":targetMeal.recipe_id})
-				 .success(function() { 
-					//gApp.mealplanController.refresh();
-				  })
-				 .error(function() { 
-					//alert("error"); 
-				  })
-				 .complete(function() { 
-					gApp.mealplanController.refresh();
-				  });
 				
 				
 				//Post an update for the target meal
-				$.post("/meals/p_update", {"meal_id":targetMeal.meal_id, "recipe_id":sourceMeal.recipe_id})
+				var targetMeal = $(this).data().meal;
+				$.post("/meals/p_update", {"meal_id":targetMeal.meal_id, "recipe_id":iSourceRecipeId})
 				 .success(function() { 
 					//gApp.mealplanController.refresh();
 				  })
@@ -69,38 +74,35 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 				  })
 				 .complete(function() { 
 					gApp.mealplanController.refresh();
-				  });
+				 });
+				
+				
+				//If it was another grid cell, post an update for the source cell
+				if (ui.draggable.hasClass("bm_mealplan_grid_cell")){
+					//Post an update for the source meal
+					$.post("/meals/p_update", {"meal_id":oSourceMeal.meal_id, "recipe_id":targetMeal.recipe_id})
+					 .success(function() { 
+						//gApp.mealplanController.refresh();
+					  })
+					 .error(function() { 
+						//alert("error"); 
+					  })
+					 .complete(function() { 
+						gApp.mealplanController.refresh();
+					  });
+				}
+				
 				
             }
 		});
 		
-	
-		//Setup the droppable event for recipes from the tables
-		$("#" + aoMeals[i].meal_id).droppable({
-			accept: "tr",
-			hoverClass: "ui-state-active",
-			drop: function( event, ui ) {
-
-				var sourceRecipeId = ui.draggable[0].id;
-				var targetMeal = $(this).data().meal;
-
-
-				//Post an update for the target meal
-				$.post("/meals/p_update", {"meal_id":targetMeal.meal_id, "recipe_id":sourceRecipeId.substring(1)})
-				 .success(function() { 
-					//gApp.mealplanController.refresh();
-				  })
-				 .error(function() { 
-					alert("error"); 
-				  })
-				 .complete(function() { 
-					gApp.mealplanController.refresh();
-				  });
-
-            }
-		});
+		//Append the ingredients to the ingredients list
+		if (aoMeals[i].recipe && aoMeals[i].recipe.ingredients){
+			$("#bm_mealplan_shopping_list_textarea").val($("#bm_mealplan_shopping_list_textarea").val() + aoMeals[i].recipe.ingredients + "\n");
+		}
 		
 		
+
 	}
 	
 	

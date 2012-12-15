@@ -129,13 +129,13 @@
 			<div id="bm_mealplan_setup_content">
 				<form name="bm_mealplan_setup_form" id="bm_mealplan_setup_form">
 					
-					<fieldset>
+					<!--fieldset-->
 						<label for="start_date">Plan Start Date:</label>
 						<input type="text" id="bm_mealplan_start_date" name="start_date"/>
 						<label for="end_date">Plan End Date:</label>
 						<input type="text" id="bm_mealplan_end_date" name="end_date"/>
 						<input hidden class="bm_mealplan_id" name="mealplan_id"></input>
-					</fieldset>
+					<!--/fieldset-->
 					
 				</form>
 		    </div>
@@ -146,6 +146,8 @@
 				<button id="bm_mealplan_cancel_edit_button" hidden style="" onclick="gApp.mealplanController.cancelEditSelectedMealplan()">Cancel Edit</button>
 				<span id="bm_mealplan_status"></span>
 			</div>
+			
+			<br><br>
 			
 			<div id="bm_mealplan_grid_wrapper">
 				<div id="bm_mealplan_grid_headers">
@@ -165,9 +167,19 @@
 				<div id="bm_grid_anchor" style="clear:both;"></div>
 			
 			</div>
-			
+
 		<!--/div--> <!--END OF THE TABS, SHOULD WE GET THEM TO WORK-->
 
+	</div>
+	
+	
+	<div id="bm_mealplan_shopping_list_wrapper" style="float:left;border:2px solid lightgray;border-radius:10px;margin-left:15px;">
+		
+		<div id="bm_mealplan_shopping_list">
+			<h3>Shopping List</h3>
+			<textarea id="bm_mealplan_shopping_list_textarea" readonly></textarea>
+		</div>
+		
 	</div>
 	
 	

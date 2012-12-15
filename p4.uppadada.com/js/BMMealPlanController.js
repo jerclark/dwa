@@ -39,6 +39,7 @@ function BMMealPlanController(){
 
 	//REGISTER TABLE ROW CLICK EVENT HANDLER
 	$('body').on( 'click', '#bm_meal_plan_table tbody tr', function( e ) {
+		
         	
 			//This will get the whole recipe data object because they get loaded from the ajax source
 			var oSelectedMealplan = gApp.mealplanController.dataTable._('#' + this.id)[0];
@@ -53,6 +54,7 @@ function BMMealPlanController(){
 				dataType:"json",
 		        url: '/meals/index/' + oSelectedMealplan.mealplan_id 
 		     }).done(function(oResponse){
+				//Clear out the shopping list
 				//Redisplay the grid data
 				gApp.mealgridController.displayGridForMealplan(oResponse);
 			 }).error(function(xhr, errorStatus, errorText){
@@ -107,7 +109,7 @@ function BMMealPlanController(){
 			
 	    "fnDrawCallback": function( oSettings ) {
 		    if (this.$('tr').length > 0){
-				this.$('.row_selected').children()[0].click();
+				//this.$('.row_selected').children()[0].click();
 			}
 		},
 		
