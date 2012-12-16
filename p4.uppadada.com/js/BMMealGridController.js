@@ -8,7 +8,7 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 	
 	//Clear out the content
 	$("#bm_mealplan_grid_content").html("");
-	$("#bm_mealplan_shopping_list_textarea").val("");
+	$("#bm_mealplan_shopping_list").html("");
 	
 	//First Create the rows, with the "date" row headers
 	var rowCount = aoMeals.length / 4;
@@ -17,7 +17,7 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 		var sRowId = "bm_mealplan_row_" + i;
 		
 		//Add the row
-		$("#bm_mealplan_grid_content").append('<div class="bm_mealplan_row" id="' + sRowId + '"></div>');
+		$("#bm_mealplan_grid_content").append('<div class="bm_mealplan_row" id="' + sRowId + '" style="clear:both;"></div>');
 		
 		//Add the row header - the date
 		$("#" + sRowId).append('<div class="bm_mealplan_grid_cell bm_mealplan_grid_row_header">' + aoMeals[i*4].meal_date + '</div>')
@@ -98,7 +98,7 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 		
 		//Append the ingredients to the ingredients list
 		if (aoMeals[i].recipe && aoMeals[i].recipe.ingredients){
-			$("#bm_mealplan_shopping_list_textarea").val($("#bm_mealplan_shopping_list_textarea").val() + aoMeals[i].recipe.ingredients + "\n");
+			$("#bm_mealplan_shopping_list").append("<li>" + aoMeals[i].recipe.ingredients.replace(/\n/g, "<li>"));
 		}
 		
 		

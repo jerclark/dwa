@@ -1,5 +1,5 @@
 var gApp;
-
+var TWO_WEEKS = (14*(24*(60*60000)));
 
 $.fn.dataTableExt.oApi.fnReloadAjax = function ( oSettings, sNewSource, fnCallback, bStandingRedraw )
 {

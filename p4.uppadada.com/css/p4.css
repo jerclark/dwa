@@ -75,11 +75,22 @@ h1 {
 .bm_table_wrapper{
 	width:300px;
 	padding:15px;
-	height:275px;
+	height:310px;
 	float:left;
 	border-radius:15px;
 	margin-left:15px;
 	border:2px solid lightgray;
+}
+
+
+#bm_meal_plan_table_outer_wrapper{
+	width:500px;
+	padding:15px;
+	height:160px;
+	border-radius:15px;
+	border:2px solid lightgray;
+	
+	
 }
 
 .bm_mealplan_grid_cell{
@@ -87,6 +98,8 @@ h1 {
 	width:125px;
 	margin:10px;
 	text-align:center;
+	padding:10px;
+	
 }
 
 .bm_mealplan_grid_column_header{
@@ -102,9 +115,9 @@ h1 {
 }
 
 .bm_mealplan_grid_body{
-	border-radius:10px;
-	border:2px solid blue;
-	background: lightblue;
+	border-radius:3px;
+	border:2px solid green;
+	background: lightgreen;
 }
 
 

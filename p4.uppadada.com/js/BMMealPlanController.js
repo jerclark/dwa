@@ -1,12 +1,29 @@
 function BMMealPlanController(){
 	
 	
-	//Init the Recipe Tabs
-	$("#bm_mealplan_tabs").tabs({
-	});
-	
-	
-	//Init the date pickers for the mealplan setup
+	/*
+	// select everything when editing field in focus
+	 $('#bm_meal_plan_table tbody td input').live('focus', function (e){
+	 	$(this).select();
+	 });
+
+	 // attach datepicker on focus and format to return yy-mm-dd    
+	 $('#bm_meal_plan_table tbody td.start_date input').live('focus', function (e){
+	 	$(this).datepicker({ dateFormat: 'yy-mm-dd' }).datepicker("show");
+	 });
+
+	 // override normal blur function ( needed for date month switching )
+	 $('#bm_meal_plan_table tbody td input').live('blur', function (e){
+	 	return false;
+	 });
+
+	 // set change function to handle sumbit
+	 $('#bm_meal_plan_table tbody td.start_date input').live('change', function (e){
+	 	$(this).parents("form").submit();
+	 });
+	*/
+
+	/*
 	$( "#bm_mealplan_start_date" ).datepicker({
 		showOn: "button",
 		buttonImage: "/images/calendar.gif",
@@ -35,6 +52,7 @@ function BMMealPlanController(){
             $( "#bm_mealplan_start_date" ).datepicker( "option", "maxDate", selectedDate );
         }
     });
+	*/
 
 
 	//REGISTER TABLE ROW CLICK EVENT HANDLER
@@ -95,7 +113,7 @@ function BMMealPlanController(){
 		
 		"bInfo": false,
 
-		"sScrollY": "200px",
+		"sScrollY": "95px",
 		
 		"bPaginate": false,
 		
@@ -104,13 +122,16 @@ function BMMealPlanController(){
 		"sAjaxSource": "/mealplans/index",
 		
 		"aoColumns": [
-					{"mData":"name","sTitle":"Meal Plans"}
+					{"mData":"name","sTitle":"Meal Plan", "sClass":"name textinput_editable"},
+					{"mData":"start_date","sTitle":"Plan Start Date", "sClass":"start_date datepicker_editable"},
+					{"mData":"end_date","sTitle":"Plan End Date", "sClass":"end_date datepicker_editable"},
 				],
 			
 	    "fnDrawCallback": function( oSettings ) {
 		    if (this.$('tr').length > 0){
 				//this.$('.row_selected').children()[0].click();
 			}
+			
 		},
 		
 		"fnCreatedRow": function (nRow, aData, iDataIndex) {
@@ -119,7 +140,7 @@ function BMMealPlanController(){
 			var oData = aData; 
 								  	
 			//NAME EDITING
-			$('td', nRow).editable( function(value, settings){
+			$('td[class*="textinput_editable"]', nRow).editable( function(value, settings){
 				var mealplanId = gApp.mealplanController.dataTable._("#" + nRow.id)[0].mealplan_id;
 				$.ajax({
 					data: {"mealplan_id":mealplanId, "name":value},
@@ -140,7 +161,88 @@ function BMMealPlanController(){
 				onblur: "submit"
             });
 
+			//Capture the date information for use in following closures
+			var startDate = new Date(oData.start_date);
+			var endDate = new Date(oData.end_date);
+			var dateDiff = endDate.getTime() - startDate.getTime();
 			
+			//START DATE EDITING
+			var startMaxDate = oData.end_date;
+			$('td[class*="start_date"]', nRow).editable( function(value, settings){
+				
+				//Init the date for posting
+				var tmpMealplanData = gApp.mealplanController.dataTable._("#" + nRow.id)[0];
+				var mealplanData = {"mealplan_id":tmpMealplanData.mealplan_id, "start_date":tmpMealplanData.start_date, "end_date":tmpMealplanData.end_date};
+				mealplanData["start_date"] = value;
+				
+				//Adjust the actual value of the end date if we've gone past it, or if we've gone earlier than 2 weeks before
+				var newStartDate = new Date(value);
+				if ( newStartDate.getTime() > endDate.getTime() ){
+					var newEndDateTime = newStartDate.getTime() + dateDiff;
+					var newEndDateString = new Date(newEndDateTime).toISOString().substring(0,10);
+					mealplanData["end_date"] = newEndDateString;
+				}else if ( (newStartDate.getTime() + TWO_WEEKS) < endDate.getTime() ){
+					var newEndDateTime = newStartDate.getTime() + TWO_WEEKS;
+					var newEndDateString = new Date(newEndDateTime).toISOString().substring(0,10);
+					mealplanData["end_date"] = newEndDateString;
+				}
+				$.ajax({
+					data: mealplanData,
+					type: "POST",
+			        url: '/mealplans/p_update'
+			     }).done(function(oResponse){
+					//Reload the data
+					gApp.mealplanController.dataTable.fnReloadAjax();		
+				 }).error(function(xhr, errorStatus, errorText){
+					alert("There was an issue updating the mealplan: " + errorStatus + ", " + errorText);
+				 });
+				return(value);
+			}, 
+			{	
+				"type":"datepicker",
+				datepicker: {
+			    	dateFormat: 'yy-mm-dd', 
+			    	numberOfMonths: 2,
+					minDate:0
+			  	},
+				event: "dblclick",
+				"width": "100%"
+            });
+
+
+
+			//END DATE EDITING
+
+			var maxEndDate = new Date(startDate.getTime() + (14*(24*(60*60000))));
+			$('td[class*="end_date"]', nRow).editable( function(value, settings){
+				var tmpMealplanData = gApp.mealplanController.dataTable._("#" + nRow.id)[0];
+				var mealplanData = {"mealplan_id":tmpMealplanData.mealplan_id, "start_date":tmpMealplanData.start_date, "end_date":tmpMealplanData.end_date};
+				mealplanData[this.classList[0]] = value;
+				$.ajax({
+					data: mealplanData,
+					type: "POST",
+			        url: '/mealplans/p_update'
+			     }).done(function(oResponse){
+					//Reload the data
+					gApp.mealplanController.dataTable.fnReloadAjax();		
+				 }).error(function(xhr, errorStatus, errorText){
+					alert("There was an issue updating the mealplan: " + errorStatus + ", " + errorText);
+				 });
+				return(value);
+			}, 
+			{	
+				"type":"datepicker",
+				datepicker: {
+			    	dateFormat: 'yy-mm-dd', 
+			    	numberOfMonths: 2,
+					minDate:startDate.toISOString().substring(0,10),
+					maxDate:maxEndDate.toISOString().substring(0,10)
+			  	},
+				event: "dblclick",
+				"width": "100%"
+            });
+
+		
 		}
 		
 		
@@ -227,4 +329,25 @@ BMMealPlanController.prototype.lockMealplan = function(){
 
 BMMealPlanController.prototype.refresh = function(){
 	this.dataTable.$('.row_selected').children()[0].click();
+}
+
+
+
+
+BMMealPlanController.prototype.removeSelectedMealplan = function(){
+	
+	var iSelectedMealplanId = this.dataTable.$('.row_selected').attr("id").substr(2);
+
+	//Create the JQUERY ajax call here, and reload the table on success
+	$.ajax({
+		dataType:"json",
+       	url: '/mealplans/delete/' + iSelectedMealplanId
+     }).done(function(){
+		 gApp.mealplanController.dataTable.fnReloadAjax();
+		 gApp.mealplanController.dataTable.$('tr:last').children()[0].click();
+	 }).error(function(xhr, errorStatus, errorText){
+		alert("There was an issue removing a recipe: " + errorStatus + ", " + errorText);
+	 });
+	
+		
 }

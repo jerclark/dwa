@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="/js/jquery-ui-1.9.1.custom/development-bundle/themes/base/jquery-ui.css"/>
 	<script type="text/javascript" charset="utf-8" src="/DataTables/media/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/jquery.jeditable.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/js/jquery.jeditable.datepicker.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/jquery.bgiframe-2.1.2.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/jquery.form.js"></script>
 	
@@ -51,7 +52,7 @@
 		<div id="masthead_wrapper">
 			<div style="position:relative;padding-left:10px;">
 				<div id="masthead_image" style="float:left;background-image:url('http://funniestcorner.com/wp-content/uploads/2012/09/21.jpg');"></div>
-				<h1 id="masthead_text">B</h1>
+				<h1 id="masthead_text">Big Meals, No Whammies</h1>
 			</div>
 			<div id="masthead"><a href="/index/index"><span id="masthead_link"></span></a></div>
 			<? if(isset($flash_error)): ?>

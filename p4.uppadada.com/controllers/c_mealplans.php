@@ -33,7 +33,7 @@ class mealplans_controller extends base_controller {
 	public function add() {
 	
 	
-		$data = Array("name" => "New Mealplan", "created" => Time::now(), "modified" => Time::now(), "user_id" => $this->user->user_id);
+		$data = Array("name" => "New Mealplan", "start_date" => date(DATE_ISO8601), "end_date" => date(DATE_ISO8601), "created" => Time::now(), "modified" => Time::now(), "user_id" => $this->user->user_id);
 
 		#Insert the posted form into the db
 		$mealplan = DB::instance(DB_NAME)->insert('mealplans',$data);
@@ -84,6 +84,24 @@ class mealplans_controller extends base_controller {
 		
 		
 	}
+	
+	
+	/**
+	* Delete
+	* 
+	* This will remove a mealplan from the DB
+	* 
+	*/
+	public function delete($mealplan_id) {
+		
+		//Auth::bounce(!$this->user);
+
+		# Delete this recipe
+		$where_condition = 'WHERE mealplan_id = '.$mealplan_id;
+		DB::instance(DB_NAME)->delete('mealplans', $where_condition);
+	
+	}
+	
 	
 	
 	

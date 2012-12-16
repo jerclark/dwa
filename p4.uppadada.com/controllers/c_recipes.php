@@ -10,7 +10,7 @@ class recipes_controller extends base_controller {
 	*/
 	public function index() {
 			
-		$q = "SELECT * FROM recipes WHERE user_id=".$this->user->user_id;
+		$q = "SELECT recipes.*,users.email FROM recipes,users WHERE recipes.user_id=users.user_id";
 		
 		$recipes = DB::instance(DB_NAME)->select_rows($q);
 		
