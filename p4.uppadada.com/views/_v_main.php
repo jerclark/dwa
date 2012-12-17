@@ -17,7 +17,7 @@
 					<small><i>Rollover for Usage Tips</i></small>
 			</div>
 		</div>
-		<div id="bm_recipe_table_wrapper" style="float:left;width:95%;" class="bm_table_wrapper">
+		<div id="bm_recipe_table_outer_wrapper" style="float:left;width:95%;" class="bm_table_wrapper">
 			<table id="bm_recipe_table" class="display">
 			</table>
 			<div>

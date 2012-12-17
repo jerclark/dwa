@@ -1,65 +1,9 @@
 function BMMealPlanController(){
 	
 	this._meals = [];
-	
-	
-	/*
-	// select everything when editing field in focus
-	 $('#bm_meal_plan_table tbody td input').live('focus', function (e){
-	 	$(this).select();
-	 });
-
-	 // attach datepicker on focus and format to return yy-mm-dd    
-	 $('#bm_meal_plan_table tbody td.start_date input').live('focus', function (e){
-	 	$(this).datepicker({ dateFormat: 'yy-mm-dd' }).datepicker("show");
-	 });
-
-	 // override normal blur function ( needed for date month switching )
-	 $('#bm_meal_plan_table tbody td input').live('blur', function (e){
-	 	return false;
-	 });
-
-	 // set change function to handle sumbit
-	 $('#bm_meal_plan_table tbody td.start_date input').live('change', function (e){
-	 	$(this).parents("form").submit();
-	 });
-	*/
-
-	/*
-	$( "#bm_mealplan_start_date" ).datepicker({
-		showOn: "button",
-		buttonImage: "/images/calendar.gif",
-		buttonImageOnly: true,
-		disabled: true,
-		dateFormat: "yy-mm-dd",
-        defaultDate: "+1w",
-		minDate: -0,
-        changeMonth: true,
-        numberOfMonths: 2,
-        onClose: function( selectedDate ) {
-            $( "#bm_mealplan_end_date" ).datepicker( "option", "minDate", selectedDate );
-        }
-    });
-    $( "#bm_mealplan_end_date" ).datepicker({
-	    showOn: "button",
-		buttonImage: "/images/calendar.gif",
-		buttonImageOnly: true,
-		disabled: true,
-		dateFormat: "yy-mm-dd",
-        defaultDate: "+1w",
-		minDate: -0,
-        changeMonth: true,
-        numberOfMonths: 2,
-        onClose: function( selectedDate ) {
-            $( "#bm_mealplan_start_date" ).datepicker( "option", "maxDate", selectedDate );
-        }
-    });
-	*/
-
 
 	//REGISTER TABLE ROW CLICK EVENT HANDLER
 	$('body').on( 'click', '#bm_meal_plan_table tbody tr', function( e ) {
-		
         	
 			//This will get the whole recipe data object because they get loaded from the ajax source
 			var oSelectedMealplan = gApp.mealplanController.dataTable._('#' + this.id)[0];
