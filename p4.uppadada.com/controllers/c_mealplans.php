@@ -58,6 +58,8 @@ class mealplans_controller extends base_controller {
 		#Insert the posted data into the db
 		DB::instance(DB_NAME)->update_row('mealplans',$_POST,"WHERE mealplan_id=".$_POST['mealplan_id']);
 		
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST); #sanitize the mealplan posted data
+		
 		#Get the number of meals
 		$startDate = $_POST['start_date'];
 		$endDate = $_POST['end_date'];
@@ -73,7 +75,7 @@ class mealplans_controller extends base_controller {
 			
 			//First add/update any new meals
 			$q = "INSERT INTO meals (`mealplan_id`,`meal_type`,`meal_index`, `meal_date`, `created`, `modified`) VALUES (".$_POST['mealplan_id'].",".$mealType.",".$i.",'".$mealDate."',".Time::now().",".Time::now().") ON DUPLICATE KEY UPDATE meal_date='".$mealDate."'";
-			
+						
 			DB::instance(DB_NAME)->query($q);
 			
 		}

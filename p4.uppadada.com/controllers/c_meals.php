@@ -13,7 +13,7 @@ class meals_controller extends base_controller {
 		$where_clause = ($mealplanId == NULL) ? "" : "WHERE mealplan_id = ".$mealplanId." order by meal_index asc";
 		
 		$q = "SELECT * FROM meals ".$where_clause;
-		
+				
 		$meals = DB::instance(DB_NAME)->select_rows($q);
 		
 		

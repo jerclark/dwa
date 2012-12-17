@@ -43,6 +43,11 @@ h1 {
 }
 
 
+.ui-tooltip {
+    max-width:800px;
+}
+
+
 .flashlight_text{
 	margin: 20px 10px 0px 10px;
 	font-size: 150%;
