@@ -17,6 +17,7 @@
 	<script type="text/javascript" charset="utf-8" src="/js/jquery.jeditable.datepicker.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/jquery.bgiframe-2.1.2.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/jquery.form.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/js/jquery.scrollTo-1.4.3.1-min.js"></script>
 	
 
 	<!--OTHER JS-->
@@ -47,7 +48,7 @@
 
 <body>
 	
-	<div id="wrapper" style="min-width:665px">
+	<div id="wrapper" style="min-width:1160px">
 		
 		<div id="masthead_wrapper">
 			<div style="position:relative;padding-left:10px;">
@@ -67,6 +68,7 @@
 			<? endif; ?>
 			<?php if($user): ?>
 				<div id='toolbar_wrapper'>
+					<div id="user_email" style="display:none;"><?=$user->email?></div>
 					Welcome, <?=$user->first_name?>!</span>
 					<a class="navbar_link" href="/users/profile">profile</a>
 					<a class="navbar_link" href="/users/logout">logout</a>

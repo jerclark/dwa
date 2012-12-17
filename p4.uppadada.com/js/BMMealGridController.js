@@ -28,8 +28,14 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 		
 		//Add the cell for the next meal
 		var targetRowIndex = Math.floor(i / 4);
-		var sCellLabel = aoMeals[i].recipe ? aoMeals[i].recipe.name : aoMeals[i].meal_id;
-		$("#bm_mealplan_row_" + targetRowIndex).append('<div class="bm_mealplan_grid_cell bm_mealplan_grid_body" id="' + aoMeals[i].meal_id + '">' + sCellLabel + '</div>');
+		
+		//Create the cell label
+		var sCellLabel = aoMeals[i].recipe ? aoMeals[i].recipe.name : "<span style='color:gray;font-size:12px;'><i>No recipe assigned. Drag from the recipe table, or click 'Auto-Fill!'</i><span>";
+		
+		//Create the tooltip text
+		var sMealTooltip = aoMeals[i].recipe ? ("Ingredients:<ul><li>" + aoMeals[i].recipe.ingredients.replace(/\n/g, "<li>") + "</ul>Preparation:<ul><li>" + aoMeals[i].recipe.steps.replace(/\n/g, "<li>") + "</ul>") : sCellLabel + "<br>NOTE: If there are no recipes tagged with this meal type (Breakfast, Lunch, etc.), then Auto-Fill will have no effect on this meal.";
+		
+		$("#bm_mealplan_row_" + targetRowIndex).append('<div title="' + sMealTooltip + '"  class="bm_mealplan_grid_cell bm_mealplan_grid_body" id="' + aoMeals[i].meal_id + '">' + sCellLabel + '</div>');
 		
 		//Setup the data object on the cell
 		$("#" + aoMeals[i].meal_id).data('meal', aoMeals[i]);

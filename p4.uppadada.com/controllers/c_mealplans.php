@@ -10,7 +10,7 @@ class mealplans_controller extends base_controller {
 	*/
 	public function index() {
 	
-		$q = "SELECT * FROM mealplans";
+		$q = "SELECT * FROM mealplans WHERE user_id='".$this->user->user_id."'";
 		
 		$mealplans = DB::instance(DB_NAME)->select_rows($q);
 		

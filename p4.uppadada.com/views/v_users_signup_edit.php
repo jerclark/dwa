@@ -40,7 +40,7 @@
 		<!--E-mail-->
 		Email<span style="color:red;">*</span>
 		<br>
-		<input type='text' required pattern="\w+@\w+\.\w{2,3}" name='email' 
+		<input type='text' required pattern="\w+@\w+(\.\w+)*" name='email' 
 			onchange="
 		  		this.setCustomValidity(this.validity.patternMismatch ? 'Please enter an e-mail address' : '');
 		  		if(this.checkValidity()) form.email.pattern = this.value;"
@@ -57,7 +57,7 @@
 		
 		
 		<!--Password-->
-		Password<span style="color:red;">*</span>
+		Password (Must be 5 or more characters)<span style="color:red;">*</span>
 		<br>
 		<input id='password' type='password' name='password' required pattern="\w{5,}" <?php if($user): ?>value=<?=$user->password ?> disabled='true'<?php endif; ?> 					
 			onchange="

@@ -1,3 +1,9 @@
+<!--NOTES-->
+<i><small>Compatibility Note: Has been tested with Chrome (Version 23.0.1271.64), Firefox (16.0.2), Safari (5.1.7) and IE 9 (9.0.8112.16421). Safari has some slight usage issues, and IE8 or earlier will not work.</small></i>
+<br>
+<small>Click here to see the <a href="http://p4.uppadada.com/proposal.html">original proposal</a>, which includes some background and usage information. This implementation below is not exactly as specified in the original proposal, but I believe the spirit of the original proposal is captured.</small>
+
+
 <!--Build the recipe UI-->
 <div id="bm_content_wrapper">
 
@@ -5,7 +11,12 @@
 	
 	<!--div id="bm_recipe_accordian"-->
 	
-		<h3>Recipes</h3>
+		<div id="header_wrapper">
+			<div style="float:left;font-size:175%;margin-left:10px;margin-bottom:10px;">Recipes</div>
+			<div style="float:left;margin-left:30px;vertical-align:bottom;color:green;" title="Get started by browsing and adding recipes, using the 'Add/Remove' buttons below the table. You can double-click the data cells to edit the properties of recipes you create. Check any combination of Breakfast/Lunch/Snack/Dinner to enable that recipe for 'auto-fill'. For example, if 'breakfast' is checked, that recipe will be part of the random pool of 'breakfast' recipes for the auto-fill functionality.">
+					<small><i>Rollover for Usage Tips</i></small>
+			</div>
+		</div>
 		<div id="bm_recipe_table_wrapper" style="float:left;width:95%;" class="bm_table_wrapper">
 			<table id="bm_recipe_table" class="display">
 			</table>
@@ -15,93 +26,7 @@
 			</div>
 		</div>
 		
-		<!--div id="bm_my_recipes_accordian_panel"-->
-			
-			
-			<!--
-			<div id="bm_metadata_wrapper" style="float:left;margin-left:20px;">
-				<div id="bm_recipe_name_label"></div>
-				<div id="bm_recipe_tabs">
-					
-					<ul>
-				        <li><a href="#bm_recipe_ingredient_tab_content">Ingredients</a></li>
-				        <li><a href="#bm_recipe_steps_tab_content">Steps</a></li>
-				        <li><a href="#bm_recipe_meal_tab_content">Meal Type<a></li>
-				    </ul>
-					
-					<div id="bm_recipe_ingredient_tab_content">
-						<form name="bm_recipe_ingredients_form" id="bm_recipe_ingredients_form">
-							<fieldset>
-								<textarea readonly id="bm_recipe_ingredients_field" name="ingredients" style="height:200px;width:700px;" placeholder="Enter Ingredients Here. Separate ingredients with a carriage return."></textarea>
-								<input hidden class="bm_recipe_id" name="recipe_id"></input>
-							</fieldset>
-						</form>
-						<div id="bm_recipe_ingredient_buttons">
-							<button id="bm_recipe_ingredient_edit_button" style="" onclick="gApp.recipeController.editSelectedRecipeIngredients()">Edit</button>
-							<button id="bm_recipe_ingredient_save_edit_button" hidden style="" onclick="gApp.recipeController.saveSelectedRecipeIngredients()">Save</button>
-							<button id="bm_recipe_ingredient_cancel_edit_button" hidden style="" onclick="gApp.recipeController.cancelEditSelectedRecipeIngredients()">Cancel Edit</button>
-							<span class=".bm_update_status"></span>
-						</div>
-				    </div>
-				    
-			
-					<div id="bm_recipe_steps_tab_content">
-						<form name="bm_recipe_steps_form" id="bm_recipe_steps_form">
-							<fieldset>
-								<textarea readonly editable="false" id="bm_recipe_steps_field" name="steps" style="height:200px;width:700px;" placeholder="Enter Preparation Steps Here."></textarea>
-								<input hidden class="bm_recipe_id" name="recipe_id"></input>
-							</fieldset>
-						</form>
-						<div id="bm_recipe_steps_buttons">
-							<button id="bm_recipe_steps_edit_button" style="" onclick="gApp.recipeController.editSelectedRecipeSteps()">Edit</button>
-							<button id="bm_recipe_steps_save_edit_button" hidden style="" onclick="gApp.recipeController.saveSelectedRecipeSteps()">Save</button>
-							<button id="bm_recipe_steps_cancel_edit_button" hidden style="" onclick="gApp.recipeController.cancelEditSelectedRecipeSteps()">Cancel Edit</button>
-							<span class=".bm_update_status"></span>
-						</div>
-					</div>
-				    
-					<div id="bm_recipe_meal_tab_content">
-						<form name="bm_recipe_meal_type_form" id="bm_recipe_meal_type_form">
-							<fieldset>
-								<input type="hidden" name="is_breakfast" value="0" />
-								<input disabled type="checkbox" id="bm_recipe_meal_type_breakfast_checkbox" name="is_breakfast" value="1"></input> Breakfast<br>
-								<input type="hidden" name="is_lunch" value="0" />
-								<input disabled type="checkbox" id="bm_recipe_meal_type_lunch_checkbox" name="is_lunch" value="1"></input> Lunch<br>
-								<input type="hidden" name="is_snack" value="0" />
-								<input disabled type="checkbox" id="bm_recipe_meal_type_snack_checkbox" name="is_snack" value="1"></input> Snack<br>
-								<input type="hidden" name="is_dinner" value="0" />
-								<input disabled type="checkbox" id="bm_recipe_meal_type_dinner_checkbox" name="is_dinner" value="1"> Dinner</input>
-								<input hidden class="bm_recipe_id" name="recipe_id"></input>
-							</fieldset>	
-						</form>
-						<div id="bm_recipe_meal_type_buttons">
-							<button id="bm_recipe_meal_type_edit_button" style="" onclick="gApp.recipeController.editSelectedRecipeMealType()">Edit</button>
-							<button id="bm_recipe_meal_type_save_edit_button" hidden style="" onclick="gApp.recipeController.saveSelectedRecipeMealType()">Save</button>
-							<button id="bm_recipe_meal_type_cancel_edit_button" hidden style="" onclick="gApp.recipeController.cancelEditSelectedRecipeMealType()">Cancel Edit</button>
-							<span class="bm_update_status"></span>
-						</div>
-				    </div>
-				</div>
-			</div>
-			<div class="bm_table_anchor" style="clear:both;"></div>
-		</div>
-		-->
-		
-		<!--
-		<h3>Community Recipes</h3>
-		<div id="bm_community_recipes_accordian_panel">
-			
-			<div id="bm_community_recipe_table_wrapper" class="bm_table_wrapper">
-				<table id="bm_community_recipe_table" class="display">
-				</table>
-			</div>
-			<div class="bm_table_anchor" style="clear:both;"></div>
-		
-			<div class="bm_table_anchor" style="clear:both;"></div>
-		</div>
-		-->
-		
-	<!--/div-->
+
 		
 	<div class="bm_table_anchor" style="clear:both;"></div>
 	
@@ -112,9 +37,12 @@
 <!--Build the planning grid UI-->
 <div id="bm_planner_wrapper">
 	
-	<h3>Meal Planner</h3>
-	
-	<div id="bm_meal_plan_config_wrapper" style="float:left;">
+	<div id="header_wrapper">
+		<div style="float:left;font-size:175%;margin-left:10px;margin-bottom:10px;">Meal Planner</div>
+		<div style="float:left;margin-left:30px;vertical-align:bottom;color:green;" title="Start meal planning by creating a meal plan in the table below. Set the date range for the meal plan (max 2 weeks). As you update the date range, you'll see the grid to the right update with a 'meal' placeholder for each meal in that date range. You can assign recipes by dragging them from the recipe table above or by clicking the 'auto-fill' button. When auto-filling, the app will only apply recipes with the appropriate 'meal type' (i.e., only recipes marked 'breakfast' will plot to breakfast). If dragging a recipe from above, you can place the recipe anywhere you like (i.e., the meal checkboxes have no effect.) You can also drag/drop the meals cells on each other, in order to switch the recipes for specific meals. As you add meals, you'll see the ingredient list update. Hover over the meal cells to see the ingredients and the preparation steps."><small><i>Rollover for Usage Tips</i></small></div>
+	</div>
+		
+	<div id="bm_meal_plan_config_wrapper" style="clear:both;float:left;width:30%;">
 	
 		<div id="bm_meal_plan_table_outer_wrapper">
 			<table id="bm_meal_plan_table" class="display">
@@ -125,10 +53,11 @@
 			</div>
 		</div>
 		
+		<br>
 		
-		<div id="bm_mealplan_shopping_list_wrapper" style="width:300px;border:2px solid lightgray;border-radius:10px;">
+		<div id="bm_mealplan_shopping_list_outer_wrapper" style="width:100%;clear:both;">
 			
-			<div id="bm_mealplan_shopping_list_wrapper">
+			<div id="bm_mealplan_shopping_inner_wrapper">
 				<h3>Shopping List</h3>
 				<ul id="bm_mealplan_shopping_list"></ul>
 			</div>
@@ -139,10 +68,13 @@
 		
 	</div>
 	
-	<div id="bm_mealplan_grid_wrapper" style="float:left;margin-left:30px;">
+	<div id="bm_mealplan_grid_wrapper" style="float:right;margin-left:30px;">
 		
 		<div id="bm_mealplan_grid_headers">
-			<div  class="bm_mealplan_grid_cell bm_mealplan_grid_column_header" id="bm_mealplan_grid_column_header_day" style="visibility:hidden;">Day</div>
+			<div class="bm_mealplan_grid_cell bm_mealplan_grid_auto_plan_button" id="bm_mealplan_grid_auto_fill_button_cell">
+				<button onClick="gApp.mealplanController.autoPlan()">Auto-Fill!</button>
+				<div style="float:right;display:none;" id="bm_auto_fill_activity_indicator"><image src="/images/spinner2-greenie.gif" width="20px" height="20px"></image></div>
+			</div>
 			<div class="bm_mealplan_grid_cell bm_mealplan_grid_column_header" id="bm_mealplan_grid_column_header_breakfast">Breakfast</div>
 			<div class="bm_mealplan_grid_cell bm_mealplan_grid_column_header" id="bm_mealplan_grid_column_header_lunch">Lunch</div>
 			<div class="bm_mealplan_grid_cell bm_mealplan_grid_column_header" id="bm_mealplan_grid_column_header_snack">Snack</div>

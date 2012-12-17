@@ -1,5 +1,7 @@
 function BMMealPlanController(){
 	
+	this._meals = [];
+	
 	
 	/*
 	// select everything when editing field in focus
@@ -74,7 +76,9 @@ function BMMealPlanController(){
 		     }).done(function(oResponse){
 				//Clear out the shopping list
 				//Redisplay the grid data
+				gApp.mealplanController._meals = oResponse;
 				gApp.mealgridController.displayGridForMealplan(oResponse);
+				
 			 }).error(function(xhr, errorStatus, errorText){
 				alert("There was an issue adding a new recipe: " + errorStatus + ", " + errorText);
 			 });
@@ -113,7 +117,7 @@ function BMMealPlanController(){
 		
 		"bInfo": false,
 
-		"sScrollY": "95px",
+		"sScrollY": "175px",
 		
 		"bPaginate": false,
 		
@@ -122,9 +126,9 @@ function BMMealPlanController(){
 		"sAjaxSource": "/mealplans/index",
 		
 		"aoColumns": [
-					{"mData":"name","sTitle":"Meal Plan", "sClass":"name textinput_editable"},
-					{"mData":"start_date","sTitle":"Plan Start Date", "sClass":"start_date datepicker_editable"},
-					{"mData":"end_date","sTitle":"Plan End Date", "sClass":"end_date datepicker_editable"},
+					{"mData":"name","sTitle":"Meal Plan", "sClass":"name textinput_editable","sWidth":"33%"},
+					{"mData":"start_date","sTitle":"Plan Start Date", "sClass":"start_date datepicker_editable","sWidth":"33%"},
+					{"mData":"end_date","sTitle":"Plan End Date", "sClass":"end_date datepicker_editable","sWidth":"33%"},
 				],
 			
 	    "fnDrawCallback": function( oSettings ) {
@@ -148,7 +152,9 @@ function BMMealPlanController(){
 			        url: '/mealplans/p_update'
 			     }).done(function(oResponse){
 					//Reload the data
-					gApp.mealplanController.dataTable.fnReloadAjax();		
+					var editedRow = nRow;
+					gApp.mealplanController.reloadData(editedRow);
+					//gApp.mealplanController.dataTable.fnReloadAjax();		
 				 }).error(function(xhr, errorStatus, errorText){
 					alert("There was an issue updating the mealplan: " + errorStatus + ", " + errorText);
 				 });
@@ -192,7 +198,8 @@ function BMMealPlanController(){
 			        url: '/mealplans/p_update'
 			     }).done(function(oResponse){
 					//Reload the data
-					gApp.mealplanController.dataTable.fnReloadAjax();		
+					var editedRow = nRow;
+					gApp.mealplanController.reloadData(editedRow);	
 				 }).error(function(xhr, errorStatus, errorText){
 					alert("There was an issue updating the mealplan: " + errorStatus + ", " + errorText);
 				 });
@@ -224,7 +231,9 @@ function BMMealPlanController(){
 			        url: '/mealplans/p_update'
 			     }).done(function(oResponse){
 					//Reload the data
-					gApp.mealplanController.dataTable.fnReloadAjax();		
+					var editedRow = nRow;
+					gApp.mealplanController.reloadData(editedRow);
+					//gApp.mealplanController.dataTable.fnReloadAjax();		
 				 }).error(function(xhr, errorStatus, errorText){
 					alert("There was an issue updating the mealplan: " + errorStatus + ", " + errorText);
 				 });
@@ -262,8 +271,18 @@ BMMealPlanController.prototype.addMealplan = function(){
         url: '/mealplans/add'
      }).done(function(oResponse){
 		 
+		var newMealplanId = oResponse;
+		
 		//Reload the data
-		gApp.mealplanController.dataTable.fnReloadAjax();		
+		gApp.mealplanController.dataTable.fnReloadAjax(
+			null,
+			function(oSettings){
+				var scroller = gApp.mealplanController.dataTable.fnSettings().nTable.parentNode;                                             
+				$(scroller).scrollTo( "tr[id='" + newMealplanId + "']", 1);
+				$("#" + newMealplanId + " > td:eq(0)").dblclick();
+			},
+			true
+		);		
 		
 		
 	 }).error(function(xhr, errorStatus, errorText){
@@ -271,6 +290,101 @@ BMMealPlanController.prototype.addMealplan = function(){
 	 });
 	
 		
+}
+
+
+
+BMMealPlanController.prototype.autoPlan = function(){
+	
+	
+	var recipeData = gApp.recipeController.dataTable._("tr");
+	
+	/*
+	Repeat with each meal
+	If it doesn't have a recipe attached, look for a recipe of that type randomly and apply it
+	*/
+	for (var i=0;i<this._meals.length;i++){
+		
+		if (!this._meals[i].recipe){
+			
+			var mealKey = "";
+			
+			//Get the "index" of the meal to find what type it is
+			switch ( (i+4) % 4 ){ 
+				
+				case 0: //Breakfast
+					mealKey = "is_breakfast";
+					break;
+					
+				case 1: //Lunch
+					mealKey = "is_lunch";
+					break;
+					
+				case 2: //Snack
+					mealKey = "is_snack";
+					break;
+									
+				case 3: //Dinner
+					mealKey = "is_dinner";
+					break;
+
+				default:
+					mealKey = "is_dinner";
+					break
+			
+			}
+			
+			//Get all recipes of that type from the recipe data table
+			var possibleRecipes = recipeData.filter(function(e,a,i){
+				return (e[mealKey] == 1);
+			});
+			
+			//Randomly fetch one from the filtered list and apply it
+			if (possibleRecipes.length > 0){
+				var randomRecipe = possibleRecipes[ Math.floor(Math.random()*(possibleRecipes.length)) ];
+				
+				var mealIndex = i;
+				$.post("/meals/p_update", {"meal_id":this._meals[i].meal_id, "recipe_id":randomRecipe.recipe_id})
+				 .success(function() { 
+					//gApp.mealplanController.refresh();
+				  })
+				 .error(function() { 
+					alert("error"); 
+				  })
+				 .complete(function() {
+					$("#" + gApp.mealplanController._meals[mealIndex].meal_id).html('');
+					gApp.mealplanController.refresh();
+				 });
+				
+				//This will put a spinner in the cell being updated
+				$("#" + this._meals[i].meal_id).html('<image src="/images/spinner2-greenie.gif" width="20px" height="20px"></image>');
+				
+			}
+						
+		}
+	}
+	
+	
+	
+		
+}
+
+
+BMMealPlanController.prototype.reloadData = function(editedRow){
+	gApp.mealplanController.dataTable.fnReloadAjax(
+		null,
+		function(oSettings){
+			gApp.mealplanController.dataTable.fnSort( [ [1,'asc'] ] );
+			gApp.mealplanController.scrollToAndSelectRow(editedRow);
+		},
+		true
+	);
+}
+
+
+BMMealPlanController.prototype.scrollToAndSelectRow = function(nRow){
+	$(this.dataTable.fnSettings().nTable.parentNode).scrollTo( "tr[id='" + nRow.id + "']", 1);	
+	$("#" + nRow.id + " > td:eq(0)").click();
 }
 
 

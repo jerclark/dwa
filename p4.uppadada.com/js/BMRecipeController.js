@@ -39,30 +39,32 @@ function BMRecipeController(){
 		
 		"bFilter": true,
 		
-		"bInfo": true,
+		"bAutoWidth": false,
+		
+		"bPaginate": false,
 
-		"sScrollY": "200px",
+		"sScrollY": "250px",
 		
-		"bPaginate": true,
-		
+		"sScrollX": "100%",
+				
 		"bJQueryUI": true,
 		
 		"sAjaxSource": "/recipes/index",
 		
 		"aoColumns": [
-					{"mData":"name","sTitle":"Recipes", "sClass":"name text_input_editable"},
-					{"mData":"ingredients","sTitle":"Ingredients","sClass":"ingredients textarea_editable"},
-					{"mData":"steps","sTitle":"Preparation","sClass":"steps textarea_editable"},
-					{"mData":"is_breakfast","sTitle":"Breakfast","sClass":"is_breakfast", "sWidth":"50px"},
-					{"mData":"is_lunch","sTitle":"Lunch","sClass":"is_lunch","sWidth":"50px"},
-					{"mData":"is_dinner","sTitle":"Dinner","sClass":"is_dinner","sWidth":"50px"},
-					{"mData":"is_snack","sTitle":"Snack","sClass":"is_snack","sWidth":"50px"},
+					{"mData":"name","sTitle":"Recipes", "sClass":"name text_input_editable","sWidth":"15%"},
+					{"mData":"ingredients","sTitle":"Ingredients","sClass":"ingredients textarea_editable","sWidth":"30%"},
+					{"mData":"steps","sTitle":"Preparation","sClass":"steps textarea_editable","sWidth":"30%"},
+					{"mData":"is_breakfast","sTitle":"Breakfast","sClass":"is_breakfast", "sWidth":"30px"},
+					{"mData":"is_lunch","sTitle":"Lunch","sClass":"is_lunch","sWidth":"30px"},
+					{"mData":"is_dinner","sTitle":"Dinner","sClass":"is_dinner","sWidth":"30px"},
+					{"mData":"is_snack","sTitle":"Snack","sClass":"is_snack","sWidth":"30px"},
 					{"mData":"email","sTitle":"Contributor", "sClass":"contributor"}				
 				],
 			
 	    "fnDrawCallback": function( oSettings ) {
 		    if (this.$('tr').length > 0){
-				this.$('tr:last').children()[0].click();
+				//this.$('tr:last').children()[0].click();
 			}
 		},
 		
@@ -71,82 +73,130 @@ function BMRecipeController(){
 			//Capture the data
 			var oData = aData; 
 			
-			
 			//Setup the checkbox columns
 			gApp.recipeController.setupRecipeTableCheckbox(nRow,oData,"is_breakfast");
 			gApp.recipeController.setupRecipeTableCheckbox(nRow,oData,"is_lunch");
 			gApp.recipeController.setupRecipeTableCheckbox(nRow,oData,"is_dinner");
 			gApp.recipeController.setupRecipeTableCheckbox(nRow,oData,"is_snack");
 			
-			
-			/*$(nRow).children(".is_breakfast").html("<input style='align:middle;' value='0' class='bm_recipe_is_breakfast_checkbox' type='checkbox' name='is_breakfast' onclick='gApp.recipeController.handleCheckboxClick(event)'/>");
-			$(nRow).children(".is_breakfast").attr("selectable", "false");
-			$(nRow).children(".is_breakfast").children("input").prop("checked", (oData.is_breakfast == 1));
-			
-			$(nRow).children(".is_lunch").html("<input style='align:middle;' value='0' class='bm_recipe_is_breakfast_checkbox' type='checkbox' name='is_breakfast' onclick='gApp.recipeController.handleCheckboxClick(event)'/>");
-			$(nRow).children(".is_breakfast").attr("selectable", "false");
-			$(nRow).children(".is_breakfast").children("input").prop("checked", (oData.is_breakfast == 1));
-			
-			$(nRow).children(".is_breakfast").html("<input style='align:middle;' value='0' class='bm_recipe_is_breakfast_checkbox' type='checkbox' name='is_breakfast' onclick='gApp.recipeController.handleCheckboxClick(event)'/>");
-			$(nRow).children(".is_breakfast").attr("selectable", "false");
-			$(nRow).children(".is_breakfast").children("input").prop("checked", (oData.is_breakfast == 1));
-			
-			$(nRow).children(".is_breakfast").html("<input style='align:middle;' value='0' class='bm_recipe_is_breakfast_checkbox' type='checkbox' name='is_breakfast' onclick='gApp.recipeController.handleCheckboxClick(event)'/>");
-			$(nRow).children(".is_breakfast").attr("selectable", "false");
-			$(nRow).children(".is_breakfast").children("input").prop("checked", (oData.is_breakfast == 1));
+			//Format the Ingredients and Steps cells
+			$("td[class*='ingredients']", nRow).html(oData.ingredients.replace(/\n/g, " | "));
+			$("td[class*='steps']", nRow).html(oData.steps.replace(/\n/g, " | "));
+		
+			/*
+			EDITING SETUP
 			*/
+		
+			if ($("#user_email").html() == oData.email){ //Only allow editing of my recipes				  	
 			
-								  	
-			//NAME EDITING
-			$('td[class*="text_input_editable"]', nRow).editable( function(value, settings){
-				var recipeId = gApp.recipeController.dataTable._("#" + nRow.id)[0].recipe_id;
-				var recipeData = {"recipe_id":recipeId};
-				recipeData[this.classList[0]] = value;
-				$.ajax({
-					data: recipeData,
-					type: "POST",
-			        url: '/recipes/p_update'
-			     }).done(function(oResponse){
-					//Reload the data
-					gApp.recipeController.dataTable.fnReloadAjax();		
-				 }).error(function(xhr, errorStatus, errorText){
-					alert("There was an issue updating the recipe: " + errorStatus + ", " + errorText);
-				 });
-				return(value);
-			},
-			{	
-                "height": "20px",
-				event: "dblclick",
-				"width": "100%",
-				onblur: "submit"
-            });
+				//NAME EDITING
+				$('td[class*="text_input_editable"]', nRow).editable( function(value, settings){
+					var recipeId = gApp.recipeController.dataTable._("#" + nRow.id)[0].recipe_id;
+					var recipeData = {"recipe_id":recipeId};
+					recipeData[this.classList[0]] = value;
+					$.ajax({
+						data: recipeData,
+						type: "POST",
+				        url: '/recipes/p_update'
+				     }).done(function(oResponse){
+						//Reload the data
+						var editedRow = nRow;
+						gApp.recipeController.dataTable.fnReloadAjax(
+							null,
+							function(oSettings){
+								gApp.recipeController.dataTable.fnSort( [ [0,'asc'] ] );
+								gApp.recipeController.scrollToAndSelectRow(editedRow);
+								gApp.mealplanController.refresh();                                           
+							},
+							true
+						);                                          
+				
+					 }).error(function(xhr, errorStatus, errorText){
+						alert("There was an issue updating the recipe: " + errorStatus + ", " + errorText);
+					 });
+					return(value);
+				},
+				{	
+	                "height": "20px",
+					event: "dblclick",
+					"width": "100%",
+					onblur: "submit"
+	            });
 
-			//NAME EDITING
-			$('td[class*="textarea_editable"]', nRow).editable( function(value, settings){
-				var recipeId = gApp.recipeController.dataTable._("#" + nRow.id)[0].recipe_id;
-				var recipeData = {"recipe_id":recipeId};
-				recipeData[this.classList[0]] = value;
-				$.ajax({
-					data: recipeData,
-					type: "POST",
-			        url: '/recipes/p_update'
-			     }).done(function(oResponse){
-					//Reload the data
-					gApp.recipeController.dataTable.fnReloadAjax();		
-				 }).error(function(xhr, errorStatus, errorText){
-					alert("There was an issue updating the recipe: " + errorStatus + ", " + errorText);
-				 });
-				return(value);
-			},
-			{	
-                "height": "40px",
-				event: "dblclick",
-				indicator: 'Saving ingredients...',
-				type: 'textarea',
-				submit:'Save changes',
-				cancel: 'Cancel'
-            });
+				//INGREDIENT AND STEPS EDITING
+				$('td[class*="ingredients"]', nRow).editable( function(value, settings){
+					var recipeId = gApp.recipeController.dataTable._("#" + nRow.id)[0].recipe_id;
+					var recipeData = {"recipe_id":recipeId};
+					recipeData[this.classList[0]] = value;
+					$.ajax({
+						data: recipeData,
+						type: "POST",
+				        url: '/recipes/p_update'
+				     }).done(function(oResponse){
+						//Reload the data
+						var editedRow = nRow;
+						gApp.recipeController.dataTable.fnReloadAjax(
+							null,
+							function(oSettings){
+								gApp.recipeController.dataTable.fnSort( [ [0,'asc'] ] );
+								gApp.recipeController.scrollToAndSelectRow(editedRow);
+								gApp.mealplanController.refresh();                                           
+							},
+							true
+						);		
+					 }).error(function(xhr, errorStatus, errorText){
+						alert("There was an issue updating the recipe: " + errorStatus + ", " + errorText);
+					 });
+					return(value);
+				},
+				{
+					data: oData.ingredients.replace(" | ", "\n"),
+	                "height": "40px",
+					event: "dblclick",
+					indicator: 'Saving ingredients...',
+					type: 'textarea',
+					submit:'Save changes',
+					cancel: 'Cancel'
+	            });
 
+
+				//INGREDIENT AND STEPS EDITING
+				$('td[class*="steps"]', nRow).editable( function(value, settings){
+					var recipeId = gApp.recipeController.dataTable._("#" + nRow.id)[0].recipe_id;
+					var recipeData = {"recipe_id":recipeId};
+					recipeData[this.classList[0]] = value;
+					$.ajax({
+						data: recipeData,
+						type: "POST",
+				        url: '/recipes/p_update'
+				     }).done(function(oResponse){
+						//Reload the data
+						var editedRow = nRow;
+						gApp.recipeController.dataTable.fnReloadAjax(
+							null,
+							function(oSettings){
+								gApp.recipeController.dataTable.fnSort( [ [0,'asc'] ] );
+								gApp.recipeController.scrollToAndSelectRow(editedRow);
+								gApp.mealplanController.refresh();                                           
+							},
+							true
+						);		
+					 }).error(function(xhr, errorStatus, errorText){
+						alert("There was an issue updating the recipe: " + errorStatus + ", " + errorText);
+					 });
+					return(value);
+				},
+				{
+					data: oData.steps.replace(" | ", "\n"),
+	                "height": "40px",
+					event: "dblclick",
+					indicator: 'Saving ingredients...',
+					type: 'textarea',
+					submit:'Save changes',
+					cancel: 'Cancel'
+	            });
+
+			} //End if ($("#user_email").html() == oData.email){
 			
 
 			
@@ -171,7 +221,7 @@ function BMRecipeController(){
 	});
 	
 
-
+/*
 	//RECIPE INGREDIENT AJAX FORM
 	$('form[name="bm_recipe_ingredients_form"]').ajaxForm({
 		type: 'POST',
@@ -218,15 +268,25 @@ function BMRecipeController(){
 			gApp.recipeController.dataTable.$('.row_selected').children()[0].click();
 		}
 	});
-
+*/
 
 
 	
 }
 
 
+BMRecipeController.prototype.scrollToAndSelectRow = function(nRow){
+	$(this.dataTable.fnSettings().nTable.parentNode).scrollTo( "tr[id='" + nRow.id + "']", 1);	
+	$("#" + nRow.id + " > td:eq(0)").click();
+}
+
+
 BMRecipeController.prototype.setupRecipeTableCheckbox = function(nRow, oData, sProp){
 	$(nRow).children("." + sProp).html("<input style='align:middle;' value='0' class='bm_recipe_table_checkbox' type='checkbox' name='" + sProp + "' onclick='gApp.recipeController.handleCheckboxClick(event)'/>");
+	$(nRow).children("." + sProp).attr("selectable", "false");
+	if ( $("#user_email").html() != oData.email ){
+		$(nRow).children("." + sProp).children("input").attr("disabled", true);
+	}
 	$(nRow).children("." + sProp).attr("selectable", "false");
 	$(nRow).children("." + sProp).children("input").prop("checked", (oData[sProp] == 1));
 }
@@ -271,8 +331,18 @@ BMRecipeController.prototype.addRecipe = function(){
         url: '/recipes/add'
      }).done(function(oResponse){
 		 
+		var newRecipeId = oResponse;
+		
 		//Reload the data
-		gApp.recipeController.dataTable.fnReloadAjax();		
+		gApp.recipeController.dataTable.fnReloadAjax(
+			null,
+			function(oSettings){
+				var scroller = gApp.recipeController.dataTable.fnSettings().nTable.parentNode;                                             
+				$(scroller).scrollTo( "tr[id='" + newRecipeId + "']", 1);
+				$("#" + newRecipeId + " > td:eq(0)").dblclick();
+			},
+			true
+		);
 		
 		
 	 }).error(function(xhr, errorStatus, errorText){
@@ -291,14 +361,23 @@ BMRecipeController.prototype.updateRecipeName = function(){
 BMRecipeController.prototype.removeSelectedRecipe = function(){
 	
 	var iSelectedRecipeId = this.dataTable.$('.row_selected').attr("id").substr(1);
+	var iSelectedRowIndex = this.dataTable.fnGetPosition(this.dataTable.$('.row_selected')[0]);
 
 	//Create the JQUERY ajax call here, and reload the table on success
 	$.ajax({
 		dataType:"json",
        	url: '/recipes/delete/' + iSelectedRecipeId
      }).done(function(){
-		 gApp.recipeController.dataTable.fnReloadAjax();
-		 gApp.recipeController.dataTable.$('tr:last').children()[0].click();
+		var rowToSelect = gApp.recipeController.dataTable.$('tr:eq(' + iSelectedRowIndex + ')')[0];	
+		gApp.recipeController.dataTable.fnReloadAjax(
+			null,
+			function(oSettings){
+				gApp.recipeController.dataTable.fnSort( [ [0,'asc'] ] );
+				gApp.recipeController.scrollToAndSelectRow(rowToSelect);
+				gApp.mealplanController.refresh();                                           
+			},
+			true
+		);
 	 }).error(function(xhr, errorStatus, errorText){
 		alert("There was an issue removing a recipe: " + errorStatus + ", " + errorText);
 	 });
