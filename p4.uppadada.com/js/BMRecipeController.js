@@ -52,7 +52,7 @@ function BMRecipeController(){
 		"sAjaxSource": "/recipes/index",
 		
 		"aoColumns": [
-					{"mData":"name","sTitle":"Recipes", "sClass":"name text_input_editable","sWidth":"15%"},
+					{"mData":"name","sTitle":"Recipes", "sClass":"name text_input_editable","sWidth":"20%"},
 					{"mData":"ingredients","sTitle":"Ingredients","sClass":"ingredients textarea_editable","sWidth":"30%"},
 					{"mData":"steps","sTitle":"Preparation","sClass":"steps textarea_editable","sWidth":"30%"},
 					{"mData":"is_breakfast","sTitle":"Breakfast","sClass":"is_breakfast", "sWidth":"30px"},
@@ -79,9 +79,20 @@ function BMRecipeController(){
 			gApp.recipeController.setupRecipeTableCheckbox(nRow,oData,"is_dinner");
 			gApp.recipeController.setupRecipeTableCheckbox(nRow,oData,"is_snack");
 			
-			//Format the Ingredients and Steps cells
-			$("td[class*='ingredients']", nRow).html(oData.ingredients.replace(/\n/g, " | "));
-			$("td[class*='steps']", nRow).html(oData.steps.replace(/\n/g, " | "));
+			//Format the Ingredients and Steps cells, adding tooltip text
+			var sIngredientDisplayText = oData.ingredients.substring(0,30).replace(/\n/g, " | ");
+			if (oData.ingredients.length > 30) sIngredientDisplayText += "...";
+			$("td[class*='ingredients']", nRow).html(sIngredientDisplayText);
+			if (oData.ingredients.length > 0){
+				$("td[class*='ingredients']", nRow).attr("title", "<ul><li>" + oData.ingredients.replace(/\n/g, "<li>") + "</ul>");
+			}
+			
+			var sStepsDisplayText = oData.steps.substring(0,30).replace(/\n/g, " | ");
+			if (oData.steps.length > 30) sStepsDisplayText += "...";
+			$("td[class*='steps']", nRow).html(sStepsDisplayText);
+			if (oData.steps.length > 0){
+				$("td[class*='steps']", nRow).attr("title", "<ul><li>" + oData.steps.replace(/\n/g, "<li>") + "</ul>");
+			}
 		
 			/*
 			EDITING SETUP
@@ -123,8 +134,12 @@ function BMRecipeController(){
 					onblur: "submit"
 	            });
 
-				//INGREDIENT AND STEPS EDITING
+				//INGREDIENT EDITING
 				$('td[class*="ingredients"]', nRow).editable( function(value, settings){
+					
+					//Close any tooltips
+					$(".ui-tooltip").remove();
+					
 					var recipeId = gApp.recipeController.dataTable._("#" + nRow.id)[0].recipe_id;
 					var recipeData = {"recipe_id":recipeId};
 					recipeData[this.classList[0]] = value;
@@ -156,12 +171,17 @@ function BMRecipeController(){
 					indicator: 'Saving ingredients...',
 					type: 'textarea',
 					submit:'Save changes',
-					cancel: 'Cancel'
+					cancel: 'Cancel',
+					onreset: function(){ $(".ui-tooltip").remove();}
 	            });
 
 
-				//INGREDIENT AND STEPS EDITING
+				//INGREDIENT EDITING
 				$('td[class*="steps"]', nRow).editable( function(value, settings){
+					
+					//Close any tooltips
+					$(".ui-tooltip").remove();
+					
 					var recipeId = gApp.recipeController.dataTable._("#" + nRow.id)[0].recipe_id;
 					var recipeData = {"recipe_id":recipeId};
 					recipeData[this.classList[0]] = value;
@@ -193,7 +213,8 @@ function BMRecipeController(){
 					indicator: 'Saving ingredients...',
 					type: 'textarea',
 					submit:'Save changes',
-					cancel: 'Cancel'
+					cancel: 'Cancel',
+					onreset: function(){ $(".ui-tooltip").remove();}
 	            });
 
 			} //End if ($("#user_email").html() == oData.email){

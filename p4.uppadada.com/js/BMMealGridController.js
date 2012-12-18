@@ -37,6 +37,11 @@ BMMealGridController.prototype.displayGridForMealplan = function(aoMeals){
 		
 		$("#bm_mealplan_row_" + targetRowIndex).append('<div title="' + sMealTooltip + '"  class="bm_mealplan_grid_cell bm_mealplan_grid_body" id="' + aoMeals[i].meal_id + '">' + sCellLabel + '</div>');
 		
+		//Set the color of the cell if there's no recipe assigned
+		if (!aoMeals[i].recipe){
+			$("#" + aoMeals[i].meal_id).css("backgroundColor", "lightgray");
+		}
+		
 		//Setup the data object on the cell
 		$("#" + aoMeals[i].meal_id).data('meal', aoMeals[i]);
 		
