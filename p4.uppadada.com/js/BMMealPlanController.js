@@ -386,7 +386,7 @@ BMMealPlanController.prototype.lockMealplan = function(){
 
 
 BMMealPlanController.prototype.refresh = function(){
-	this.dataTable.$('.row_selected').children()[0].click();
+	this.dataTable.$('.row_selected').click(); //children()[0].click();
 }
 
 
