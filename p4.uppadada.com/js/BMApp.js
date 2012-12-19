@@ -104,3 +104,9 @@ function BMApp(){
 	
 
 }
+
+
+function parseDate(input) {
+  var parts = input.match(/(\d+)/g);
+  return new Date(parts[0], parts[1]-1, parts[2]);
+}

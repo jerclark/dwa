@@ -112,8 +112,8 @@ function BMMealPlanController(){
             });
 
 			//Capture the date information for use in following closures
-			var startDate = new Date(oData.start_date);
-			var endDate = new Date(oData.end_date);
+			var startDate = parseDate(oData.start_date); //new Date(oData.start_date);
+			var endDate = parseDate(oData.end_date); //new Date(oData.end_date);
 			var dateDiff = endDate.getTime() - startDate.getTime();
 			
 			//START DATE EDITING
@@ -409,3 +409,7 @@ BMMealPlanController.prototype.removeSelectedMealplan = function(){
 	
 		
 }
+
+
+
+
