@@ -154,7 +154,8 @@ function BMMealPlanController(){
 				datepicker: {
 			    	dateFormat: 'yy-mm-dd', 
 			    	numberOfMonths: 2,
-					minDate:0
+					minDate:0,
+					hideIfNoPrevNext: true
 			  	},
 				event: "dblclick",
 				"width": "100%"
@@ -189,7 +190,8 @@ function BMMealPlanController(){
 			    	dateFormat: 'yy-mm-dd', 
 			    	numberOfMonths: 2,
 					minDate:startDate.toISOString().substring(0,10),
-					maxDate:maxEndDate.toISOString().substring(0,10)
+					maxDate:maxEndDate.toISOString().substring(0,10),
+					hideIfNoPrevNext: true
 			  	},
 				event: "dblclick",
 				"width": "100%"
