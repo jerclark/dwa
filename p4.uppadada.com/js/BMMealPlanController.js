@@ -169,7 +169,7 @@ function BMMealPlanController(){
 			$('td[class*="end_date"]', nRow).editable( function(value, settings){
 				var tmpMealplanData = gApp.mealplanController.dataTable._("#" + nRow.id)[0];
 				var mealplanData = {"mealplan_id":tmpMealplanData.mealplan_id, "start_date":tmpMealplanData.start_date, "end_date":tmpMealplanData.end_date};
-				mealplanData[this.classList[0]] = value;
+				mealplanData["end_date"] = value;
 				$.ajax({
 					data: mealplanData,
 					type: "POST",
