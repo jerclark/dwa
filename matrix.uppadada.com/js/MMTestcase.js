@@ -1,14 +1,26 @@
-function MMTestcase(sName){
+function MMTestcase(oProps){
 	
 	//ID
-	this.id = "TC" + gApp.testcaseCount++;
+	if (typeof(oProps._id) == "undefined") {
+		this.id = "TC" + gApp.testcaseCount++; 
+		this._id = null;
+	}else{
+		this.id = this._id = oProps._id;
+	}
+		
+		
 	
+
 	//NAME
-	if (typeof(sName) == "undefined") sName = "Untitled Testcase - " + this.id;
-	this.name = sName;
+	//if (typeof(sName) == "undefined") sName = "Untitled Testcase - " + this.id;
+	(typeof(oProps.name) == "undefined") ? 
+		this.name = "Untitled Testcase - " + this.id :
+		this.name = oProps.name;
 	
 	//PARAMETERS
-	this.parameters = [];
+	(typeof(oProps.parameters) == "undefined") ? 
+		this.parameters = [] :
+		this.parameters = oProps.parameters;
 	
 	//DT_RowID
 	this.DT_RowId = this.id;
@@ -17,7 +29,9 @@ function MMTestcase(sName){
 	this.matrixCells = [];
 	
 	//EXPECTED RESULT
-	this.expectedResult = "";
+	(typeof(oProps.expectedResult) == "undefined") ? 
+		this.expectedResult = "" :
+		this.expectedResult = oProps.expectedResult;
 		
 	//Set the parameter controller
 	//this.parameterController = new MMParameterController();
@@ -34,6 +48,26 @@ function MMTestcase(sName){
 			
 	
 }
+
+
+MMTestcase.prototype.serialize = function(){
+
+	var serializedParams = [];
+	for (var i=0;i<this.parameters.length;i++){
+		serializedParams.push(this.parameters[i].serialize());
+	}
+
+	var o = {
+		name: this.name,
+		parameters: serializedParams		
+	};
+
+	if (this.kinvey_id != "") o._id = this.kinvey_id;
+
+	return o;
+
+}
+
 
 
 MMTestcase.prototype.updateCells = function(){
@@ -85,6 +119,21 @@ MMTestcase.prototype.updateCells = function(){
 		
 		
 	});
+
+
+	if (this._id != null){
+
+		//Save to kinvey
+		var promise = Kinvey.DataStore.update('Testcases', currentTestcase, {
+			success   : function(response) {
+				alert("updated");
+			},
+			error : function(response){
+				alert(response.description);
+			}
+		});	
+
+	}
 	
 	
 	gApp.matrixController.loadMatrixForTestcase(this);

@@ -9,7 +9,7 @@
 	define('APP_PATH', realpath(dirname(__FILE__)).'/');
          
 # Environment
-	require_once DOC_ROOT.'environment.php'; 
+	#require_once DOC_ROOT.'environment.php'; 
    
 # Where is core located?
 	define('CORE_PATH',  $_SERVER['DOCUMENT_ROOT']."/../core/");

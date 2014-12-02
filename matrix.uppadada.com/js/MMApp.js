@@ -24,6 +24,9 @@ var gValueDataTable;
 //Matrix Globals
 var gMatrixGrid;
 
+//Kinvey Globals
+var gActiveUser;
+
 
 
 $(document).ready(function() {	
@@ -44,6 +47,28 @@ $(document).ready(function() {
 	        });
 	
 	gApp = new MMApp();
+
+
+	//init the Kinvey Backend, and validate connection
+	var initPromise = Kinvey.init({
+   		appKey    : 'kid_by8TjzRMv',
+    	appSecret : '59ef31a617814b45b7fa29ae24a279b8'
+	});
+	initPromise.then(function(activeUser) {
+    	gApp.toggleLoginLogout();
+    	
+    	//Load the data from kinvey
+		gApp.testcaseController.loadData();
+	
+	}, function(error) {
+    	alert("error: " + error);
+	});
+
+
+
+
+
+
 	
 	//Load some sample data
 	//gApp.addSampleData();
@@ -95,6 +120,63 @@ function MMApp(){
 	
 }
 
+MMApp.prototype.authenticate = function(){
+
+	var u = $('input[name=username]').val();
+	var p = $('input[name=password]').val();
+
+	var promise = Kinvey.User.login(
+	{
+    	username : u,
+    	password : p
+	}, 
+	{
+	    success: function(response) {
+	    	gApp.toggleLoginLogout();
+	    },
+	    error: function(response) {
+        	alert(response.description);
+    	}
+	});
+
+}
+
+
+
+MMApp.prototype.signup = function(){
+
+	var u = $('input[name=username]').val();
+	var p = $('input[name=password]').val();
+
+	var promise = Kinvey.User.signup({
+    	username : u,
+    	password : p
+	}, {
+	    success: function(response) {
+	    	gApp.toggleLoginLogout();
+	    },
+	    error: function(response) {
+        	alert(response.description);
+    	}
+	});
+
+}
+
+
+MMApp.prototype.logout = function(){
+	var user = Kinvey.getActiveUser();
+	if(null !== user) {
+		var promise = Kinvey.User.logout( {
+		    success: function(response) {
+		    	gApp.toggleLoginLogout()
+		    },
+		    error: function(response) {
+	        	alert(response.description);
+	    	}
+		});
+	}
+}
+
 
 
 MMApp.prototype.addSampleData = function(){
@@ -109,6 +191,28 @@ MMApp.prototype.TestcaseResultStateEnum = {
     UNTESTED : "untested"
 }
 
+MMApp.prototype.kinveyLogin = function(){
+
+
+}
+
+
+MMApp.prototype.toggleLoginLogout = function(){
+
+	var activeUser = Kinvey.getActiveUser();
+	if (activeUser == null){
+		$("#loginmodal").show();
+		$("#logout").hide();
+		this.gActiveUser = null;
+	}else{
+		$("#loginmodal").hide();
+		$("#logout").show();
+		$("#current_user_name").html(activeUser.username);
+		this.gActiveUser = activeUser;
+	}
+
+}
+
 
 
 function findDTRowDataById(aDTDataSet, iDTRowId){
@@ -121,6 +225,7 @@ function findDTRowDataById(aDTDataSet, iDTRowId){
 	}
 	return {index:i,data:d[0]};
 }
+
 
 
 $(function(){

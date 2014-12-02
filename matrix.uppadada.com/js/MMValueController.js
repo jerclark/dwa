@@ -78,6 +78,9 @@ MMValueController.prototype.addValue = function(){
 	
 	//Create new matrix cells for the selected testcase
 	gApp.testcaseController.selectedTestcase.updateCells();
+
+	//Save the testcase
+	//gApp.testcaseController.updateTestcase();
 	
 	return newValue.id;
 	
@@ -124,6 +127,9 @@ MMValueController.prototype.removeValue = function(){
 		gApp.testcaseController.selectedTestcase.pruneCells(oSelectedRow.id);
 		
 	}
+
+	//Save to Kinvey
+	//gApp.testcaseController.updateTestcase();
 		
 }
 
@@ -134,6 +140,8 @@ MMValueController.prototype.loadDataForParameter = function(oParameter){
 	
 	//Set the testcase
 	this.parameter = oParameter;
+
+	gApp.valueCount+=oParameter.values.length;
 	
 	//Now load the data into the Parameter table
 	this.dataTable = $('#mm_value_table').dataTable({
@@ -172,6 +180,9 @@ MMValueController.prototype.loadDataForParameter = function(oParameter){
 							oData[this.classList[0]] = value; //this.classList[0] is the the TD class which it gets from the column definition 
 							gApp.valueController.parameter.values = gApp.valueController.dataTable.fnGetData();
 							gApp.parameterController.testcase.updateCells();
+
+							//gApp.testcaseController.updateTestcase();
+
 							return value;
 						}, 
 						{	

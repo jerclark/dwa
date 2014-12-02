@@ -65,7 +65,7 @@ MMParameterController.prototype.selectedParameter = function(){
 }
 
 
-MMParameterController.prototype.addParameter = function(){
+MMParameterController.prototype.addParameter = function(pProps){
 	
 	//Make sure a testcase is selected
 	if (this.testcase == null){
@@ -74,7 +74,7 @@ MMParameterController.prototype.addParameter = function(){
 	}
 	
 	//Create a new parameter
-	var newParameter = new MMParameter();
+	var newParameter = new MMParameter(pProps);
 	this.dataTable.fnAddData( newParameter );
 	gApp.testcaseController.selectedTestcase.parameters = this.dataTable.fnGetData();
 	
@@ -86,6 +86,9 @@ MMParameterController.prototype.addParameter = function(){
 	//Tell the testcase to recalculate the matrix cells
 	gApp.testcaseController.selectedTestcase.matrixCells = [];
 	gApp.testcaseController.selectedTestcase.updateCells();
+
+	//Save to Kinvey
+	//gApp.testcaseController.updateTestcase();
 	
 	return newParameter.id;
 	
@@ -124,6 +127,9 @@ MMParameterController.prototype.removeParameter = function(){
 		gApp.testcaseController.selectedTestcase.updateCells();
 		
 	}
+
+	//Save to Kinvey
+	//gApp.testcaseController.updateTestcase();
 		
 }
 
@@ -134,6 +140,8 @@ MMParameterController.prototype.loadDataForTestcase = function(oTestcase){
 	
 	//Set the testcase
 	this.testcase = oTestcase;
+
+	gApp.parameterCount+=oTestcase.parameters.length;
 	
 	//Now load the data into the Parameter table
 	this.dataTable = $('#mm_parameter_table').dataTable({
@@ -166,6 +174,12 @@ MMParameterController.prototype.loadDataForTestcase = function(oTestcase){
 							
 							//Update the cells
 							gApp.parameterController.testcase.updateCells();
+
+
+							//Save to kinvey
+							//gApp.testcaseController.updateTestcase();
+					
+
 							return value;
 						}, 
 						{	

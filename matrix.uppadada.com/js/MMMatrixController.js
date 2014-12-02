@@ -251,6 +251,10 @@ MMMatrixController.prototype.editExpectedResultForCell = function(){
 				selectedTestcase.matrixCells = aCells;
 				gApp.testcaseController.selectedTestcase = gApp.testcaseController.dataTable._('#' + selectedTestcase.id)[0];
 				gApp.testcaseController.selectedTestcase.updateCells();
+
+				//Save to Kinvey
+				//gApp.testcaseController.updateTestcase();
+
 				$( this ).dialog( "close" );
 			},
 			Cancel:function(){

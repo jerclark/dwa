@@ -2,10 +2,33 @@
 <br>
 <i><small>Compatibility Note: Has been tested with Chrome (Version 23.0.1271.64), Firefox (16.0.2), Safari (5.1.7) and IE 9 (9.0.8112.16421). Safari has some slight usage issues, and IE8 or earlier will not work.</small></i>
 <br><br>
-<small>Click here to see the <a href="http://p3.uppadada.com">original proposal</a>, which includes some background and usage information. This implementation below is not exactly as specified in the original proposal, but I believe the spirit of the original proposal is captured. There is NO persistence in this implementation. Once you leave the page, your entered data will be lost.</small>
 
+
+<div id="loginmodal" style="display:none;">
+  <h2>User Login</h2>
+  <form id="loginform" name="loginform">
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" class="txtfield" tabindex="1">
+     
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" class="txtfield" tabindex="2">
+     
+    <div class="center">
+    	<input type="button" onclick="gApp.authenticate()" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Log In" tabindex="3">
+    	<input type="button" onclick="gApp.signup()" name="signupbtn" id="signupbtn" class="flatbtn-blu hidemodal" value="Signup!" tabindex="3">
+    </div>
+  	
+  </form>
+</div>
+
+
+<div id="logout" style="display:none;">
+  Logged in as: <span id="current_user_name"></span>
+  <input type="button" onclick="gApp.logout()" name="signupbtn" id="signupbtn" class="flatbtn-blu" value="Logout" tabindex="3">
+</div>
 
 <!--Wrapper-->
+
 <div style="border:3px solid gray;margin-top:10px;padding:20px;	min-width:1100px;border-radius:20px;">
 
 
@@ -34,7 +57,7 @@
 			</table>
 		
 			<div>
-				<button id="mm_testcase_add_button" type='button' onclick="gApp.testcaseController.addTestcase()">Add</button>
+				<button id="mm_testcase_add_button" type='button' onclick="gApp.testcaseController.addTestcase({})">Add</button>
 				<button type='button' onclick="gApp.testcaseController.removeTestcase()">Remove</button>
 			</div>
 						
@@ -52,7 +75,7 @@
 		
 			<div>
 			<span style="float:left;display:none;"><input hidden="true" type="text" id="mm_parameter_input_name" placeholder="Enter Parameter Name" onkeyup="gApp.parameterController.detectInputNameKeypress()"/></span>
-			<button type='button' id="mm_parameter_add_button" onclick="gApp.parameterController.addParameter()">Add</button>
+			<button type='button' id="mm_parameter_add_button" onclick="gApp.parameterController.addParameter({})">Add</button>
 			<button type='button' onclick="gApp.parameterController.removeParameter()">Remove</button>
 			</div>
 			
@@ -70,7 +93,7 @@
 		
 			<div>
 				<span style="float:left;display:none;"><input hidden="true" type="text" id="mm_value_input_name" placeholder="Enter Value Name" onkeyup="gApp.valueController.detectInputNameKeypress()"/></span>
-				<button type='button' id="mm_value_add_button" onclick="gApp.valueController.addValue()">Add</button>
+				<button type='button' id="mm_value_add_button" onclick="gApp.valueController.addValue({})">Add</button>
 				<button type='button' onclick="gApp.valueController.removeValue()">Remove</button>
 			</div>
 		</div>
@@ -116,6 +139,8 @@
 				<span id="mm_matrix_passed_stat_value"></span><br>
 				<span id="mm_matrix_failed_stat_value"></span>					
 			</div>
+
+			
 			
 		</div>
 		

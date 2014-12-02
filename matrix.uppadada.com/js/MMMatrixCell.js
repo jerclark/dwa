@@ -79,6 +79,11 @@ MMMatrixCell.prototype.toggleState = function(){
 		$('#' + this.token).attr("resultState", "");
 	
 	}
+
+
+	//Save to kinvey
+	gApp.testcaseController.updateTestcase();
+	
 	
 }
 

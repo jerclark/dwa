@@ -18,3 +18,17 @@ function MMValue(sParameterId,sName){
 	
 }
 
+
+
+MMValue.prototype.serialize = function(){
+
+	var o = {
+		_id: this.id,
+		name: this.name,
+		optional: this.optional
+	};
+
+	return o;
+	
+
+}

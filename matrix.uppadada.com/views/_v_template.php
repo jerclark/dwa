@@ -16,6 +16,8 @@
 	<script type="text/javascript" charset="utf-8" src="/DataTables/media/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/jquery.jeditable.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/jquery.bgiframe-2.1.2.js"></script>
+	<script type="text/javascript" charset="utf-8" src="//da189i1jfloii.cloudfront.net/js/kinvey-html5-1.1.8.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.leanModal.min.js"></script>
 	
 	<script type="text/javascript" charset="utf-8" src="/js/MMApp.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/MMTestcase.js"></script>
@@ -63,6 +65,7 @@
 				<div id="masthead_image" style="float:left;background-image:url('/images/matrix.jpg');"></div>
 				<h1 id="masthead_text">Matrix Master</h1>
 			</div>
+
 			<div id="masthead"></div>			
 		</div>
 
@@ -72,8 +75,12 @@
 		
 	</div>
 	
-	
-
+	<script type="text/javascript">
+		$(function(){
+	  		
+	  		$('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+		});
+	</script>
 	
 		
 
