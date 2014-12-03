@@ -91,6 +91,13 @@ MMTestcaseController.prototype.detectInputNameKeypress = function(){
 
 MMTestcaseController.prototype.addTestcase = function(tcProps){
 
+	var user = Kinvey.getActiveUser();
+	if(null === user) 
+	{
+		alert("Please login to create testcases.");
+		return;
+	}
+
 
 	//Create a new testcase
 	var newTestcase = new MMTestcase(tcProps);
@@ -175,7 +182,7 @@ MMTestcaseController.prototype.removeTestcase = function(){
 
 	var promise = Kinvey.DataStore.destroy('Testcases', this.selectedTestcase._id, {
 	    success: function(response) {
-	        alert("deleted");
+	        console.log("deleted");
 	    }
 	});
 		

@@ -1,8 +1,10 @@
 function MMTestcase(oProps){
 	
+	gApp.testcaseCount++; 
+
 	//ID
 	if (typeof(oProps._id) == "undefined") {
-		this.id = "TC" + gApp.testcaseCount++; 
+		this.id = guid(); //"TC" + gApp.testcaseCount;
 		this._id = null;
 	}else{
 		this.id = this._id = oProps._id;
@@ -126,7 +128,7 @@ MMTestcase.prototype.updateCells = function(){
 		//Save to kinvey
 		var promise = Kinvey.DataStore.update('Testcases', currentTestcase, {
 			success   : function(response) {
-				alert("updated");
+				console.log("updated");
 			},
 			error : function(response){
 				alert(response.description);

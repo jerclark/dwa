@@ -57,8 +57,11 @@ $(document).ready(function() {
 	initPromise.then(function(activeUser) {
     	gApp.toggleLoginLogout();
     	
-    	//Load the data from kinvey
-		gApp.testcaseController.loadData();
+    	//Load the data from kinvey, if we have a login
+    	if (activeUser != null){
+			gApp.testcaseController.loadData();
+		}
+
 	
 	}, function(error) {
     	alert("error: " + error);
@@ -133,6 +136,7 @@ MMApp.prototype.authenticate = function(){
 	{
 	    success: function(response) {
 	    	gApp.toggleLoginLogout();
+	    	gApp.testcaseController.loadData();
 	    },
 	    error: function(response) {
         	alert(response.description);
@@ -154,6 +158,7 @@ MMApp.prototype.signup = function(){
 	}, {
 	    success: function(response) {
 	    	gApp.toggleLoginLogout();
+	    	gApp.testcaseController.loadData();
 	    },
 	    error: function(response) {
         	alert(response.description);
@@ -249,6 +254,15 @@ $(function(){
        });
 });
 
+
+
+
+function guid(){
+	'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    	var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+    	return v.toString(16);
+	});
+}
 
 
 
