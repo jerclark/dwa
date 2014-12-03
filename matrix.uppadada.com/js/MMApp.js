@@ -173,7 +173,8 @@ MMApp.prototype.logout = function(){
 	if(null !== user) {
 		var promise = Kinvey.User.logout( {
 		    success: function(response) {
-		    	gApp.toggleLoginLogout()
+		    	location.reload();
+		    	//gApp.toggleLoginLogout();
 		    },
 		    error: function(response) {
 	        	alert(response.description);

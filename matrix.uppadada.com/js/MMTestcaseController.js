@@ -183,6 +183,9 @@ MMTestcaseController.prototype.removeTestcase = function(){
 	var promise = Kinvey.DataStore.destroy('Testcases', this.selectedTestcase._id, {
 	    success: function(response) {
 	        console.log("deleted");
+	    },
+	    error: function(response){
+	    	console.log(response.description);
 	    }
 	});
 		
