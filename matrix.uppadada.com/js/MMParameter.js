@@ -2,7 +2,7 @@ function MMParameter(oProps){
 
 	//ID
 	if (typeof(oProps._id) == "undefined") {
-		this.id = "P" + gApp.parameterCount++; 
+		this.id = pguid(); //"P" + gApp.parameterCount++; 
 		this.kinvey_id = "";
 	}else{
 		this.id = this.kinvey_id = oProps._id;
@@ -12,7 +12,7 @@ function MMParameter(oProps){
 	//NAME
 	//if (typeof(sName) == "undefined") sName = "Untitled Testcase - " + this.id;
 	(typeof(oProps.name) == "undefined") ? 
-		this.name = "Untitled Parameter - " + this.id :
+		this.name = "Untitled Parameter" :
 		this.name = oProps.name;
 	
 	//PARAMETERS

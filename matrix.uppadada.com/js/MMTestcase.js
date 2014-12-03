@@ -4,7 +4,7 @@ function MMTestcase(oProps){
 
 	//ID
 	if (typeof(oProps._id) == "undefined") {
-		this.id = guid(); //"TC" + gApp.testcaseCount;
+		this.id = pguid(); //"TC" + gApp.testcaseCount;
 		this._id = null;
 	}else{
 		this.id = this._id = oProps._id;
@@ -16,7 +16,7 @@ function MMTestcase(oProps){
 	//NAME
 	//if (typeof(sName) == "undefined") sName = "Untitled Testcase - " + this.id;
 	(typeof(oProps.name) == "undefined") ? 
-		this.name = "Untitled Testcase - " + this.id :
+		this.name = "Untitled Testcase" :
 		this.name = oProps.name;
 	
 	//PARAMETERS
@@ -28,7 +28,15 @@ function MMTestcase(oProps){
 	this.DT_RowId = this.id;
 	
 	//CELLS
-	this.matrixCells = [];
+	(typeof(oProps.matrixCells) == "undefined") ? 
+		this.matrixCells = [] :
+		this.matrixCells = $.map(oProps.matrixCells, function(o,i){
+			var nc = new MMMatrixCell(o.token, o.values);
+			nc.testcaseId = o.testcaseId;
+			nc.expectedResult = o.expectedResult;
+			nc.resultState = o.resultState;
+			return nc;
+		});
 	
 	//EXPECTED RESULT
 	(typeof(oProps.expectedResult) == "undefined") ? 

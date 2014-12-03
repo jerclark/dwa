@@ -78,12 +78,7 @@ MMMatrixCell.prototype.toggleState = function(){
 		this.resultState = gApp.TestcaseResultStateEnum.UNTESTED;
 		$('#' + this.token).attr("resultState", "");
 	
-	}
-
-
-	//Save to kinvey
-	gApp.testcaseController.updateTestcase();
-	
+	}	
 	
 }
 

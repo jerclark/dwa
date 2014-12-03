@@ -136,7 +136,7 @@ MMTestcaseController.prototype.addTestcase = function(tcProps){
 	if (typeof(tcProps._id) == "undefined"){
 		var promise = Kinvey.DataStore.save('Testcases', this.selectedTestcase, {
 			success   : function(response) {
-				//alert(response.description);
+				gApp.testcaseController.selectedTestcase._id = response._id;
 			},
 			error : function(response){
 				alert(response.description);

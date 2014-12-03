@@ -124,7 +124,7 @@ MMMatrixController.prototype.loadMatrixForTestcase = function(oTestcase){
 				
 				
 				
-			}else{ //non-option click
+			}else{ //non-option click, toggle the 'state' (i.e. result)
 			
 				cellData.toggleState();
 					
@@ -141,6 +141,8 @@ MMMatrixController.prototype.loadMatrixForTestcase = function(oTestcase){
 			gApp.testcaseController.selectedTestcase.matrixCells = updatedMatrixCells;
 	
 			gApp.matrixController.updateStats();
+
+			gApp.testcaseController.updateTestcase();
 			
 		});
 		
